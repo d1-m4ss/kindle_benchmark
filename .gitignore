@@ -1,0 +1,37 @@
+# macOS and Python by-products
+.DS_Store
+__pycache__/
+*.py[cod]
+
+# Local archives and planning/publication drafts
+*.zip
+
+# Downloaded sources, generated corpora, and local runtime state
+koreader_src/
+libraries/
+real_books/
+work_real/
+env_*/
+plugins_source/bookends/
+plugins_source/bookshelf/
+plugins_source/project_title/
+plugins_source/simpleui/
+plugins_source/vos/
+plugins_source/zenos/
+
+# Local benchmark output. Campaigns are opt-in: list a campaign below to
+# publish it, and only its aggregates travel. Raw JSON, logs, checkpoints and
+# screenshots stay local -- they are large and, on the real corpus, carry book
+# filenames. Publish raw only after scripts/sanitize_published_results.py.
+test_out.json
+results/*
+!results/runs/
+results/runs/*
+!results/runs/2026-08-31-fixed/
+!results/runs/2026-09-03-full/
+!results/runs/2026-09-03-flash100/
+!results/runs/2026-09-03-bookends10-fixed/
+results/runs/**/raw/
+results/runs/**/logs/
+results/runs/**/checkpoints/
+results/runs/**/screenshots/

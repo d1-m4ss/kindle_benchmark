@@ -1,0 +1,18 @@
+{
+  "book_count": 2692,
+  "corpus_name": "REAL_2692",
+  "folder_count": 1123,
+  "formats": {
+    ".epub": 2692,
+    ".html": 1,
+    "<none>": 17
+  },
+  "logical_bytes": 3071515531,
+  "maximum_folder_depth": 5,
+  "median_file_bytes": 764397.0,
+  "p90_file_bytes": 2231046.0999999996,
+  "preexisting_koreader_state_count": 0,
+  "schema_version": 1,
+  "seed": 20260831,
+  "total_files": 2710
+}

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="840" height="520" viewBox="0 0 840 520">
+<rect width="100%" height="100%" fill="white"/>
+<text x="420.0" y="28" text-anchor="middle" font-family="sans-serif" font-size="18">Steady-state restart to usable library</text>
+<text x="18" y="212.5" transform="rotate(-90 18 212.5)" text-anchor="middle" font-family="sans-serif" font-size="12">Median latency (ms)</text>
+<line x1="70" y1="55" x2="70" y2="370" stroke="black"/>
+<line x1="70" y1="370" x2="820" y2="370" stroke="black"/>
+<rect x="79.38" y="151.22" width="43.75" height="218.78" fill="#3978b5"/>
+<text x="101.25" y="147.22" text-anchor="middle" font-family="sans-serif" font-size="9">547.53</text>
+<text x="101.25" y="382" transform="rotate(55 101.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">R0_stock process:spawn_to_library_ready_ms</text>
+<rect x="141.88" y="68.66" width="43.75" height="301.34" fill="#3978b5"/>
+<text x="163.75" y="64.66" text-anchor="middle" font-family="sans-serif" font-size="9">754.16</text>
+<text x="163.75" y="382" transform="rotate(55 163.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">R10_simpleui_vos_bookshelf process:spawn_to_library_ready_ms</text>
+<rect x="204.38" y="65.57" width="43.75" height="304.43" fill="#3978b5"/>
+<text x="226.25" y="61.57" text-anchor="middle" font-family="sans-serif" font-size="9">761.89</text>
+<text x="226.25" y="382" transform="rotate(55 226.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">R11_project_title_vos process:spawn_to_library_ready_ms</text>
+<rect x="266.88" y="142.70" width="43.75" height="227.30" fill="#3978b5"/>
+<text x="288.75" y="138.70" text-anchor="middle" font-family="sans-serif" font-size="9">568.85</text>
+<text x="288.75" y="382" transform="rotate(55 288.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">R1_bookshelf process:spawn_to_library_ready_ms</text>
+<rect x="329.38" y="71.77" width="43.75" height="298.23" fill="#3978b5"/>
+<text x="351.25" y="67.77" text-anchor="middle" font-family="sans-serif" font-size="9">746.38</text>
+<text x="351.25" y="382" transform="rotate(55 351.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">R2_simpleui process:spawn_to_library_ready_ms</text>
+<rect x="391.88" y="68.90" width="43.75" height="301.10" fill="#3978b5"/>
+<text x="413.75" y="64.90" text-anchor="middle" font-family="sans-serif" font-size="9">753.57</text>
+<text x="413.75" y="382" transform="rotate(55 413.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">R3_zenos process:spawn_to_library_ready_ms</text>
+<rect x="454.38" y="168.55" width="43.75" height="201.45" fill="#3978b5"/>
+<text x="476.25" y="164.55" text-anchor="middle" font-family="sans-serif" font-size="9">504.18</text>
+<text x="476.25" y="382" transform="rotate(55 476.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">R4_project_title process:spawn_to_library_ready_ms</text>
+<rect x="516.88" y="145.49" width="43.75" height="224.51" fill="#3978b5"/>
+<text x="538.75" y="141.49" text-anchor="middle" font-family="sans-serif" font-size="9">561.87</text>
+<text x="538.75" y="382" transform="rotate(55 538.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">R5_vos process:spawn_to_library_ready_ms</text>
+<rect x="579.38" y="63.60" width="43.75" height="306.40" fill="#3978b5"/>
+<text x="601.25" y="59.60" text-anchor="middle" font-family="sans-serif" font-size="9">766.83</text>
+<text x="601.25" y="382" transform="rotate(55 601.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">R6_simpleui_bookshelf process:spawn_to_library_ready_ms</text>
+<rect x="641.88" y="55.00" width="43.75" height="315.00" fill="#3978b5"/>
+<text x="663.75" y="51.00" text-anchor="middle" font-family="sans-serif" font-size="9">788.35</text>
+<text x="663.75" y="382" transform="rotate(55 663.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">R7_zenos_bookshelf process:spawn_to_library_ready_ms</text>
+<rect x="704.38" y="120.38" width="43.75" height="249.62" fill="#3978b5"/>
+<text x="726.25" y="116.38" text-anchor="middle" font-family="sans-serif" font-size="9">624.73</text>
+<text x="726.25" y="382" transform="rotate(55 726.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">R8_vos_bookshelf process:spawn_to_library_ready_ms</text>
+<rect x="766.88" y="73.51" width="43.75" height="296.49" fill="#3978b5"/>
+<text x="788.75" y="69.51" text-anchor="middle" font-family="sans-serif" font-size="9">742.01</text>
+<text x="788.75" y="382" transform="rotate(55 788.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">R9_simpleui_vos process:spawn_to_library_ready_ms</text>
+</svg>

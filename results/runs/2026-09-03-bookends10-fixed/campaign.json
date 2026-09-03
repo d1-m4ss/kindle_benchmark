@@ -1,0 +1,8 @@
+{
+  "benchmark_harness_sha256": "4865237af95f38936e30c3237fc8b8474f10316a329d2dfc955b323eba89b455",
+  "campaign": "2026-09-03-bookends10-fixed",
+  "created_utc": "2026-09-03T12:58:18.577552+00:00",
+  "emulate_reader_flash_ms": null,
+  "runner_sha256": "7245461217d56599d9000b92e787b6ee1a4cbac82040bc521c459ac9fa17d671",
+  "versions_lock_sha256": "26bb78442d6bed9f4933bc3c30a6209507dc0fecb152335c3fd708bd660db8d4"
+}

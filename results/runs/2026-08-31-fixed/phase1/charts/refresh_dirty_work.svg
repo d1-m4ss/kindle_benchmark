@@ -1,0 +1,187 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="4200" height="520" viewBox="0 0 4200 520">
+<rect width="100%" height="100%" fill="white"/>
+<text x="2100.0" y="28" text-anchor="middle" font-family="sans-serif" font-size="18">Refresh and dirty work: next page</text>
+<text x="18" y="212.5" transform="rotate(-90 18 212.5)" text-anchor="middle" font-family="sans-serif" font-size="12">Percent / screen-equivalent percent</text>
+<line x1="70" y1="55" x2="70" y2="370" stroke="black"/>
+<line x1="70" y1="370" x2="4180" y2="370" stroke="black"/>
+<rect x="80.28" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="104.25" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="104.25" y="382" transform="rotate(55 104.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">A_stock unique</text>
+<rect x="148.78" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="172.75" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="172.75" y="382" transform="rotate(55 172.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">A_stock cumulative</text>
+<rect x="217.28" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="241.25" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="241.25" y="382" transform="rotate(55 241.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">A_stock unique</text>
+<rect x="285.77" y="55.00" width="47.95" height="315.00" fill="#3978b5"/>
+<text x="309.75" y="51.00" text-anchor="middle" font-family="sans-serif" font-size="9">500.00</text>
+<text x="309.75" y="382" transform="rotate(55 309.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">A_stock cumulative</text>
+<rect x="354.27" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="378.25" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="378.25" y="382" transform="rotate(55 378.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">B_bookshelf unique</text>
+<rect x="422.77" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="446.75" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="446.75" y="382" transform="rotate(55 446.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">B_bookshelf cumulative</text>
+<rect x="491.27" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="515.25" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="515.25" y="382" transform="rotate(55 515.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">B_bookshelf unique</text>
+<rect x="559.77" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="583.75" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="583.75" y="382" transform="rotate(55 583.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">B_bookshelf cumulative</text>
+<rect x="628.27" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="652.25" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="652.25" y="382" transform="rotate(55 652.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">C_simpleui unique</text>
+<rect x="696.77" y="300.81" width="47.95" height="69.19" fill="#3978b5"/>
+<text x="720.75" y="296.81" text-anchor="middle" font-family="sans-serif" font-size="9">109.83</text>
+<text x="720.75" y="382" transform="rotate(55 720.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">C_simpleui cumulative</text>
+<rect x="765.27" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="789.25" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="789.25" y="382" transform="rotate(55 789.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">C_simpleui unique</text>
+<rect x="833.77" y="300.81" width="47.95" height="69.19" fill="#3978b5"/>
+<text x="857.75" y="296.81" text-anchor="middle" font-family="sans-serif" font-size="9">109.83</text>
+<text x="857.75" y="382" transform="rotate(55 857.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">C_simpleui cumulative</text>
+<rect x="902.27" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="926.25" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="926.25" y="382" transform="rotate(55 926.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">D_zenos unique</text>
+<rect x="970.77" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="994.75" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="994.75" y="382" transform="rotate(55 994.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">D_zenos cumulative</text>
+<rect x="1039.28" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="1063.25" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="1063.25" y="382" transform="rotate(55 1063.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">D_zenos unique</text>
+<rect x="1107.78" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="1131.75" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="1131.75" y="382" transform="rotate(55 1131.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">D_zenos cumulative</text>
+<rect x="1176.28" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="1200.25" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="1200.25" y="382" transform="rotate(55 1200.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">E_project_title unique</text>
+<rect x="1244.78" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="1268.75" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="1268.75" y="382" transform="rotate(55 1268.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">E_project_title cumulative</text>
+<rect x="1313.28" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="1337.25" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="1337.25" y="382" transform="rotate(55 1337.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">E_project_title unique</text>
+<rect x="1381.78" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="1405.75" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="1405.75" y="382" transform="rotate(55 1405.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">E_project_title cumulative</text>
+<rect x="1450.28" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="1474.25" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="1474.25" y="382" transform="rotate(55 1474.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">F_bookshelf_bookends unique</text>
+<rect x="1518.78" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="1542.75" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="1542.75" y="382" transform="rotate(55 1542.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">F_bookshelf_bookends cumulative</text>
+<rect x="1587.28" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="1611.25" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="1611.25" y="382" transform="rotate(55 1611.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">F_bookshelf_bookends unique</text>
+<rect x="1655.78" y="181.00" width="47.95" height="189.00" fill="#3978b5"/>
+<text x="1679.75" y="177.00" text-anchor="middle" font-family="sans-serif" font-size="9">300.00</text>
+<text x="1679.75" y="382" transform="rotate(55 1679.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">F_bookshelf_bookends cumulative</text>
+<rect x="1724.28" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="1748.25" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="1748.25" y="382" transform="rotate(55 1748.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">G_simpleui_bookshelf_bookends unique</text>
+<rect x="1792.78" y="300.81" width="47.95" height="69.19" fill="#3978b5"/>
+<text x="1816.75" y="296.81" text-anchor="middle" font-family="sans-serif" font-size="9">109.83</text>
+<text x="1816.75" y="382" transform="rotate(55 1816.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">G_simpleui_bookshelf_bookends cumulative</text>
+<rect x="1861.28" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="1885.25" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="1885.25" y="382" transform="rotate(55 1885.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">G_simpleui_bookshelf_bookends unique</text>
+<rect x="1929.78" y="300.81" width="47.95" height="69.19" fill="#3978b5"/>
+<text x="1953.75" y="296.81" text-anchor="middle" font-family="sans-serif" font-size="9">109.83</text>
+<text x="1953.75" y="382" transform="rotate(55 1953.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">G_simpleui_bookshelf_bookends cumulative</text>
+<rect x="1998.28" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="2022.25" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="2022.25" y="382" transform="rotate(55 2022.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">H_zenos_bookshelf_bookends unique</text>
+<rect x="2066.78" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="2090.75" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="2090.75" y="382" transform="rotate(55 2090.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">H_zenos_bookshelf_bookends cumulative</text>
+<rect x="2135.28" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="2159.25" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="2159.25" y="382" transform="rotate(55 2159.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">H_zenos_bookshelf_bookends unique</text>
+<rect x="2203.78" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="2227.75" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="2227.75" y="382" transform="rotate(55 2227.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">H_zenos_bookshelf_bookends cumulative</text>
+<rect x="2272.28" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="2296.25" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="2296.25" y="382" transform="rotate(55 2296.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">I_simpleui_vos unique</text>
+<rect x="2340.78" y="288.54" width="47.95" height="81.46" fill="#3978b5"/>
+<text x="2364.75" y="284.54" text-anchor="middle" font-family="sans-serif" font-size="9">129.31</text>
+<text x="2364.75" y="382" transform="rotate(55 2364.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">I_simpleui_vos cumulative</text>
+<rect x="2409.28" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="2433.25" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="2433.25" y="382" transform="rotate(55 2433.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">I_simpleui_vos unique</text>
+<rect x="2477.78" y="288.54" width="47.95" height="81.46" fill="#3978b5"/>
+<text x="2501.75" y="284.54" text-anchor="middle" font-family="sans-serif" font-size="9">129.31</text>
+<text x="2501.75" y="382" transform="rotate(55 2501.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">I_simpleui_vos cumulative</text>
+<rect x="2546.28" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="2570.25" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="2570.25" y="382" transform="rotate(55 2570.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">J_project_title_vos unique</text>
+<rect x="2614.78" y="294.69" width="47.95" height="75.31" fill="#3978b5"/>
+<text x="2638.75" y="290.69" text-anchor="middle" font-family="sans-serif" font-size="9">119.54</text>
+<text x="2638.75" y="382" transform="rotate(55 2638.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">J_project_title_vos cumulative</text>
+<rect x="2683.28" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="2707.25" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="2707.25" y="382" transform="rotate(55 2707.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">J_project_title_vos unique</text>
+<rect x="2751.78" y="294.69" width="47.95" height="75.31" fill="#3978b5"/>
+<text x="2775.75" y="290.69" text-anchor="middle" font-family="sans-serif" font-size="9">119.54</text>
+<text x="2775.75" y="382" transform="rotate(55 2775.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">J_project_title_vos cumulative</text>
+<rect x="2820.28" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="2844.25" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="2844.25" y="382" transform="rotate(55 2844.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">A_stock unique</text>
+<rect x="2888.78" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="2912.75" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="2912.75" y="382" transform="rotate(55 2912.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">A_stock cumulative</text>
+<rect x="2957.28" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="2981.25" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="2981.25" y="382" transform="rotate(55 2981.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">B_bookshelf unique</text>
+<rect x="3025.78" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="3049.75" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="3049.75" y="382" transform="rotate(55 3049.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">B_bookshelf cumulative</text>
+<rect x="3094.28" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="3118.25" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="3118.25" y="382" transform="rotate(55 3118.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">C_simpleui unique</text>
+<rect x="3162.78" y="300.81" width="47.95" height="69.19" fill="#3978b5"/>
+<text x="3186.75" y="296.81" text-anchor="middle" font-family="sans-serif" font-size="9">109.83</text>
+<text x="3186.75" y="382" transform="rotate(55 3186.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">C_simpleui cumulative</text>
+<rect x="3231.28" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="3255.25" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="3255.25" y="382" transform="rotate(55 3255.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">D_zenos unique</text>
+<rect x="3299.78" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="3323.75" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="3323.75" y="382" transform="rotate(55 3323.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">D_zenos cumulative</text>
+<rect x="3368.28" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="3392.25" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="3392.25" y="382" transform="rotate(55 3392.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">E_project_title unique</text>
+<rect x="3436.78" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="3460.75" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="3460.75" y="382" transform="rotate(55 3460.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">E_project_title cumulative</text>
+<rect x="3505.28" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="3529.25" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="3529.25" y="382" transform="rotate(55 3529.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">F_bookshelf_bookends unique</text>
+<rect x="3573.78" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="3597.75" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="3597.75" y="382" transform="rotate(55 3597.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">F_bookshelf_bookends cumulative</text>
+<rect x="3642.28" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="3666.25" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="3666.25" y="382" transform="rotate(55 3666.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">G_simpleui_bookshelf_bookends unique</text>
+<rect x="3710.78" y="300.81" width="47.95" height="69.19" fill="#3978b5"/>
+<text x="3734.75" y="296.81" text-anchor="middle" font-family="sans-serif" font-size="9">109.83</text>
+<text x="3734.75" y="382" transform="rotate(55 3734.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">G_simpleui_bookshelf_bookends cumulative</text>
+<rect x="3779.28" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="3803.25" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="3803.25" y="382" transform="rotate(55 3803.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">H_zenos_bookshelf_bookends unique</text>
+<rect x="3847.78" y="244.00" width="47.95" height="126.00" fill="#3978b5"/>
+<text x="3871.75" y="240.00" text-anchor="middle" font-family="sans-serif" font-size="9">200.00</text>
+<text x="3871.75" y="382" transform="rotate(55 3871.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">H_zenos_bookshelf_bookends cumulative</text>
+<rect x="3916.28" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="3940.25" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="3940.25" y="382" transform="rotate(55 3940.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">I_simpleui_vos unique</text>
+<rect x="3984.78" y="288.54" width="47.95" height="81.46" fill="#3978b5"/>
+<text x="4008.75" y="284.54" text-anchor="middle" font-family="sans-serif" font-size="9">129.31</text>
+<text x="4008.75" y="382" transform="rotate(55 4008.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">I_simpleui_vos cumulative</text>
+<rect x="4053.28" y="307.00" width="47.95" height="63.00" fill="#3978b5"/>
+<text x="4077.25" y="303.00" text-anchor="middle" font-family="sans-serif" font-size="9">100.00</text>
+<text x="4077.25" y="382" transform="rotate(55 4077.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">J_project_title_vos unique</text>
+<rect x="4121.77" y="294.69" width="47.95" height="75.31" fill="#3978b5"/>
+<text x="4145.75" y="290.69" text-anchor="middle" font-family="sans-serif" font-size="9">119.54</text>
+<text x="4145.75" y="382" transform="rotate(55 4145.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">J_project_title_vos cumulative</text>
+</svg>

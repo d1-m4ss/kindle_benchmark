@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "_comment": "Single source of truth for pinned dependency revisions. setup.sh and scripts/run_benchmarks.py both read this file, so a version bump is a one-file edit. Only tagged stable releases are pinned: pre-release tags (for example ZenOS v3.3.0-betaN) are deliberately not used.",
+  "koreader": {
+    "repo": "https://github.com/koreader/koreader.git",
+    "checkout_path": "koreader_src",
+    "tag": "v2026.07.2",
+    "commit": "9192014d8bd82a91dc1012473be0f238dedfdb54",
+    "date": "2026-07-31T14:51:24+02:00",
+    "release_url": "https://github.com/koreader/koreader/releases/tag/v2026.07.2",
+    "tree_url": "https://github.com/koreader/koreader/tree/9192014d8bd82a91dc1012473be0f238dedfdb54",
+    "note": "Tags v2026.07.1 and v2026.07.2 both point at this commit; v2026.07.2 is the current release name."
+  },
+  "koreader_base": {
+    "commit": "6e4bc81af4e04f78d81677a323a780a71b29702a",
+    "tag": "v2013.03-3987-g6e4bc81",
+    "date": "2026-07-23T15:38:29+02:00",
+    "tree_url": "https://github.com/koreader/koreader-base/tree/6e4bc81af4e04f78d81677a323a780a71b29702a",
+    "note": "Submodule revision recorded by the pinned KOReader tag; fetched by kodev, not pinned separately."
+  },
+  "plugins": {
+    "simpleui": {
+      "repo": "https://github.com/doctorhetfield-cmd/simpleui.koplugin.git",
+      "checkout_path": "plugins_source/simpleui",
+      "plugin_dir": "simpleui.koplugin",
+      "loaded_name": "simpleui",
+      "tag": "2.7.0",
+      "commit": "29dbfdea3298f8d4485faec38fd1691f76e35328",
+      "date": "2026-08-30T10:54:56+01:00",
+      "release_url": "https://github.com/doctorhetfield-cmd/simpleui.koplugin/releases/tag/2.7.0",
+      "tree_url": "https://github.com/doctorhetfield-cmd/simpleui.koplugin/tree/29dbfdea3298f8d4485faec38fd1691f76e35328"
+    },
+    "zenos": {
+      "repo": "https://github.com/xZenLabs/zen-os.git",
+      "checkout_path": "plugins_source/zenos",
+      "plugin_dir": "zenos.koplugin",
+      "loaded_name": "zenos",
+      "tag": "v3.2.2",
+      "commit": "6bf289431bd7eeac88e424f77ecbba6cfab9ab61",
+      "date": "2026-08-28T23:28:18-04:00",
+      "release_url": "https://github.com/xZenLabs/zen-os/releases/tag/v3.2.2",
+      "tree_url": "https://github.com/xZenLabs/zen-os/tree/6bf289431bd7eeac88e424f77ecbba6cfab9ab61"
+    },
+    "bookshelf": {
+      "repo": "https://github.com/AndyHazz/bookshelf.koplugin.git",
+      "checkout_path": "plugins_source/bookshelf",
+      "plugin_dir": "bookshelf.koplugin",
+      "loaded_name": "bookshelf",
+      "tag": "v4.4.1",
+      "commit": "c20ffdec5170ba9595a9f1e534863e1b36474efc",
+      "date": "2026-08-31T16:04:57+01:00",
+      "release_url": "https://github.com/AndyHazz/bookshelf.koplugin/releases/tag/v4.4.1",
+      "tree_url": "https://github.com/AndyHazz/bookshelf.koplugin/tree/c20ffdec5170ba9595a9f1e534863e1b36474efc"
+    },
+    "bookends": {
+      "repo": "https://github.com/AndyHazz/bookends.koplugin.git",
+      "checkout_path": "plugins_source/bookends",
+      "plugin_dir": "bookends.koplugin",
+      "loaded_name": "bookends",
+      "tag": "v5.24.0",
+      "commit": "7ae55d263ef2dcf4090f07cb25fd864c3958bd04",
+      "date": "2026-08-31T10:28:19+01:00",
+      "release_url": "https://github.com/AndyHazz/bookends.koplugin/releases/tag/v5.24.0",
+      "tree_url": "https://github.com/AndyHazz/bookends.koplugin/tree/7ae55d263ef2dcf4090f07cb25fd864c3958bd04"
+    },
+    "project_title": {
+      "repo": "https://github.com/joshuacant/ProjectTitle.git",
+      "checkout_path": "plugins_source/project_title",
+      "plugin_dir": "projecttitle.koplugin",
+      "loaded_name": "projecttitle",
+      "tag": "2026.07-v3.8.3",
+      "commit": "f29b5328f408362a95282ed8786a5b691536260c",
+      "date": "2026-08-03T11:15:45-04:00",
+      "release_url": "https://github.com/joshuacant/ProjectTitle/releases/tag/2026.07-v3.8.3",
+      "tree_url": "https://github.com/joshuacant/ProjectTitle/tree/f29b5328f408362a95282ed8786a5b691536260c"
+    },
+    "vos": {
+      "repo": "https://github.com/SeriousHornet/vos.koplugin.git",
+      "checkout_path": "plugins_source/vos",
+      "plugin_dir": "vos.koplugin",
+      "loaded_name": "vos",
+      "tag": "v1.3.4",
+      "commit": "a8c661997b36165b5e75965c5903dbc9ffecebea",
+      "date": "2026-08-24T10:17:27+08:00",
+      "release_url": "https://github.com/SeriousHornet/vos.koplugin/releases/tag/v1.3.4",
+      "tree_url": "https://github.com/SeriousHornet/vos.koplugin/tree/a8c661997b36165b5e75965c5903dbc9ffecebea"
+    }
+  }
+}

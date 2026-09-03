@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2520" height="520" viewBox="0 0 2520 520">
+<rect width="100%" height="100%" fill="white"/>
+<text x="1260.0" y="28" text-anchor="middle" font-family="sans-serif" font-size="18">Warm library navigation</text>
+<text x="18" y="212.5" transform="rotate(-90 18 212.5)" text-anchor="middle" font-family="sans-serif" font-size="12">Median latency (ms)</text>
+<line x1="70" y1="55" x2="70" y2="370" stroke="black"/>
+<line x1="70" y1="370" x2="2500" y2="370" stroke="black"/>
+<rect x="80.12" y="330.09" width="47.25" height="39.91" fill="#3978b5"/>
+<text x="103.75" y="326.09" text-anchor="middle" font-family="sans-serif" font-size="9">16.33</text>
+<text x="103.75" y="382" transform="rotate(55 103.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">R0_stock library_cached_paging</text>
+<rect x="147.62" y="292.97" width="47.25" height="77.03" fill="#3978b5"/>
+<text x="171.25" y="288.97" text-anchor="middle" font-family="sans-serif" font-size="9">31.52</text>
+<text x="171.25" y="382" transform="rotate(55 171.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">R0_stock library_first_render</text>
+<rect x="215.12" y="301.45" width="47.25" height="68.55" fill="#3978b5"/>
+<text x="238.75" y="297.45" text-anchor="middle" font-family="sans-serif" font-size="9">28.05</text>
+<text x="238.75" y="382" transform="rotate(55 238.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">R0_stock library_sequential_paging</text>
+<rect x="282.62" y="328.48" width="47.25" height="41.52" fill="#3978b5"/>
+<text x="306.25" y="324.48" text-anchor="middle" font-family="sans-serif" font-size="9">16.99</text>
+<text x="306.25" y="382" transform="rotate(55 306.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">R10_simpleui_vos_bookshelf library_cached_paging</text>
+<rect x="350.12" y="130.67" width="47.25" height="239.33" fill="#3978b5"/>
+<text x="373.75" y="126.67" text-anchor="middle" font-family="sans-serif" font-size="9">97.92</text>
+<text x="373.75" y="382" transform="rotate(55 373.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">R10_simpleui_vos_bookshelf library_first_render</text>
+<rect x="417.62" y="324.72" width="47.25" height="45.28" fill="#3978b5"/>
+<text x="441.25" y="320.72" text-anchor="middle" font-family="sans-serif" font-size="9">18.52</text>
+<text x="441.25" y="382" transform="rotate(55 441.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">R10_simpleui_vos_bookshelf library_sequential_paging</text>
+<rect x="485.12" y="347.66" width="47.25" height="22.34" fill="#3978b5"/>
+<text x="508.75" y="343.66" text-anchor="middle" font-family="sans-serif" font-size="9">9.14</text>
+<text x="508.75" y="382" transform="rotate(55 508.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">R11_project_title_vos library_cached_paging</text>
+<rect x="552.62" y="272.15" width="47.25" height="97.85" fill="#3978b5"/>
+<text x="576.25" y="268.15" text-anchor="middle" font-family="sans-serif" font-size="9">40.03</text>
+<text x="576.25" y="382" transform="rotate(55 576.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">R11_project_title_vos library_first_render</text>
+<rect x="620.12" y="347.53" width="47.25" height="22.47" fill="#3978b5"/>
+<text x="643.75" y="343.53" text-anchor="middle" font-family="sans-serif" font-size="9">9.20</text>
+<text x="643.75" y="382" transform="rotate(55 643.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">R11_project_title_vos library_sequential_paging</text>
+<rect x="687.62" y="331.55" width="47.25" height="38.45" fill="#3978b5"/>
+<text x="711.25" y="327.55" text-anchor="middle" font-family="sans-serif" font-size="9">15.73</text>
+<text x="711.25" y="382" transform="rotate(55 711.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">R1_bookshelf library_cached_paging</text>
+<rect x="755.12" y="292.83" width="47.25" height="77.17" fill="#3978b5"/>
+<text x="778.75" y="288.83" text-anchor="middle" font-family="sans-serif" font-size="9">31.57</text>
+<text x="778.75" y="382" transform="rotate(55 778.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">R1_bookshelf library_first_render</text>
+<rect x="822.62" y="328.50" width="47.25" height="41.50" fill="#3978b5"/>
+<text x="846.25" y="324.50" text-anchor="middle" font-family="sans-serif" font-size="9">16.98</text>
+<text x="846.25" y="382" transform="rotate(55 846.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">R1_bookshelf library_sequential_paging</text>
+<rect x="890.12" y="335.63" width="47.25" height="34.37" fill="#3978b5"/>
+<text x="913.75" y="331.63" text-anchor="middle" font-family="sans-serif" font-size="9">14.06</text>
+<text x="913.75" y="382" transform="rotate(55 913.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">R2_simpleui library_cached_paging</text>
+<rect x="957.62" y="55.00" width="47.25" height="315.00" fill="#3978b5"/>
+<text x="981.25" y="51.00" text-anchor="middle" font-family="sans-serif" font-size="9">128.87</text>
+<text x="981.25" y="382" transform="rotate(55 981.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">R2_simpleui library_first_render</text>
+<rect x="1025.12" y="328.50" width="47.25" height="41.50" fill="#3978b5"/>
+<text x="1048.75" y="324.50" text-anchor="middle" font-family="sans-serif" font-size="9">16.98</text>
+<text x="1048.75" y="382" transform="rotate(55 1048.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">R2_simpleui library_sequential_paging</text>
+<rect x="1092.62" y="350.42" width="47.25" height="19.58" fill="#3978b5"/>
+<text x="1116.25" y="346.42" text-anchor="middle" font-family="sans-serif" font-size="9">8.01</text>
+<text x="1116.25" y="382" transform="rotate(55 1116.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">R3_zenos library_cached_paging</text>
+<rect x="1160.12" y="266.70" width="47.25" height="103.30" fill="#3978b5"/>
+<text x="1183.75" y="262.70" text-anchor="middle" font-family="sans-serif" font-size="9">42.26</text>
+<text x="1183.75" y="382" transform="rotate(55 1183.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">R3_zenos library_first_render</text>
+<rect x="1227.62" y="350.17" width="47.25" height="19.83" fill="#3978b5"/>
+<text x="1251.25" y="346.17" text-anchor="middle" font-family="sans-serif" font-size="9">8.11</text>
+<text x="1251.25" y="382" transform="rotate(55 1251.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">R3_zenos library_sequential_paging</text>
+<rect x="1295.12" y="350.69" width="47.25" height="19.31" fill="#3978b5"/>
+<text x="1318.75" y="346.69" text-anchor="middle" font-family="sans-serif" font-size="9">7.90</text>
+<text x="1318.75" y="382" transform="rotate(55 1318.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">R4_project_title library_cached_paging</text>
+<rect x="1362.62" y="307.14" width="47.25" height="62.86" fill="#3978b5"/>
+<text x="1386.25" y="303.14" text-anchor="middle" font-family="sans-serif" font-size="9">25.72</text>
+<text x="1386.25" y="382" transform="rotate(55 1386.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">R4_project_title library_first_render</text>
+<rect x="1430.12" y="351.12" width="47.25" height="18.88" fill="#3978b5"/>
+<text x="1453.75" y="347.12" text-anchor="middle" font-family="sans-serif" font-size="9">7.72</text>
+<text x="1453.75" y="382" transform="rotate(55 1453.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">R4_project_title library_sequential_paging</text>
+<rect x="1497.62" y="345.28" width="47.25" height="24.72" fill="#3978b5"/>
+<text x="1521.25" y="341.28" text-anchor="middle" font-family="sans-serif" font-size="9">10.11</text>
+<text x="1521.25" y="382" transform="rotate(55 1521.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">R5_vos library_cached_paging</text>
+<rect x="1565.12" y="265.36" width="47.25" height="104.64" fill="#3978b5"/>
+<text x="1588.75" y="261.36" text-anchor="middle" font-family="sans-serif" font-size="9">42.81</text>
+<text x="1588.75" y="382" transform="rotate(55 1588.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">R5_vos library_first_render</text>
+<rect x="1632.62" y="341.91" width="47.25" height="28.09" fill="#3978b5"/>
+<text x="1656.25" y="337.91" text-anchor="middle" font-family="sans-serif" font-size="9">11.49</text>
+<text x="1656.25" y="382" transform="rotate(55 1656.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">R5_vos library_sequential_paging</text>
+<rect x="1700.12" y="344.88" width="47.25" height="25.12" fill="#3978b5"/>
+<text x="1723.75" y="340.88" text-anchor="middle" font-family="sans-serif" font-size="9">10.28</text>
+<text x="1723.75" y="382" transform="rotate(55 1723.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">R6_simpleui_bookshelf library_cached_paging</text>
+<rect x="1767.62" y="120.84" width="47.25" height="249.16" fill="#3978b5"/>
+<text x="1791.25" y="116.84" text-anchor="middle" font-family="sans-serif" font-size="9">101.94</text>
+<text x="1791.25" y="382" transform="rotate(55 1791.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">R6_simpleui_bookshelf library_first_render</text>
+<rect x="1835.12" y="333.93" width="47.25" height="36.07" fill="#3978b5"/>
+<text x="1858.75" y="329.93" text-anchor="middle" font-family="sans-serif" font-size="9">14.75</text>
+<text x="1858.75" y="382" transform="rotate(55 1858.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">R6_simpleui_bookshelf library_sequential_paging</text>
+<rect x="1902.62" y="336.87" width="47.25" height="33.13" fill="#3978b5"/>
+<text x="1926.25" y="332.87" text-anchor="middle" font-family="sans-serif" font-size="9">13.55</text>
+<text x="1926.25" y="382" transform="rotate(55 1926.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">R7_zenos_bookshelf library_cached_paging</text>
+<rect x="1970.12" y="241.09" width="47.25" height="128.91" fill="#3978b5"/>
+<text x="1993.75" y="237.09" text-anchor="middle" font-family="sans-serif" font-size="9">52.74</text>
+<text x="1993.75" y="382" transform="rotate(55 1993.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">R7_zenos_bookshelf library_first_render</text>
+<rect x="2037.62" y="348.96" width="47.25" height="21.04" fill="#3978b5"/>
+<text x="2061.25" y="344.96" text-anchor="middle" font-family="sans-serif" font-size="9">8.61</text>
+<text x="2061.25" y="382" transform="rotate(55 2061.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">R7_zenos_bookshelf library_sequential_paging</text>
+<rect x="2105.12" y="333.70" width="47.25" height="36.30" fill="#3978b5"/>
+<text x="2128.75" y="329.70" text-anchor="middle" font-family="sans-serif" font-size="9">14.85</text>
+<text x="2128.75" y="382" transform="rotate(55 2128.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">R8_vos_bookshelf library_cached_paging</text>
+<rect x="2172.62" y="261.69" width="47.25" height="108.31" fill="#3978b5"/>
+<text x="2196.25" y="257.69" text-anchor="middle" font-family="sans-serif" font-size="9">44.31</text>
+<text x="2196.25" y="382" transform="rotate(55 2196.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">R8_vos_bookshelf library_first_render</text>
+<rect x="2240.12" y="330.19" width="47.25" height="39.81" fill="#3978b5"/>
+<text x="2263.75" y="326.19" text-anchor="middle" font-family="sans-serif" font-size="9">16.29</text>
+<text x="2263.75" y="382" transform="rotate(55 2263.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">R8_vos_bookshelf library_sequential_paging</text>
+<rect x="2307.62" y="329.88" width="47.25" height="40.12" fill="#3978b5"/>
+<text x="2331.25" y="325.88" text-anchor="middle" font-family="sans-serif" font-size="9">16.42</text>
+<text x="2331.25" y="382" transform="rotate(55 2331.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">R9_simpleui_vos library_cached_paging</text>
+<rect x="2375.12" y="139.35" width="47.25" height="230.65" fill="#3978b5"/>
+<text x="2398.75" y="135.35" text-anchor="middle" font-family="sans-serif" font-size="9">94.36</text>
+<text x="2398.75" y="382" transform="rotate(55 2398.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">R9_simpleui_vos library_first_render</text>
+<rect x="2442.62" y="320.39" width="47.25" height="49.61" fill="#3978b5"/>
+<text x="2466.25" y="316.39" text-anchor="middle" font-family="sans-serif" font-size="9">20.30</text>
+<text x="2466.25" y="382" transform="rotate(55 2466.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">R9_simpleui_vos library_sequential_paging</text>
+</svg>

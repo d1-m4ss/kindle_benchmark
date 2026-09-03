@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="520" viewBox="0 0 800 520">
+<rect width="100%" height="100%" fill="white"/>
+<text x="400.0" y="28" text-anchor="middle" font-family="sans-serif" font-size="18">Steady-state restart to usable library</text>
+<text x="18" y="212.5" transform="rotate(-90 18 212.5)" text-anchor="middle" font-family="sans-serif" font-size="12">Median latency (ms)</text>
+<line x1="70" y1="55" x2="70" y2="370" stroke="black"/>
+<line x1="70" y1="370" x2="780" y2="370" stroke="black"/>
+<rect x="79.68" y="98.43" width="45.18" height="271.57" fill="#3978b5"/>
+<text x="102.27" y="94.43" text-anchor="middle" font-family="sans-serif" font-size="9">531.95</text>
+<text x="102.27" y="382" transform="rotate(55 102.27 382)" text-anchor="start" font-family="sans-serif" font-size="9">R0_stock process:spawn_to_library_ready_ms</text>
+<rect x="144.23" y="134.73" width="45.18" height="235.27" fill="#3978b5"/>
+<text x="166.82" y="130.73" text-anchor="middle" font-family="sans-serif" font-size="9">460.85</text>
+<text x="166.82" y="382" transform="rotate(55 166.82 382)" text-anchor="start" font-family="sans-serif" font-size="9">R10_project_title_vos process:spawn_to_library_ready_ms</text>
+<rect x="208.77" y="89.28" width="45.18" height="280.72" fill="#3978b5"/>
+<text x="231.36" y="85.28" text-anchor="middle" font-family="sans-serif" font-size="9">549.88</text>
+<text x="231.36" y="382" transform="rotate(55 231.36 382)" text-anchor="start" font-family="sans-serif" font-size="9">R1_vos process:spawn_to_library_ready_ms</text>
+<rect x="273.32" y="106.89" width="45.18" height="263.11" fill="#3978b5"/>
+<text x="295.91" y="102.89" text-anchor="middle" font-family="sans-serif" font-size="9">515.38</text>
+<text x="295.91" y="382" transform="rotate(55 295.91 382)" text-anchor="start" font-family="sans-serif" font-size="9">R2_bookshelf process:spawn_to_library_ready_ms</text>
+<rect x="337.86" y="86.05" width="45.18" height="283.95" fill="#3978b5"/>
+<text x="360.45" y="82.05" text-anchor="middle" font-family="sans-serif" font-size="9">556.20</text>
+<text x="360.45" y="382" transform="rotate(55 360.45 382)" text-anchor="start" font-family="sans-serif" font-size="9">R3_vos_bookshelf process:spawn_to_library_ready_ms</text>
+<rect x="402.41" y="55.00" width="45.18" height="315.00" fill="#3978b5"/>
+<text x="425.00" y="51.00" text-anchor="middle" font-family="sans-serif" font-size="9">617.02</text>
+<text x="425.00" y="382" transform="rotate(55 425.00 382)" text-anchor="start" font-family="sans-serif" font-size="9">R4_simpleui process:spawn_to_library_ready_ms</text>
+<rect x="466.95" y="55.73" width="45.18" height="314.27" fill="#3978b5"/>
+<text x="489.55" y="51.73" text-anchor="middle" font-family="sans-serif" font-size="9">615.59</text>
+<text x="489.55" y="382" transform="rotate(55 489.55 382)" text-anchor="start" font-family="sans-serif" font-size="9">R5_simpleui_bookshelf process:spawn_to_library_ready_ms</text>
+<rect x="531.50" y="112.33" width="45.18" height="257.67" fill="#3978b5"/>
+<text x="554.09" y="108.33" text-anchor="middle" font-family="sans-serif" font-size="9">504.72</text>
+<text x="554.09" y="382" transform="rotate(55 554.09 382)" text-anchor="start" font-family="sans-serif" font-size="9">R6_simpleui_vos process:spawn_to_library_ready_ms</text>
+<rect x="596.05" y="107.69" width="45.18" height="262.31" fill="#3978b5"/>
+<text x="618.64" y="103.69" text-anchor="middle" font-family="sans-serif" font-size="9">513.82</text>
+<text x="618.64" y="382" transform="rotate(55 618.64 382)" text-anchor="start" font-family="sans-serif" font-size="9">R7_simpleui_vos_bookshelf process:spawn_to_library_ready_ms</text>
+<rect x="660.59" y="59.77" width="45.18" height="310.23" fill="#3978b5"/>
+<text x="683.18" y="55.77" text-anchor="middle" font-family="sans-serif" font-size="9">607.67</text>
+<text x="683.18" y="382" transform="rotate(55 683.18 382)" text-anchor="start" font-family="sans-serif" font-size="9">R8_zenos process:spawn_to_library_ready_ms</text>
+<rect x="725.14" y="70.80" width="45.18" height="299.20" fill="#3978b5"/>
+<text x="747.73" y="66.80" text-anchor="middle" font-family="sans-serif" font-size="9">586.07</text>
+<text x="747.73" y="382" transform="rotate(55 747.73 382)" text-anchor="start" font-family="sans-serif" font-size="9">R9_zenos_bookshelf process:spawn_to_library_ready_ms</text>
+</svg>

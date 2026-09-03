@@ -1,0 +1,8 @@
+{
+  "benchmark_harness_sha256": "cbb3916cf451e79d150d2dccea7da6cdfc02b76d691337acba02fa38d305315c",
+  "campaign": "2026-09-03-flash100",
+  "created_utc": "2026-09-03T11:18:19.802444+00:00",
+  "emulate_reader_flash_ms": 100,
+  "runner_sha256": "39ca032fd45a9d5508a7ecd8936f6028f81b3ae29b50fc486efc117ca95c3aef",
+  "versions_lock_sha256": "26bb78442d6bed9f4933bc3c30a6209507dc0fecb152335c3fd708bd660db8d4"
+}
