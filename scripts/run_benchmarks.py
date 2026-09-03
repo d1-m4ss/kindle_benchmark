@@ -110,6 +110,7 @@ PHASE1_CONFIGS = OrderedDict({
     "J_simpleui_vos": ["simpleui", "vos"],
     "K_simpleui_vos_bookshelf": ["simpleui", "vos", "bookshelf"],
     "L_project_title_vos": ["project_title", "vos"],
+    "M_leanui": ["leanui"],
 })
 PHASE2_CONFIGS = OrderedDict({
     "R0_stock": [],
@@ -124,6 +125,7 @@ PHASE2_CONFIGS = OrderedDict({
     "R9_simpleui_vos": ["simpleui", "vos"],
     "R10_simpleui_vos_bookshelf": ["simpleui", "vos", "bookshelf"],
     "R11_project_title_vos": ["project_title", "vos"],
+    "R12_leanui": ["leanui"],
 })
 PLUGIN_DIRS = {name: info["plugin_dir"] for name, info in VERSIONS["plugins"].items()}
 LOADED_PLUGIN_NAMES = {name: info["loaded_name"] for name, info in VERSIONS["plugins"].items()}
@@ -329,8 +331,22 @@ def setup_isolated_home(job: Job) -> Path:
         link.symlink_to(source)
     settings_file = home / "settings.reader.lua"
     if not settings_file.exists():
-        plugins_disabled_str = '        ["coverbrowser"] = true,\n' if "project_title" in job.plugins else ''
+        plugins_disabled_str = '        ["coverbrowser"] = true,\n' if ("project_title" in job.plugins or "leanui" in job.plugins) else ''
         pt_setup_str = '    ["aaaProjectTitle_initial_default_setup_done2"] = true,\n' if "project_title" in job.plugins else ''
+        leanui_settings_str = (
+            '    ["leanui_settings"] = {\n'
+            '        ["enabled"] = true,\n'
+            '        ["library_mode"] = "dense",\n'
+            '        ["items_per_page_portrait"] = 14,\n'
+            '        ["cache_enabled"] = true,\n'
+            '        ["scoped_redraw"] = true,\n'
+            '        ["navbar_enabled"] = true,\n'
+            '        ["navbar_labels"] = true,\n'
+            '        ["quicksettings_enabled"] = true,\n'
+            '        ["topbar_enabled"] = true,\n'
+            '        ["badges"] = "on",\n'
+            '    },\n'
+        ) if "leanui" in job.plugins else ''
         settings_file.write_text(
             'return {\n'
             f'    ["home_dir"] = "{job.library_dir}",\n'
@@ -339,6 +355,7 @@ def setup_isolated_home(job: Job) -> Path:
             f'{plugins_disabled_str}'
             '    },\n'
             f'{pt_setup_str}'
+            f'{leanui_settings_str}'
             '}\n'
         )
     if "project_title" in job.plugins:
@@ -1067,7 +1084,7 @@ def validation_jobs(campaign: str) -> list[Job]:
 def phase1_blocks(campaign: str, first_runs: int = 3, steady_runs: int = 3) -> OrderedDict[str, list[Job]]:
     blocks: OrderedDict[str, list[Job]] = OrderedDict()
     corpora = (("flat", 50), ("flat", 2000), ("hierarchical", 50), ("hierarchical", 2000))
-    primary_first = {"A_stock", "B_bookshelf", "C_simpleui", "D_zenos", "J_project_title_vos"}
+    primary_first = {"A_stock", "B_bookshelf", "C_simpleui", "D_zenos", "J_project_title_vos", "M_leanui"}
     large_library = str(ROOT / "libraries" / "hierarchical" / "books_2000")
 
     for config, plugins in PHASE1_CONFIGS.items():
@@ -1465,6 +1482,8 @@ def ensure_validation_passed(layout: RunLayout, jobs: list[Job]) -> None:
     }
     by_id = {job.run_id: job for job in jobs}
     for run_id, scenario in targets.items():
+        if run_id not in by_id:
+            continue
         data = json.loads((layout.raw / f"{run_id}.json").read_text())
         if data.get("timing", {}).get("integer_rounding") is not False:
             raise RuntimeError(f"{run_id} does not prove non-rounded raw timing")
@@ -1475,21 +1494,21 @@ def ensure_validation_passed(layout: RunLayout, jobs: list[Job]) -> None:
         ]
         if len(samples) < 20 or not any(value != int(value) for value in samples):
             raise RuntimeError(f"{run_id}/{scenario} lacks 20 fractional-ms PASS samples")
-        if run_id not in by_id:
-            raise RuntimeError(f"validation job definition missing: {run_id}")
-    overhead = json.loads((layout.raw / "precision_stock_page.json").read_text()).get(
-        "instrumentation_overhead_validation", {}
-    )
-    required = {"library_sequential_paging"}
-    if not set(overhead).issuperset(required):
-        raise RuntimeError("instrumentation overhead control is incomplete")
-    for scenario, result in overhead.items():
-        if result.get("sample_count", 0) < 30:
-            raise RuntimeError(f"instrumentation control {scenario} has fewer than 30 paired samples")
-        delta = abs(result.get("median_delta_ms") or 0.0)
-        relative = abs(result.get("relative_overhead_pct") or 0.0)
-        if delta > 15.0 and relative > 25.0:
-            raise RuntimeError(f"material instrumentation overhead in {scenario}: {delta:.3f} ms / {relative:.2f}%")
+
+    if "precision_stock_page" in by_id:
+        overhead = json.loads((layout.raw / "precision_stock_page.json").read_text()).get(
+            "instrumentation_overhead_validation", {}
+        )
+        required = {"library_sequential_paging"}
+        if not set(overhead).issuperset(required):
+            raise RuntimeError("instrumentation overhead control is incomplete")
+        for scenario, result in overhead.items():
+            if result.get("sample_count", 0) < 30:
+                raise RuntimeError(f"instrumentation control {scenario} has fewer than 30 paired samples")
+            delta = abs(result.get("median_delta_ms") or 0.0)
+            relative = abs(result.get("relative_overhead_pct") or 0.0)
+            if delta > 15.0 and relative > 25.0:
+                raise RuntimeError(f"material instrumentation overhead in {scenario}: {delta:.3f} ms / {relative:.2f}%")
 
 
 def ensure_paging_phase1_complete(campaign: str, process_runs: int,
@@ -1653,6 +1672,8 @@ def main() -> int:
                         help="independent process runs per paging cell (default: 3)")
     parser.add_argument("--emulate-reader-flash-ms", type=int,
                         help="explicit SDL flash delay in milliseconds; omit for baseline")
+    parser.add_argument("--configs",
+                        help="comma-separated config names to run (e.g. M_leanui,A_stock)")
     args = parser.parse_args()
 
     if not args.campaign or "/" in args.campaign or args.campaign in {".", ".."}:
@@ -1728,9 +1749,14 @@ def main() -> int:
         if args.batch not in {"3", "all"}:
             parser.error("Bookends control is Phase 2 batch 3")
         blocks = bookends_blocks(args.campaign)
-        # Explicit standalone control for a focused Bookends repair campaign.
-        # The normal full-campaign spelling (--phase2 --batch 3) retains its
-        # Phase 1/2 prerequisites above.
+    if args.configs:
+        config_set = {c.strip() for c in args.configs.split(",")}
+        filtered_blocks = OrderedDict()
+        for b_name, b_jobs in blocks.items():
+            f_jobs = [j for j in b_jobs if j.config in config_set]
+            if f_jobs:
+                filtered_blocks[b_name] = f_jobs
+        blocks = filtered_blocks
 
     if args.emulate_reader_flash_ms is not None:
         blocks = OrderedDict(

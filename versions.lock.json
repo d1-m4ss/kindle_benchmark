@@ -19,6 +19,17 @@
     "note": "Submodule revision recorded by the pinned KOReader tag; fetched by kodev, not pinned separately."
   },
   "plugins": {
+    "leanui": {
+      "repo": "/Users/d13mas/Documents/scripts/koreader_plugin/leanui.koplugin",
+      "checkout_path": "plugins_source/leanui",
+      "plugin_dir": "leanui.koplugin",
+      "loaded_name": "leanui",
+      "tag": "v0.5.0-dev",
+      "commit": "5f72b77bd0f7b094164500b31138c7fc064723ac",
+      "date": "2026-09-03T20:05:00+03:00",
+      "release_url": "local",
+      "tree_url": "local"
+    },
     "simpleui": {
       "repo": "https://github.com/doctorhetfield-cmd/simpleui.koplugin.git",
       "checkout_path": "plugins_source/simpleui",

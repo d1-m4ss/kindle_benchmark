@@ -1145,7 +1145,14 @@ function ProjectTitleAdapter:start_to_home()
     return self:unsupported("Project: Title has no standalone Home Screen")
 end
 
+local LeanUIAdapter = setmetatable({}, { __index = StockAdapter })
+LeanUIAdapter.__index = LeanUIAdapter
+function LeanUIAdapter:start_to_home()
+    return self:unsupported("LeanUI has no standalone Home Screen")
+end
+
 local function backend_for(config_name)
+    if config_name:find("leanui", 1, true) then return LeanUIAdapter end
     if config_name:find("simpleui", 1, true) then return SimpleUIAdapter end
     if config_name:find("zenos", 1, true) then return ZenOSAdapter end
     if config_name:find("project_title", 1, true) then return ProjectTitleAdapter end
