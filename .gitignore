@@ -10,6 +10,7 @@ __pycache__/
 koreader_src/
 libraries/
 real_books/
+real_books_extra_sep5/
 work_real/
 env_*/
 plugins_source/bookends/
@@ -31,6 +32,7 @@ results/runs/*
 !results/runs/2026-09-03-full/
 !results/runs/2026-09-03-flash100/
 !results/runs/2026-09-03-bookends10-fixed/
+!results/runs/2026-09-12-full/
 results/runs/**/raw/
 results/runs/**/logs/
 results/runs/**/checkpoints/

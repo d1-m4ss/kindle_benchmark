@@ -24,9 +24,9 @@
       "checkout_path": "plugins_source/leanui",
       "plugin_dir": "leanui.koplugin",
       "loaded_name": "leanui",
-      "tag": "v0.5.0-dev",
-      "commit": "5f72b77bd0f7b094164500b31138c7fc064723ac",
-      "date": "2026-09-03T20:05:00+03:00",
+      "tag": "v0.5.0",
+      "commit": "2bd063af78cd5652edc6784b80e26dc097657552",
+      "date": "2026-09-03T20:17:33+03:00",
       "release_url": "local",
       "tree_url": "local"
     },
@@ -35,11 +35,11 @@
       "checkout_path": "plugins_source/simpleui",
       "plugin_dir": "simpleui.koplugin",
       "loaded_name": "simpleui",
-      "tag": "2.7.0",
-      "commit": "29dbfdea3298f8d4485faec38fd1691f76e35328",
-      "date": "2026-08-30T10:54:56+01:00",
-      "release_url": "https://github.com/doctorhetfield-cmd/simpleui.koplugin/releases/tag/2.7.0",
-      "tree_url": "https://github.com/doctorhetfield-cmd/simpleui.koplugin/tree/29dbfdea3298f8d4485faec38fd1691f76e35328"
+      "tag": "2.7.1",
+      "commit": "79dfd7e3bffb45c3072e1e50562cbe122644d1fe",
+      "date": "2026-09-07T19:31:48+01:00",
+      "release_url": "https://github.com/doctorhetfield-cmd/simpleui.koplugin/releases/tag/2.7.1",
+      "tree_url": "https://github.com/doctorhetfield-cmd/simpleui.koplugin/tree/79dfd7e3bffb45c3072e1e50562cbe122644d1fe"
     },
     "zenos": {
       "repo": "https://github.com/xZenLabs/zen-os.git",
@@ -57,22 +57,22 @@
       "checkout_path": "plugins_source/bookshelf",
       "plugin_dir": "bookshelf.koplugin",
       "loaded_name": "bookshelf",
-      "tag": "v4.4.1",
-      "commit": "c20ffdec5170ba9595a9f1e534863e1b36474efc",
-      "date": "2026-08-31T16:04:57+01:00",
-      "release_url": "https://github.com/AndyHazz/bookshelf.koplugin/releases/tag/v4.4.1",
-      "tree_url": "https://github.com/AndyHazz/bookshelf.koplugin/tree/c20ffdec5170ba9595a9f1e534863e1b36474efc"
+      "tag": "v5.0.0",
+      "commit": "a6eca2429ef92cf1bae103ef1e3f0af634937a66",
+      "date": "2026-09-11T20:06:30+01:00",
+      "release_url": "https://github.com/AndyHazz/bookshelf.koplugin/releases/tag/v5.0.0",
+      "tree_url": "https://github.com/AndyHazz/bookshelf.koplugin/tree/a6eca2429ef92cf1bae103ef1e3f0af634937a66"
     },
     "bookends": {
       "repo": "https://github.com/AndyHazz/bookends.koplugin.git",
       "checkout_path": "plugins_source/bookends",
       "plugin_dir": "bookends.koplugin",
       "loaded_name": "bookends",
-      "tag": "v5.24.0",
-      "commit": "7ae55d263ef2dcf4090f07cb25fd864c3958bd04",
-      "date": "2026-08-31T10:28:19+01:00",
-      "release_url": "https://github.com/AndyHazz/bookends.koplugin/releases/tag/v5.24.0",
-      "tree_url": "https://github.com/AndyHazz/bookends.koplugin/tree/7ae55d263ef2dcf4090f07cb25fd864c3958bd04"
+      "tag": "v5.25.0",
+      "commit": "655b6a4dd2cbf7c322a5d86a825cb51e3322debe",
+      "date": "2026-09-04T23:28:52+01:00",
+      "release_url": "https://github.com/AndyHazz/bookends.koplugin/releases/tag/v5.25.0",
+      "tree_url": "https://github.com/AndyHazz/bookends.koplugin/tree/655b6a4dd2cbf7c322a5d86a825cb51e3322debe"
     },
     "project_title": {
       "repo": "https://github.com/joshuacant/ProjectTitle.git",

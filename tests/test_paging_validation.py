@@ -309,7 +309,7 @@ class TestPagingValidation(unittest.TestCase):
 
     def test_paging_phase1_has_three_process_runs_per_dataset(self):
         blocks = paging_phase1_blocks("test_campaign", process_runs=3)
-        self.assertEqual(len(blocks), 12)
+        self.assertEqual(len(blocks), 13)
         self.assertEqual(sorted({len(jobs) for jobs in blocks.values()}), [6])
         self.assertEqual(
             sorted({job.run_id.rsplit("_r", 1)[-1] for jobs in blocks.values() for job in jobs}),
