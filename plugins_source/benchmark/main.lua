@@ -71,6 +71,7 @@ local function memory_snapshot(force_gc)
         natural_lua_heap_kb = natural,
         forced_gc_live_heap_kb = live,
         rss_kb = tonumber(usage.ru_maxrss) / (jit.os == "OSX" and 1024 or 1),
+        rss_peak_kib = tonumber(usage.ru_maxrss) / (jit.os == "OSX" and 1024 or 1),
     }
 end
 
@@ -327,8 +328,11 @@ function Benchmark:runHarness()
         end
     end
 
+    local action_cpu_ms
     local function invoke(action_fn)
+        local cpu_start = os.clock()
         local ok, result = pcall(action_fn)
+        action_cpu_ms = (os.clock() - cpu_start) * 1000
         if not ok then return { success = false, reason = "Action exception: " .. tostring(result) } end
         if type(result) == "table" and result.pending then
             self:_settleNaturally(result.settle_ticks or settle_ticks)
@@ -351,8 +355,29 @@ function Benchmark:runHarness()
         reset_recording()
         inst.active = instrumented ~= false
         local t0 = time.monotonic()
+        -- Observe the current chooser instance, not arbitrary dirty/repaint ticks.
+        -- Restore both hooks after each sample, including synchronous failures.
+        local fm = require("apps/filemanager/filemanager").instance
+        local target = fm and fm.file_chooser
+        local own_paint = target and rawget(target, "paintTo")
+        local original_paint = target and target.paintTo
+        local original_repaint = UIManager._repaint
+        local painted, painted_page, first_paint
+        if original_paint then
+            target.paintTo = function(widget, ...)
+                original_paint(widget, ...)
+                if widget == target then painted = true; painted_page = widget.page end
+            end
+        end
+        UIManager._repaint = function(manager, ...)
+            painted = false
+            original_repaint(manager, ...)
+            if painted and not first_paint then first_paint = time.monotonic() end
+        end
         local result = invoke(action_fn)
         local elapsed = precise_ms(time.monotonic() - t0)
+        UIManager._repaint = original_repaint
+        if target then target.paintTo = own_paint end
         inst.active = false
         -- invoke() already settled and repainted inside the timed window, so
         -- the buffer here is the finished frame for this transition.
@@ -397,9 +422,15 @@ function Benchmark:runHarness()
             status = "PASS",
             success = true,
             wall_time_ms = elapsed,
+            action_cpu_ms = action_cpu_ms,
+            first_content_paint_ms = first_paint and precise_ms(first_paint - t0) or nil,
+            settled_verified_ms = elapsed,
+            paint_target_verified = first_paint ~= nil and
+                (result.page_after == nil or painted_page == result.page_after),
             natural_lua_heap_kb = after.natural_lua_heap_kb,
             lua_heap_delta_kb = after.natural_lua_heap_kb - before.natural_lua_heap_kb,
             rss_kb = after.rss_kb,
+            rss_peak_kib = after.rss_peak_kib,
             set_dirty_calls = inst.set_dirty_calls,
             refresh_count = inst.refresh_count,
             full_refreshes = inst.full_refreshes,
@@ -433,6 +464,7 @@ function Benchmark:runHarness()
     end
 
     local metric_keys = {
+        "action_cpu_ms", "first_content_paint_ms", "settled_verified_ms", "rss_peak_kib",
         "wall_time_ms", "natural_lua_heap_kb", "lua_heap_delta_kb", "rss_kb",
         "set_dirty_calls", "refresh_count", "full_refreshes", "partial_refreshes",
         "unique_dirty_pct", "cumulative_dirty_screen_equivalents", "largest_single_dirty_pct",
@@ -791,6 +823,16 @@ function Benchmark:runHarness()
     end
 
     results.memory_checkpoints.post_init_idle = memory_snapshot(true)
+    do
+        local fm = require("apps/filemanager/filemanager").instance
+        local chooser = fm and fm.file_chooser
+        local leanui = PluginLoader:getPluginInstance("leanui")
+        results.effective_library_mode = leanui and leanui.config.library.mode
+            or (chooser and chooser.display_mode) or "stock"
+        results.effective_config = leanui and leanui.config or { mode = results.effective_library_mode }
+        results.effective_density = chooser and chooser.perpage
+        results.effective_dpi = Screen:getDPI()
+    end
 
     if #missing_plugins > 0 or not startup_ready.success then
         results.run_status = "FAILED"

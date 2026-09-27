@@ -418,9 +418,13 @@ class TestPagingValidation(unittest.TestCase):
         items_p2 = [f"book_{i}.epub" for i in range(11, 21)]
         items_p3 = [f"book_{i}.epub" for i in range(21, 31)]
 
-        # Valid PNG mock builder
+        # Real decodable PNGs; headers alone are not visual evidence.
         def mock_png(w=1236, h=1648, extra=b""):
-            return b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR" + struct.pack(">II", w, h) + b"\x08\x02\x00\x00\x00\x00\x00\x00\x00" + extra
+            import io
+            from PIL import Image
+            out = io.BytesIO()
+            Image.new('L', (w, h), sum(extra) % 256).save(out, format='PNG')
+            return out.getvalue()
 
         png_b = mock_png(1236, 1648, b"page_2_visual_data")
         png_a = mock_png(1236, 1648, b"page_3_visual_data")
@@ -569,7 +573,11 @@ class TestPagingValidation(unittest.TestCase):
         items_p2 = [f"book_{i}.epub" for i in range(11, 21)]
         items_p3 = [f"book_{i}.epub" for i in range(21, 31)]
 
-        png_same = b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR" + struct.pack(">II", 1236, 1648) + b"\x08\x02\x00\x00\x00\x00\x00\x00\x00same"
+        import io
+        from PIL import Image
+        out = io.BytesIO()
+        Image.new('L', (1236, 1648), 128).save(out, format='PNG')
+        png_same = out.getvalue()
         h = hashlib.sha256(png_same).hexdigest()
 
         data["scenarios"]["smoke_probe_step_2_to_3"] = {

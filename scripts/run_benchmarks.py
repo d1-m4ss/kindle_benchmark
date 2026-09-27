@@ -15,6 +15,7 @@ import math
 import os
 import platform
 import queue
+from PIL import Image
 import re
 import shutil
 import statistics
@@ -178,6 +179,9 @@ class Job:
     overhead: bool = False
     timeout_s: int = 600
     emulate_reader_flash_ms: int | None = None
+    leanui_source: str | None = None
+    library_mode: str = "compact_list"
+    measurement_contract: bool = False
 
 
 def make_layout(campaign: str, phase: str) -> RunLayout:
@@ -219,7 +223,53 @@ def verify_png_file(path: Path) -> tuple[bool, str | None, int, int]:
         return False, f"invalid dimensions ({width}x{height})", width, height
     if (width, height) not in {(618, 824), (1236, 1648)}:
         return False, f"unexpected resolution {width}x{height} (expected 618x824 or 1236x1648)", width, height
+    try:
+        with Image.open(path) as image:
+            image.verify()
+        with Image.open(path) as image:
+            image.load()
+    except (OSError, ValueError, SyntaxError) as exc:
+        return False, f"corrupt PNG: {exc}", width, height
     return True, None, width, height
+
+
+def plugin_tree_sha256(root: Path) -> str:
+    digest = hashlib.sha256()
+    for directory, dirs, files in os.walk(root, followlinks=True):
+        dirs[:] = sorted(d for d in dirs if d not in {'.git', '__pycache__'})
+        for name in sorted(files):
+            path = Path(directory) / name
+            digest.update(path.relative_to(root).as_posix().encode() + b'\0')
+            digest.update(bytes.fromhex(sha256_file(path)))
+    return digest.hexdigest()
+
+
+def measurement_errors(data: dict, expected_mode: str | None) -> list[str]:
+    errors = []
+    if expected_mode and data.get('effective_library_mode') != expected_mode:
+        errors.append('effective_library_mode mismatch')
+    for key in ('plugin_files_sha256', 'effective_config_sha256'):
+        if not re.fullmatch(r'[0-9a-f]{64}', data.get(key, '')):
+            errors.append(f'{key} missing/invalid')
+    if data.get('source_verified') is not True:
+        errors.append('plugin manifest changed during run')
+    if data.get('memory_method') != 'getrusage_peak;current_unavailable':
+        errors.append('memory_method must distinguish peak/current RSS')
+    if data.get('rss_current_kib') is not None or not data.get('rss_current_reason'):
+        errors.append('current RSS requires independent sampling; peak is not current')
+    for name, scenario in data.get('scenarios', {}).items():
+        if not name.startswith(('library_sequential_paging', 'library_cached_paging')):
+            continue
+        for sample in scenario.get('iterations', []):
+            if sample.get('status') != 'PASS':
+                continue
+            for key in ('action_cpu_ms', 'first_content_paint_ms', 'settled_verified_ms'):
+                value = sample.get(key)
+                if not isinstance(value, (int, float)) or not math.isfinite(value) or value < 0:
+                    errors.append(f'{name}: invalid {key}')
+            if sample.get('paint_target_verified') is not True:
+                errors.append(f'{name}: no verified target paint')
+    return errors
 
 
 def benchmark_harness_sha256() -> str:
@@ -323,6 +373,8 @@ def setup_isolated_home(job: Job) -> Path:
     plugins_dir.mkdir(parents=True, exist_ok=True)
     links = {"benchmark.koplugin": PLUGINS_SRC / "benchmark"}
     links.update({PLUGIN_DIRS[name]: PLUGINS_SRC / name for name in job.plugins})
+    if 'leanui' in job.plugins and job.leanui_source:
+        links[PLUGIN_DIRS['leanui']] = Path(job.leanui_source)
     for link_name, source in links.items():
         link = plugins_dir / link_name
         if link.is_symlink() and link.resolve() == source.resolve():
@@ -358,6 +410,16 @@ def setup_isolated_home(job: Job) -> Path:
             f'{leanui_settings_str}'
             '}\n'
         )
+    if "leanui" in job.plugins:
+        if job.library_mode not in {'compact_list', 'cover_list', 'cover_grid'}:
+            raise ValueError(f'Unsupported LeanUI mode: {job.library_mode}')
+        settings_dir = home / 'settings'
+        settings_dir.mkdir(parents=True, exist_ok=True)
+        settings = settings_dir / 'leanui_settings.lua'
+        if not settings.exists():
+            settings.write_text('return { quick_menu_settings = { library = { mode = '
+                                + json.dumps(job.library_mode)
+                                + ', background = { mode = "off" } } } }\n')
     if "project_title" in job.plugins:
         settings_dir = home / "settings"
         settings_dir.mkdir(parents=True, exist_ok=True)
@@ -635,6 +697,8 @@ def validate_result_artifact(job: Job, layout: RunLayout, *, require_success: bo
         # when the library root paginates on its own. Neither a silent narrowing
         # nor a silently ignored narrowing may pass.
         errors.extend(paging_root_errors(job, data))
+    if job.measurement_contract:
+        errors.extend(measurement_errors(data, job.library_mode if 'leanui' in job.plugins else None))
 
     if job.profile == "bookends_control":
         # Reader page turns are only comparable inside one document, so a
@@ -913,6 +977,9 @@ def run_job(job: Job, layout: RunLayout, environment: dict, *, resume: bool = Tr
     # restart (exit 85). Keep it outside the measured process instead of
     # fabricating the plugin's private SQLite cache.
     home = Path(job.ko_home) if _project_title_restart else setup_isolated_home(job)
+    plugin_digest = plugin_tree_sha256(home / 'plugins')
+    config_digest = hashlib.sha256(''.join(sha256_file(p) for p in sorted(home.rglob('*.lua'))
+                                         if 'plugins' not in p.relative_to(home).parts).encode()).hexdigest()
     if job.mode == "real_first_run":
         sanitize_working_corpus(Path(job.library_dir))
     targets_file = home / "benchmark_targets.json"
@@ -1015,6 +1082,13 @@ def run_job(job: Job, layout: RunLayout, environment: dict, *, resume: bool = Tr
         },
         "orchestrator_job": asdict(job),
         "ko_home_disk_usage": tree_disk_usage(Path(job.ko_home)),
+        "plugin_files_sha256": plugin_digest,
+        "input_config_sha256": config_digest,
+        "effective_config_sha256": hashlib.sha256(json.dumps(data.get('effective_config'), sort_keys=True).encode()).hexdigest(),
+        "source_verified": plugin_digest == plugin_tree_sha256(home / 'plugins'),
+        "memory_method": "getrusage_peak;current_unavailable",
+        "rss_current_kib": None,
+        "rss_current_reason": "No portable instantaneous RSS sampler; rss_peak_kib is getrusage high-water mark",
     })
     if job.mode in {"first_run_cold", "real_first_run", "steady_init"}:
         data["indexing_measurement"] = {
