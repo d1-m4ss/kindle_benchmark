@@ -1164,4 +1164,5 @@ function Adapters.get_adapter(config_name, library_dir, sample_book, sample_fold
     return backend_for(config_name):new(library_dir, sample_book, sample_folder)
 end
 
+Adapters.visible_signature = visible_signature
 return Adapters

@@ -258,7 +258,8 @@ def measurement_errors(data: dict, expected_mode: str | None) -> list[str]:
     if data.get('rss_current_kib') is not None or not data.get('rss_current_reason'):
         errors.append('current RSS requires independent sampling; peak is not current')
     for name, scenario in data.get('scenarios', {}).items():
-        if not name.startswith(('library_sequential_paging', 'library_cached_paging')):
+        if not (name.startswith(('library_sequential_paging', 'library_cached_paging'))
+                or name in {'home_to_library', 'library_first_render', 'library_folder_enter', 'library_folder_back', 'change_sort_mode'}):
             continue
         for sample in scenario.get('iterations', []):
             if sample.get('status') != 'PASS':

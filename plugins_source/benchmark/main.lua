@@ -11,6 +11,7 @@ local logger = require("logger")
 
 local Geometry = require("geometry")
 local Adapters = require("adapters")
+local PaintObserver = require("paint_observer")
 
 ffi.cdef[[
     struct rusage {
@@ -268,6 +269,18 @@ function Benchmark:runHarness()
     }
     local orig_setDirty = UIManager.setDirty
     local orig_refreshUI = Screen.refreshUI
+    -- SDL3's terminal submission boundary: every refresh mode falls back here.
+    -- setDirty may receive a deferred rectangle function and is NOT proof of
+    -- the rectangle actually submitted after layout/queue merging.
+    local orig_refreshFullImp = Screen.refreshFullImp
+    local actual_refreshes = {}
+    Screen.refreshFullImp = function(screen, x, y, w, h, ...)
+        if inst.active then
+            local bx, by, bw, bh = (screen.full_bb or screen.bb):getBoundedRect(x, y, w, h)
+            actual_refreshes[#actual_refreshes+1] = {x=bx, y=by, w=bw, h=bh}
+        end
+        return orig_refreshFullImp(screen, x, y, w, h, ...)
+    end
 
     local function record_refresh(x, y, w, h, refresh_type, full)
         local n = inst.count + 1
@@ -285,6 +298,7 @@ function Benchmark:runHarness()
     end
 
     local function reset_recording()
+        actual_refreshes = {}
         inst.set_dirty_calls = 0
         inst.refresh_count = 0
         inst.full_refreshes = 0
@@ -350,34 +364,21 @@ function Benchmark:runHarness()
         return result or { success = false, reason = "Reset returned no result" }
     end
 
+    local paint_observer = PaintObserver.install(UIManager, function()
+        local fm = require("apps/filemanager/filemanager").instance
+        return fm and fm.file_chooser
+    end, Adapters.visible_signature, time.monotonic)
+
     local function measured(action_fn, instrumented)
         local before = memory_snapshot(false)
         reset_recording()
         inst.active = instrumented ~= false
         local t0 = time.monotonic()
-        -- Observe the current chooser instance, not arbitrary dirty/repaint ticks.
-        -- Restore both hooks after each sample, including synchronous failures.
-        local fm = require("apps/filemanager/filemanager").instance
-        local target = fm and fm.file_chooser
-        local own_paint = target and rawget(target, "paintTo")
-        local original_paint = target and target.paintTo
-        local original_repaint = UIManager._repaint
-        local painted, painted_page, first_paint
-        if original_paint then
-            target.paintTo = function(widget, ...)
-                original_paint(widget, ...)
-                if widget == target then painted = true; painted_page = widget.page end
-            end
-        end
-        UIManager._repaint = function(manager, ...)
-            painted = false
-            original_repaint(manager, ...)
-            if painted and not first_paint then first_paint = time.monotonic() end
-        end
+        paint_observer:begin()
         local result = invoke(action_fn)
         local elapsed = precise_ms(time.monotonic() - t0)
-        UIManager._repaint = original_repaint
-        if target then target.paintTo = own_paint end
+        local first_paint, paint_signature = paint_observer:first()
+        paint_observer:stop()
         inst.active = false
         -- invoke() already settled and repainted inside the timed window, so
         -- the buffer here is the finished frame for this transition.
@@ -425,8 +426,8 @@ function Benchmark:runHarness()
             action_cpu_ms = action_cpu_ms,
             first_content_paint_ms = first_paint and precise_ms(first_paint - t0) or nil,
             settled_verified_ms = elapsed,
-            paint_target_verified = first_paint ~= nil and
-                (result.page_after == nil or painted_page == result.page_after),
+            paint_target_verified = first_paint ~= nil,
+            first_content_paint_signature = paint_signature,
             natural_lua_heap_kb = after.natural_lua_heap_kb,
             lua_heap_delta_kb = after.natural_lua_heap_kb - before.natural_lua_heap_kb,
             rss_kb = after.rss_kb,
@@ -441,6 +442,9 @@ function Benchmark:runHarness()
             cumulative_dirty_screen_equivalents = cumulative_eq,
             largest_single_dirty_pct = largest_pct,
             refresh_requests = refresh_requests,
+            actual_refresh_rectangles = actual_refreshes,
+            actual_refresh_count = #actual_refreshes,
+            actual_refresh_union_pixels = Geometry.calculate_spatial_union(actual_refreshes),
             semantic_evidence = result,
         }
         if result.page_before ~= nil then out.page_before = result.page_before end
@@ -827,8 +831,8 @@ function Benchmark:runHarness()
         local fm = require("apps/filemanager/filemanager").instance
         local chooser = fm and fm.file_chooser
         local leanui = PluginLoader:getPluginInstance("leanui")
-        results.effective_library_mode = leanui and leanui.config.library.mode
-            or (chooser and chooser.display_mode) or "stock"
+        results.effective_library_mode = PaintObserver.effectiveMode(chooser, leanui and leanui.config.library)
+        results.measurement_contract_version = 1
         results.effective_config = leanui and leanui.config or { mode = results.effective_library_mode }
         results.effective_density = chooser and chooser.perpage
         results.effective_dpi = Screen:getDPI()
@@ -1340,6 +1344,9 @@ function Benchmark:runHarness()
     end
 
     UIManager.setDirty = orig_setDirty
+    paint_observer:restore()
+    Screen.refreshFullImp = orig_refreshFullImp
+    Screen.refreshUI = orig_refreshUI
     local file = io.open(output_file, "w")
     if file then file:write(json.encode(results)); file:close() end
     emit_marker("BENCHMARK_COMPLETE")
