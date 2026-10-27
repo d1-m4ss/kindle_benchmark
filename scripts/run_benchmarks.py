@@ -33,7 +33,19 @@ from pathlib import Path
 from typing import Iterable
 
 ROOT = Path(__file__).resolve().parent.parent
-KOREADER_DIR = ROOT / "koreader_src" / "koreader-emulator-arm64-apple-darwin27.0.0-debug" / "koreader"
+def _find_koreader_dir() -> Path:
+    """KOReader emulator build directory: $KOREADER_EMULATOR_DIR, else the only
+    koreader-emulator-*-debug build under koreader_src (macOS arm64, Linux x86_64, ...)."""
+    override = os.environ.get("KOREADER_EMULATOR_DIR")
+    if override:
+        return Path(override)
+    builds = sorted((ROOT / "koreader_src").glob("koreader-emulator-*-debug"))
+    if not builds:
+        return ROOT / "koreader_src" / "koreader-emulator-debug" / "koreader"
+    return builds[0] / "koreader"
+
+
+KOREADER_DIR = _find_koreader_dir()
 PLUGINS_SRC = ROOT / "plugins_source"
 ENV_BASE = ROOT / "env_benchmark_runs"
 WORK_REAL = ROOT / "work_real"

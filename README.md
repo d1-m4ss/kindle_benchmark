@@ -548,6 +548,32 @@ Memory checkpoints record natural Lua heap, forced-GC live Lua heap, RSS, KO_HOM
 
 Dirty-region output records refresh calls, full/partial refresh counts, cumulative dirty screen-equivalents, geometric union of dirty area, and largest dirty region. It measures redraw requests in the emulator, not physical Kindle waveform timing or ghosting.
 
+### What the Bookshelf `library_*` rows mean
+
+Bookshelf is a separate widget, not a replacement for KOReader's file browser. The
+`library_*` scenarios (first render, next page, sort, folder navigation) therefore
+measure the stock browser with Bookshelf loaded and idle, which is the cost of having
+the plugin installed; the screens for `A_stock` and `B_bookshelf` are identical. Only the
+`bookshelf_*` scenarios exercise the shelf itself. Stacks that do replace the browser
+(SimpleUI, ZenOS, Project:Title) are measured on their own library views. The Bookshelf
+shelf scenarios walk explicit page transitions and fail on a no-op turn, an empty shelf or
+an unchanged visible signature (the `noops` / `empty_shelves` audit counters).
+
+### One-sided timing noise
+
+Contention, scheduling and thermal effects can only make an iteration slower, so a
+timing distribution is the true cost plus non-negative noise: its minimum (or a low
+percentile) is a steadier estimator than the median or mean, and the medians in the tables can
+drift between runs by more than the within-run spread. The reports therefore publish the
+minimum, p10 and p90 next to each median, and the tables here are descriptive. Where
+distributions overlap (library paging in particular) no ranking is claimed. Ranking claims would
+need several independent runs per cell and the same iteration count for everything compared.
+
+### Linux and other hosts
+
+The runner finds the emulator under `koreader_src/koreader-emulator-*-debug` or from
+`$KOREADER_EMULATOR_DIR`. The published numbers were measured on macOS arm64 only.
+
 ## Limits
 
 - The M4 Pro host does not reproduce Kindle CPU, storage I/O, memory-pressure, or E-Ink waveform behaviour.
