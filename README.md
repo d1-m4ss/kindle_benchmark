@@ -22,6 +22,7 @@ Real library of 2,692 EPUBs, KOReader v2026.07.2 in the SDL emulator, every plug
 | **Heaviest** | SimpleUI: restart 409–466 ms, 66–86 MiB heap, 210–250 ms to close a book (Stock: 29 ms). |
 | **In between** | ZenOS: restart 461 ms, 22 MiB; adding Bookshelf to VOS or ZenOS costs about 7 MiB more heap. |
 | **Bookends** | Page turn in the book 4.7 → 16.7 ms, closing a book 27 → 49 ms, +3.7 MiB heap. Small in absolute terms, not negligible. |
+| **Bookshelf's own shelf** | Page turn 133 ms with the default animation, 38 ms (fastest 22 ms) with it off, versus 17.5 ms for Stock's list. A deliberate cost; the library rows for Bookshelf measure the stock browser (see below). |
 | **Correction** | Project:Title's lead in the earlier report came from running without its cover list. With covers it is about as light as Stock, not clearly faster. |
 | **Library paging** | 15–17.5 ms per page for every stack, distributions overlap: no ranking. |
 
@@ -163,27 +164,27 @@ The real corpus is the more practically useful result set. Restart values are th
 
 ### Real-library paging
 
-Warm medians of 30 transitions per stack in the Phase 2 library root (505 entries:
+Warm medians (and, in brackets, the fastest iteration) of 30 transitions per stack in the Phase 2 library root (505 entries:
 500 EPUBs + 5 folders). `Entries/page` is the visible page size; comparisons across
 different layouts are UX-level, not equal-render-work claims. The dedicated
 three-process paging phases were not repeated in this round.
 
-| Stack | Entries/page | Sequential | Cached |
+| Stack | Entries/page | Sequential, ms: median (min) | Cached, ms: median (min) |
 |---|---:|---:|---:|
-| Project:Title | 7 | 14.80 ms | 20.75 ms |
-| Project:Title + VOS | 7 | 15.14 ms | 18.62 ms |
-| VOS | 10 | 15.45 ms | 14.66 ms |
-| Bookshelf | 10 | 15.70 ms | 14.50 ms |
-| SimpleUI | 9 | 15.94 ms | 12.80 ms |
-| LeanUI (local rebuild) | 14 | 15.97 ms | 16.11 ms |
-| SimpleUI + Bookshelf | 9 | 16.08 ms | 13.13 ms |
-| SimpleUI + VOS + Bookshelf | 9 | 16.09 ms | 14.27 ms |
-| ZenOS | 5 | 16.10 ms | 16.13 ms |
-| ZenOS + Bookshelf | 5 | 16.10 ms | 16.13 ms |
-| SimpleUI + VOS | 9 | 16.12 ms | 14.65 ms |
-| VOS + Bookshelf | 10 | 16.13 ms | 15.09 ms |
-| m1n1mal + pagecount | 10 | 17.38 ms | 15.68 ms |
-| Stock | 10 | 17.52 ms | 15.68 ms |
+| Project:Title | 7 | 14.8 (12.0) | 20.7 (8.5) |
+| Project:Title + VOS | 7 | 15.1 (12.7) | 18.6 (9.0) |
+| VOS | 10 | 15.4 (13.3) | 14.7 (9.1) |
+| Bookshelf | 10 | 15.7 (9.9) | 14.5 (9.4) |
+| SimpleUI | 9 | 15.9 (7.4) | 12.8 (10.4) |
+| LeanUI (local rebuild) | 14 | 16.0 (12.7) | 16.1 (15.6) |
+| SimpleUI + Bookshelf | 9 | 16.1 (7.5) | 13.1 (11.0) |
+| SimpleUI + VOS + Bookshelf | 9 | 16.1 (7.3) | 14.3 (9.1) |
+| ZenOS | 5 | 16.1 (5.5) | 16.1 (6.6) |
+| ZenOS + Bookshelf | 5 | 16.1 (6.4) | 16.1 (6.5) |
+| SimpleUI + VOS | 9 | 16.1 (7.3) | 14.7 (9.8) |
+| VOS + Bookshelf | 10 | 16.1 (13.3) | 15.1 (8.8) |
+| m1n1mal + pagecount | 10 | 17.4 (13.6) | 15.7 (10.6) |
+| Stock | 10 | 17.5 (12.6) | 15.7 (9.5) |
 
 The separate `2026-09-03-flash100` sensitivity study added approximately
 97–106 ms to the median library transition. It is an injected SDL delay, not a

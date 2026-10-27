@@ -1142,3 +1142,21 @@ class TestPagingValidation(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestEmulatorDiscovery(unittest.TestCase):
+    def test_env_override_wins(self):
+        import os
+        from scripts import run_benchmarks as rb
+        with patch.dict(os.environ, {"KOREADER_EMULATOR_DIR": "/opt/ko/koreader"}):
+            self.assertEqual(rb._find_koreader_dir(), Path("/opt/ko/koreader"))
+
+    def test_finds_any_host_build_directory(self):
+        import os
+        from scripts import run_benchmarks as rb
+        with tempfile.TemporaryDirectory() as tmp:
+            build = Path(tmp) / "koreader_src" / "koreader-emulator-x86_64-linux-gnu-debug"
+            build.mkdir(parents=True)
+            env = {k: v for k, v in os.environ.items() if k != "KOREADER_EMULATOR_DIR"}
+            with patch.dict(os.environ, env, clear=True), patch.object(rb, "ROOT", Path(tmp)):
+                self.assertEqual(rb._find_koreader_dir(), build / "koreader")
