@@ -47,9 +47,9 @@ section.
   279 ms, open book 98 ms, but a sort change is slower than Stock and
   m1n1mal (see the cover-list cost table). Earlier versions of this README
   credited it with a large lead; that was measured without covers.
-- **SimpleUI** keeps its larger startup and memory cost: restart 431–466 ms,
-  library render 57–66 ms, 66–81 MiB live Lua heap, and about 230 ms to close
-  a book.
+- **SimpleUI** keeps its larger startup and memory cost: restart 409–466 ms,
+  library render 51–66 ms, 66–86 MiB live Lua heap, and about 210–250 ms to close
+  a book (Stock: 29 ms).
 - **ZenOS** restarts in 461 ms and renders the library in 33 ms; its page holds 5
   entries, so paging comparisons are UX-level.
 - **Bookshelf** leaves the normal library close to Stock. In its dedicated shelf,
@@ -59,8 +59,8 @@ section.
   112 ms). On the synthetic FLAT 2000 library its render time is higher (66 versus
   49 ms for v1.4 in the baseline campaign); that is one process per cell and was not
   investigated further. Its new automatic series folders are on by default.
-- **Library paging** is 14–17.5 ms per page for every stack; distributions
-  overlap, so no paging ranking is claimed.
+- **Library paging**: sequential 14.8–17.5 ms per page, cached 12.8–20.8 ms, for
+  every stack; distributions overlap, so no paging ranking is claimed.
 
 ### Cover list cost, and how Project:Title is measured
 
