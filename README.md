@@ -26,7 +26,7 @@ Two different harness setups and several plugin releases changed at once, so thi
 
 - Campaigns of 2026-10-27 (reports with all scenarios): [all stacks, Phase 1](results/runs/2026-10-27-m1n1mal-v3/phase1/REPORT.md) and [Phase 2](results/runs/2026-10-27-m1n1mal-v3/phase2/REPORT.md); [Project:Title with covers](results/runs/2026-10-27-pt-covers/phase2/REPORT.md); [VOS v1.4.1 stacks](results/runs/2026-10-27-vos-141/phase2/REPORT.md); [Bookends control](results/runs/2026-10-27-bookends/phase2/BOOKENDS_REPORT.md). Each row in the tables below comes from the newest campaign that measured it.
 - Earlier (older pins): [2026-09-03 Phase 1](results/runs/2026-09-03-full/phase1/REPORT.md), [Phase 2](results/runs/2026-09-03-full/phase2/REPORT.md), [100 ms flash-delay study](results/runs/2026-09-03-flash100/phase1/REPORT.md)
-- [Campaign runbook](RUNBOOK.md) · [Scenario definitions](SCENARIOS.md)
+- [Campaign runbook](RUNBOOK.md) · [Scenario definitions](SCENARIOS.md) · [Plan: benchmark on a real Kindle](docs/DEVICE_BENCHMARK_PLAN.md)
 
 ## Results at a glance (2026-10-27)
 
