@@ -1,0 +1,22 @@
+{
+  "benchmark_harness_sha256": "02d0ba91801cd3f859bc86b85d2f8a8111f820021cb6b9f25e53a6ed1347f2b5",
+  "campaign": "2026-10-27-pt-covers",
+  "created_or_verified_utc": "2026-10-27T19:41:01.460484+00:00",
+  "emulate_reader_flash_ms": null,
+  "host": {
+    "machine": "arm64",
+    "python": "3.14.9",
+    "release": "27.0.0",
+    "system": "Darwin"
+  },
+  "phase": "phase2",
+  "runner_sha256": "52835e08cfedca44c66327427d0361bd9305c8c62946fb4b1f7b124bb719e4ea",
+  "sdl_video_driver": "dummy",
+  "target": {
+    "dpi": 300,
+    "grayscale": true,
+    "height": 1648,
+    "width": 1236
+  },
+  "versions_lock_sha256": "71c62562577d75d79b6dab0405876eeae7ea19ad7d5db59667c6c9cf1bd57e06"
+}

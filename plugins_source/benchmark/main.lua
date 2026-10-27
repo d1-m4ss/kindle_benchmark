@@ -836,6 +836,13 @@ function Benchmark:runHarness()
         results.effective_config = leanui and leanui.config or { mode = results.effective_library_mode }
         results.effective_density = chooser and chooser.perpage
         results.effective_dpi = Screen:getDPI()
+        local FC = require("ui/widget/filechooser")
+        results.library_probe = {
+            display_mode = G_reader_settings:readSetting("filemanager_display_mode"),
+            cover_build_ui = FC._updateItemsBuildUI ~= nil,
+            do_cover_images = FC._do_cover_images,
+            display_mode_type = FC.display_mode_type,
+        }
     end
 
     if #missing_plugins > 0 or not startup_ready.success then

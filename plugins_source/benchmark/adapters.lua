@@ -433,7 +433,8 @@ function StockAdapter:library_folder_enter()
                 and type(chooser_after.item_table) == "table" then
             return self:ok({ path = self.sample_folder, visible_signature = visible_signature(chooser_after), expected_refresh = true })
         end
-        return self:fail("Folder-enter path/items postcondition failed")
+        return self:fail(string.format("Folder-enter path/items postcondition failed: want=%s got=%s",
+            tostring(self.sample_folder), tostring(chooser_after and chooser_after.path)))
     end)
 end
 
@@ -648,6 +649,23 @@ function BaseAdapter:open_bookshelf()
     local pl = package.loaded["pluginloader"]
     local bs_plugin = pl and pl.loaded_plugins and pl.loaded_plugins["bookshelf"]
     if bs_plugin then
+        -- Paging comparisons use a paginated Home shelf. Newer Bookshelf
+        -- releases default Home to variable-capacity spines, which can fit
+        -- the 50-book validation corpus on one page and make paging
+        -- unsupported. Pin only this benchmark profile to covers, preserving
+        -- every other user/default tab setting.
+        local ok_tabs, TabModel = pcall(require, "lib/bookshelf_tab_model")
+        if ok_tabs and TabModel.load and TabModel.save then
+            local tabs, changed = TabModel.load(), false
+            for _, tab in ipairs(tabs) do
+                if tab.id == "all" and tab.view_mode ~= "covers" then
+                    tab.view_mode = "covers"
+                    changed = true
+                    break
+                end
+            end
+            if changed then TabModel.save(tabs) end
+        end
         if bs_plugin._widget and not UIManager:isWidgetShown(bs_plugin._widget) then
             bs_plugin._widget = nil
         end

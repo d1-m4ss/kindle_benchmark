@@ -112,6 +112,7 @@ PHASE1_CONFIGS = OrderedDict({
     "K_simpleui_vos_bookshelf": ["simpleui", "vos", "bookshelf"],
     "L_project_title_vos": ["project_title", "vos"],
     "M_leanui": ["leanui"],
+    "N_m1n1mal": ["m1n1mal", "pagecount"],
 })
 PHASE2_CONFIGS = OrderedDict({
     "R0_stock": [],
@@ -127,7 +128,9 @@ PHASE2_CONFIGS = OrderedDict({
     "R10_simpleui_vos_bookshelf": ["simpleui", "vos", "bookshelf"],
     "R11_project_title_vos": ["project_title", "vos"],
     "R12_leanui": ["leanui"],
+    "R13_m1n1mal": ["m1n1mal", "pagecount"],
 })
+PLUGIN_SUBPATHS = {name: info.get("plugin_subpath", "") for name, info in VERSIONS["plugins"].items()}
 PLUGIN_DIRS = {name: info["plugin_dir"] for name, info in VERSIONS["plugins"].items()}
 LOADED_PLUGIN_NAMES = {name: info["loaded_name"] for name, info in VERSIONS["plugins"].items()}
 
@@ -305,6 +308,7 @@ def ensure_layout(layout: RunLayout, emulate_reader_flash_ms: int | None = None)
             "python": platform.python_version(),
         },
         "target": {"width": 1236, "height": 1648, "dpi": 300, "grayscale": True},
+        "sdl_video_driver": os.environ.get("SDL_VIDEODRIVER") or "platform_default",
         "emulate_reader_flash_ms": emulate_reader_flash_ms,
         "versions_lock_sha256": sha256_file(lock) if lock.exists() else None,
         "runner_sha256": sha256_file(Path(__file__)),
@@ -314,6 +318,7 @@ def ensure_layout(layout: RunLayout, emulate_reader_flash_ms: int | None = None)
     campaign_identity = {
         "campaign": layout.campaign,
         "created_utc": datetime.now(timezone.utc).isoformat(),
+        "sdl_video_driver": metadata["sdl_video_driver"],
         "emulate_reader_flash_ms": emulate_reader_flash_ms,
         "versions_lock_sha256": metadata["versions_lock_sha256"],
         "runner_sha256": metadata["runner_sha256"],
@@ -321,7 +326,7 @@ def ensure_layout(layout: RunLayout, emulate_reader_flash_ms: int | None = None)
     }
     if campaign_file.exists():
         existing_campaign = json.loads(campaign_file.read_text())
-        for key in ("campaign", "emulate_reader_flash_ms", "versions_lock_sha256", "runner_sha256", "benchmark_harness_sha256"):
+        for key in ("campaign", "sdl_video_driver", "emulate_reader_flash_ms", "versions_lock_sha256", "runner_sha256", "benchmark_harness_sha256"):
             if existing_campaign.get(key) != campaign_identity.get(key):
                 raise RuntimeError(f"campaign identity changed for {key}; start a new campaign")
         campaign_identity = existing_campaign
@@ -373,7 +378,7 @@ def setup_isolated_home(job: Job) -> Path:
     plugins_dir = home / "plugins"
     plugins_dir.mkdir(parents=True, exist_ok=True)
     links = {"benchmark.koplugin": PLUGINS_SRC / "benchmark"}
-    links.update({PLUGIN_DIRS[name]: PLUGINS_SRC / name for name in job.plugins})
+    links.update({PLUGIN_DIRS[name]: PLUGINS_SRC / name / PLUGIN_SUBPATHS[name] for name in job.plugins})
     if 'leanui' in job.plugins and job.leanui_source:
         links[PLUGIN_DIRS['leanui']] = Path(job.leanui_source)
     for link_name, source in links.items():
@@ -385,7 +390,14 @@ def setup_isolated_home(job: Job) -> Path:
     settings_file = home / "settings.reader.lua"
     if not settings_file.exists():
         plugins_disabled_str = '        ["coverbrowser"] = true,\n' if ("project_title" in job.plugins or "leanui" in job.plugins) else ''
-        pt_setup_str = '    ["aaaProjectTitle_initial_default_setup_done2"] = true,\n' if "project_title" in job.plugins else ''
+        # Project:Title's first-run setup (which switches the library to its
+        # cover list) must run: pre-marking it done left the stack measured in
+        # the plain list, without covers. The runner already performs the
+        # supported restart (exit 85) outside the measured process.
+        pt_setup_str = ''
+        # SimpleUI >= 3.0 defaults to the FileManager; earlier campaigns measured
+        # it starting on its Home Screen, so pin that explicitly.
+        start_with_str = '    ["start_with"] = "homescreen_simpleui",\n' if "simpleui" in job.plugins else ''
         leanui_settings_str = (
             '    ["leanui_settings"] = {\n'
             '        ["enabled"] = true,\n'
@@ -408,6 +420,7 @@ def setup_isolated_home(job: Job) -> Path:
             f'{plugins_disabled_str}'
             '    },\n'
             f'{pt_setup_str}'
+            f'{start_with_str}'
             f'{leanui_settings_str}'
             '}\n'
         )
@@ -986,8 +999,10 @@ def run_job(job: Job, layout: RunLayout, environment: dict, *, resume: bool = Tr
     targets_file = home / "benchmark_targets.json"
     write_deterministic_targets(Path(job.library_dir), targets_file)
     is_darwin = sys.platform == "darwin"
-    emu_w = "618" if is_darwin else "1236"
-    emu_h = "824" if is_darwin else "1648"
+    headless = os.environ.get("SDL_VIDEODRIVER") == "dummy"
+    # Cocoa gets a 2x Retina render target from a half-size window. The SDL
+    # dummy driver has no display scaling, so request the target pixel size.
+    emu_w, emu_h = ("618", "824") if is_darwin and not headless else ("1236", "1648")
     screenshot_dir = layout.screenshots / job.run_id
     screenshot_dir.mkdir(parents=True, exist_ok=True)
     env = os.environ.copy()
@@ -1159,7 +1174,7 @@ def validation_jobs(campaign: str) -> list[Job]:
 def phase1_blocks(campaign: str, first_runs: int = 3, steady_runs: int = 3) -> OrderedDict[str, list[Job]]:
     blocks: OrderedDict[str, list[Job]] = OrderedDict()
     corpora = (("flat", 50), ("flat", 2000), ("hierarchical", 50), ("hierarchical", 2000))
-    primary_first = {"A_stock", "B_bookshelf", "C_simpleui", "D_zenos", "J_project_title_vos", "M_leanui"}
+    primary_first = {"A_stock", "B_bookshelf", "C_simpleui", "D_zenos", "J_project_title_vos", "M_leanui", "N_m1n1mal"}
     large_library = str(ROOT / "libraries" / "hierarchical" / "books_2000")
 
     for config, plugins in PHASE1_CONFIGS.items():
@@ -1605,7 +1620,8 @@ def ensure_paging_phase1_complete(campaign: str, process_runs: int,
 
 
 def ensure_phase1_complete(campaign: str, first_runs: int, steady_runs: int,
-                           emulate_reader_flash_ms: int | None = None) -> None:
+                           emulate_reader_flash_ms: int | None = None,
+                           configs: set[str] | None = None) -> None:
     layout = make_layout(campaign, "phase1")
     validation = validation_jobs(campaign)
     phase1 = phase1_blocks(campaign, first_runs, steady_runs)
@@ -1618,6 +1634,12 @@ def ensure_phase1_complete(campaign: str, first_runs: int, steady_runs: int,
     if not block_checkpoint_valid(layout, "smoke_gate", validation):
         raise RuntimeError("Phase 1 smoke_gate checkpoint is missing or invalid")
     for block, jobs in phase1.items():
+        if configs is not None:
+            # A --configs campaign only measures the named configs, so only
+            # their Phase 1 blocks gate Phase 2.
+            jobs = [job for job in jobs if job.config in configs]
+            if not jobs:
+                continue
         if not block_checkpoint_valid(layout, block, jobs):
             raise RuntimeError(f"Phase 1 block checkpoint is missing or invalid: {block}")
 
@@ -1806,7 +1828,8 @@ def main() -> int:
         if args.batch == "3":
             blocks = bookends_blocks(args.campaign)
             if not args.dry_run and not args.prepare_only:
-                ensure_phase1_complete(args.campaign, args.first_runs, args.steady_runs, args.emulate_reader_flash_ms)
+                ensure_phase1_complete(args.campaign, args.first_runs, args.steady_runs, args.emulate_reader_flash_ms,
+                                       {c.strip() for c in args.configs.split(",")} if args.configs else None)
                 expected_phase2 = phase2_blocks(args.campaign, args.steady_runs)
                 if args.emulate_reader_flash_ms is not None:
                     expected_phase2 = OrderedDict(
@@ -1818,7 +1841,8 @@ def main() -> int:
                         raise RuntimeError(f"Phase 2 block checkpoint is missing or invalid: {block}")
         else:
             if not args.dry_run and not args.prepare_only:
-                ensure_phase1_complete(args.campaign, args.first_runs, args.steady_runs, args.emulate_reader_flash_ms)
+                ensure_phase1_complete(args.campaign, args.first_runs, args.steady_runs, args.emulate_reader_flash_ms,
+                                       {c.strip() for c in args.configs.split(",")} if args.configs else None)
             blocks = select_blocks(phase2_blocks(args.campaign, args.steady_runs), "phase2", args.batch)
     else:
         if args.batch not in {"3", "all"}:

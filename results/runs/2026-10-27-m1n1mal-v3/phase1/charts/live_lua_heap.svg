@@ -1,0 +1,280 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="6370" height="520" viewBox="0 0 6370 520">
+<rect width="100%" height="100%" fill="white"/>
+<text x="3185.0" y="28" text-anchor="middle" font-family="sans-serif" font-size="18">Forced-GC live Lua heap</text>
+<text x="18" y="212.5" transform="rotate(-90 18 212.5)" text-anchor="middle" font-family="sans-serif" font-size="12">KiB</text>
+<line x1="70" y1="55" x2="70" y2="370" stroke="black"/>
+<line x1="70" y1="370" x2="6350" y2="370" stroke="black"/>
+<rect x="80.35" y="281.73" width="48.31" height="88.27" fill="#3978b5"/>
+<text x="104.51" y="277.73" text-anchor="middle" font-family="sans-serif" font-size="9">8506.24</text>
+<text x="104.51" y="382" transform="rotate(55 104.51 382)" text-anchor="start" font-family="sans-serif" font-size="9">A_stock memory:post_library_render_idle</text>
+<rect x="149.36" y="284.78" width="48.31" height="85.22" fill="#3978b5"/>
+<text x="173.52" y="280.78" text-anchor="middle" font-family="sans-serif" font-size="9">8211.57</text>
+<text x="173.52" y="382" transform="rotate(55 173.52 382)" text-anchor="start" font-family="sans-serif" font-size="9">A_stock memory:post_library_render_idle</text>
+<rect x="218.37" y="63.29" width="48.31" height="306.71" fill="#3978b5"/>
+<text x="242.53" y="59.29" text-anchor="middle" font-family="sans-serif" font-size="9">29555.47</text>
+<text x="242.53" y="382" transform="rotate(55 242.53 382)" text-anchor="start" font-family="sans-serif" font-size="9">A_stock memory:post_library_render_idle</text>
+<rect x="287.38" y="97.61" width="48.31" height="272.39" fill="#3978b5"/>
+<text x="311.54" y="93.61" text-anchor="middle" font-family="sans-serif" font-size="9">26248.67</text>
+<text x="311.54" y="382" transform="rotate(55 311.54 382)" text-anchor="start" font-family="sans-serif" font-size="9">A_stock memory:post_library_render_idle</text>
+<rect x="356.40" y="283.55" width="48.31" height="86.45" fill="#3978b5"/>
+<text x="380.55" y="279.55" text-anchor="middle" font-family="sans-serif" font-size="9">8330.78</text>
+<text x="380.55" y="382" transform="rotate(55 380.55 382)" text-anchor="start" font-family="sans-serif" font-size="9">A_stock memory:post_library_render_idle</text>
+<rect x="425.41" y="283.79" width="48.31" height="86.21" fill="#3978b5"/>
+<text x="449.56" y="279.79" text-anchor="middle" font-family="sans-serif" font-size="9">8307.39</text>
+<text x="449.56" y="382" transform="rotate(55 449.56 382)" text-anchor="start" font-family="sans-serif" font-size="9">A_stock memory:post_library_render_idle</text>
+<rect x="494.42" y="276.68" width="48.31" height="93.32" fill="#3978b5"/>
+<text x="518.57" y="272.68" text-anchor="middle" font-family="sans-serif" font-size="9">8992.73</text>
+<text x="518.57" y="382" transform="rotate(55 518.57 382)" text-anchor="start" font-family="sans-serif" font-size="9">B_bookshelf memory:post_library_render_idle</text>
+<rect x="563.43" y="279.61" width="48.31" height="90.39" fill="#3978b5"/>
+<text x="587.58" y="275.61" text-anchor="middle" font-family="sans-serif" font-size="9">8710.32</text>
+<text x="587.58" y="382" transform="rotate(55 587.58 382)" text-anchor="start" font-family="sans-serif" font-size="9">B_bookshelf memory:post_library_render_idle</text>
+<rect x="632.44" y="58.64" width="48.31" height="311.36" fill="#3978b5"/>
+<text x="656.59" y="54.64" text-anchor="middle" font-family="sans-serif" font-size="9">30003.32</text>
+<text x="656.59" y="382" transform="rotate(55 656.59 382)" text-anchor="start" font-family="sans-serif" font-size="9">B_bookshelf memory:post_library_render_idle</text>
+<rect x="701.45" y="87.92" width="48.31" height="282.08" fill="#3978b5"/>
+<text x="725.60" y="83.92" text-anchor="middle" font-family="sans-serif" font-size="9">27181.78</text>
+<text x="725.60" y="382" transform="rotate(55 725.60 382)" text-anchor="start" font-family="sans-serif" font-size="9">B_bookshelf memory:post_library_render_idle</text>
+<rect x="770.46" y="278.95" width="48.31" height="91.05" fill="#3978b5"/>
+<text x="794.62" y="274.95" text-anchor="middle" font-family="sans-serif" font-size="9">8774.04</text>
+<text x="794.62" y="382" transform="rotate(55 794.62 382)" text-anchor="start" font-family="sans-serif" font-size="9">B_bookshelf memory:post_library_render_idle</text>
+<rect x="839.47" y="278.45" width="48.31" height="91.55" fill="#3978b5"/>
+<text x="863.63" y="274.45" text-anchor="middle" font-family="sans-serif" font-size="9">8822.31</text>
+<text x="863.63" y="382" transform="rotate(55 863.63 382)" text-anchor="start" font-family="sans-serif" font-size="9">B_bookshelf memory:post_library_render_idle</text>
+<rect x="908.48" y="222.63" width="48.31" height="147.37" fill="#3978b5"/>
+<text x="932.64" y="218.63" text-anchor="middle" font-family="sans-serif" font-size="9">14200.78</text>
+<text x="932.64" y="382" transform="rotate(55 932.64 382)" text-anchor="start" font-family="sans-serif" font-size="9">C_simpleui memory:post_library_render_idle</text>
+<rect x="977.49" y="222.55" width="48.31" height="147.45" fill="#3978b5"/>
+<text x="1001.65" y="218.55" text-anchor="middle" font-family="sans-serif" font-size="9">14208.68</text>
+<text x="1001.65" y="382" transform="rotate(55 1001.65 382)" text-anchor="start" font-family="sans-serif" font-size="9">C_simpleui memory:post_library_render_idle</text>
+<rect x="1046.51" y="106.76" width="48.31" height="263.24" fill="#3978b5"/>
+<text x="1070.66" y="102.76" text-anchor="middle" font-family="sans-serif" font-size="9">25366.46</text>
+<text x="1070.66" y="382" transform="rotate(55 1070.66 382)" text-anchor="start" font-family="sans-serif" font-size="9">C_simpleui memory:post_library_render_idle</text>
+<rect x="1115.52" y="184.88" width="48.31" height="185.12" fill="#3978b5"/>
+<text x="1139.67" y="180.88" text-anchor="middle" font-family="sans-serif" font-size="9">17838.84</text>
+<text x="1139.67" y="382" transform="rotate(55 1139.67 382)" text-anchor="start" font-family="sans-serif" font-size="9">C_simpleui memory:post_library_render_idle</text>
+<rect x="1184.53" y="221.00" width="48.31" height="149.00" fill="#3978b5"/>
+<text x="1208.68" y="217.00" text-anchor="middle" font-family="sans-serif" font-size="9">14358.26</text>
+<text x="1208.68" y="382" transform="rotate(55 1208.68 382)" text-anchor="start" font-family="sans-serif" font-size="9">C_simpleui memory:post_library_render_idle</text>
+<rect x="1253.54" y="221.44" width="48.31" height="148.56" fill="#3978b5"/>
+<text x="1277.69" y="217.44" text-anchor="middle" font-family="sans-serif" font-size="9">14315.54</text>
+<text x="1277.69" y="382" transform="rotate(55 1277.69 382)" text-anchor="start" font-family="sans-serif" font-size="9">C_simpleui memory:post_library_render_idle</text>
+<rect x="1322.55" y="208.41" width="48.31" height="161.59" fill="#3978b5"/>
+<text x="1346.70" y="204.41" text-anchor="middle" font-family="sans-serif" font-size="9">15571.68</text>
+<text x="1346.70" y="382" transform="rotate(55 1346.70 382)" text-anchor="start" font-family="sans-serif" font-size="9">D_zenos memory:post_library_render_idle</text>
+<rect x="1391.56" y="211.99" width="48.31" height="158.01" fill="#3978b5"/>
+<text x="1415.71" y="207.99" text-anchor="middle" font-family="sans-serif" font-size="9">15226.68</text>
+<text x="1415.71" y="382" transform="rotate(55 1415.71 382)" text-anchor="start" font-family="sans-serif" font-size="9">D_zenos memory:post_library_render_idle</text>
+<rect x="1460.57" y="134.21" width="48.31" height="235.79" fill="#3978b5"/>
+<text x="1484.73" y="130.21" text-anchor="middle" font-family="sans-serif" font-size="9">22721.84</text>
+<text x="1484.73" y="382" transform="rotate(55 1484.73 382)" text-anchor="start" font-family="sans-serif" font-size="9">D_zenos memory:post_library_render_idle</text>
+<rect x="1529.58" y="189.62" width="48.31" height="180.38" fill="#3978b5"/>
+<text x="1553.74" y="185.62" text-anchor="middle" font-family="sans-serif" font-size="9">17381.59</text>
+<text x="1553.74" y="382" transform="rotate(55 1553.74 382)" text-anchor="start" font-family="sans-serif" font-size="9">D_zenos memory:post_library_render_idle</text>
+<rect x="1598.59" y="198.27" width="48.31" height="171.73" fill="#3978b5"/>
+<text x="1622.75" y="194.27" text-anchor="middle" font-family="sans-serif" font-size="9">16548.24</text>
+<text x="1622.75" y="382" transform="rotate(55 1622.75 382)" text-anchor="start" font-family="sans-serif" font-size="9">D_zenos memory:post_library_render_idle</text>
+<rect x="1667.60" y="215.68" width="48.31" height="154.32" fill="#3978b5"/>
+<text x="1691.76" y="211.68" text-anchor="middle" font-family="sans-serif" font-size="9">14871.00</text>
+<text x="1691.76" y="382" transform="rotate(55 1691.76 382)" text-anchor="start" font-family="sans-serif" font-size="9">D_zenos memory:post_library_render_idle</text>
+<rect x="1736.62" y="284.16" width="48.31" height="85.84" fill="#3978b5"/>
+<text x="1760.77" y="280.16" text-anchor="middle" font-family="sans-serif" font-size="9">8271.86</text>
+<text x="1760.77" y="382" transform="rotate(55 1760.77 382)" text-anchor="start" font-family="sans-serif" font-size="9">E_project_title memory:post_library_render_idle</text>
+<rect x="1805.63" y="254.38" width="48.31" height="115.62" fill="#3978b5"/>
+<text x="1829.78" y="250.38" text-anchor="middle" font-family="sans-serif" font-size="9">11141.54</text>
+<text x="1829.78" y="382" transform="rotate(55 1829.78 382)" text-anchor="start" font-family="sans-serif" font-size="9">E_project_title memory:post_library_render_idle</text>
+<rect x="1874.64" y="277.50" width="48.31" height="92.50" fill="#3978b5"/>
+<text x="1898.79" y="273.50" text-anchor="middle" font-family="sans-serif" font-size="9">8913.46</text>
+<text x="1898.79" y="382" transform="rotate(55 1898.79 382)" text-anchor="start" font-family="sans-serif" font-size="9">E_project_title memory:post_library_render_idle</text>
+<rect x="1943.65" y="282.70" width="48.31" height="87.30" fill="#3978b5"/>
+<text x="1967.80" y="278.70" text-anchor="middle" font-family="sans-serif" font-size="9">8412.19</text>
+<text x="1967.80" y="382" transform="rotate(55 1967.80 382)" text-anchor="start" font-family="sans-serif" font-size="9">E_project_title memory:post_library_render_idle</text>
+<rect x="2012.66" y="283.22" width="48.31" height="86.78" fill="#3978b5"/>
+<text x="2036.81" y="279.22" text-anchor="middle" font-family="sans-serif" font-size="9">8362.58</text>
+<text x="2036.81" y="382" transform="rotate(55 2036.81 382)" text-anchor="start" font-family="sans-serif" font-size="9">E_project_title memory:post_library_render_idle</text>
+<rect x="2081.67" y="277.16" width="48.31" height="92.84" fill="#3978b5"/>
+<text x="2105.82" y="273.16" text-anchor="middle" font-family="sans-serif" font-size="9">8946.35</text>
+<text x="2105.82" y="382" transform="rotate(55 2105.82 382)" text-anchor="start" font-family="sans-serif" font-size="9">F_vos memory:post_library_render_idle</text>
+<rect x="2150.68" y="152.86" width="48.31" height="217.14" fill="#3978b5"/>
+<text x="2174.84" y="148.86" text-anchor="middle" font-family="sans-serif" font-size="9">20924.14</text>
+<text x="2174.84" y="382" transform="rotate(55 2174.84 382)" text-anchor="start" font-family="sans-serif" font-size="9">F_vos memory:post_library_render_idle</text>
+<rect x="2219.69" y="87.21" width="48.31" height="282.79" fill="#3978b5"/>
+<text x="2243.85" y="83.21" text-anchor="middle" font-family="sans-serif" font-size="9">27250.02</text>
+<text x="2243.85" y="382" transform="rotate(55 2243.85 382)" text-anchor="start" font-family="sans-serif" font-size="9">F_vos memory:post_library_render_idle</text>
+<rect x="2288.70" y="276.97" width="48.31" height="93.03" fill="#3978b5"/>
+<text x="2312.86" y="272.97" text-anchor="middle" font-family="sans-serif" font-size="9">8965.04</text>
+<text x="2312.86" y="382" transform="rotate(55 2312.86 382)" text-anchor="start" font-family="sans-serif" font-size="9">F_vos memory:post_library_render_idle</text>
+<rect x="2357.71" y="276.49" width="48.31" height="93.51" fill="#3978b5"/>
+<text x="2381.87" y="272.49" text-anchor="middle" font-family="sans-serif" font-size="9">9010.66</text>
+<text x="2381.87" y="382" transform="rotate(55 2381.87 382)" text-anchor="start" font-family="sans-serif" font-size="9">F_vos memory:post_library_render_idle</text>
+<rect x="2426.73" y="218.56" width="48.31" height="151.44" fill="#3978b5"/>
+<text x="2450.88" y="214.56" text-anchor="middle" font-family="sans-serif" font-size="9">14593.33</text>
+<text x="2450.88" y="382" transform="rotate(55 2450.88 382)" text-anchor="start" font-family="sans-serif" font-size="9">G_simpleui_bookshelf memory:post_library_render_idle</text>
+<rect x="2495.74" y="83.06" width="48.31" height="286.94" fill="#3978b5"/>
+<text x="2519.89" y="79.06" text-anchor="middle" font-family="sans-serif" font-size="9">27650.43</text>
+<text x="2519.89" y="382" transform="rotate(55 2519.89 382)" text-anchor="start" font-family="sans-serif" font-size="9">G_simpleui_bookshelf memory:post_library_render_idle</text>
+<rect x="2564.75" y="178.94" width="48.31" height="191.06" fill="#3978b5"/>
+<text x="2588.90" y="174.94" text-anchor="middle" font-family="sans-serif" font-size="9">18411.51</text>
+<text x="2588.90" y="382" transform="rotate(55 2588.90 382)" text-anchor="start" font-family="sans-serif" font-size="9">G_simpleui_bookshelf memory:post_library_render_idle</text>
+<rect x="2633.76" y="216.68" width="48.31" height="153.32" fill="#3978b5"/>
+<text x="2657.91" y="212.68" text-anchor="middle" font-family="sans-serif" font-size="9">14774.48</text>
+<text x="2657.91" y="382" transform="rotate(55 2657.91 382)" text-anchor="start" font-family="sans-serif" font-size="9">G_simpleui_bookshelf memory:post_library_render_idle</text>
+<rect x="2702.77" y="216.39" width="48.31" height="153.61" fill="#3978b5"/>
+<text x="2726.92" y="212.39" text-anchor="middle" font-family="sans-serif" font-size="9">14802.09</text>
+<text x="2726.92" y="382" transform="rotate(55 2726.92 382)" text-anchor="start" font-family="sans-serif" font-size="9">G_simpleui_bookshelf memory:post_library_render_idle</text>
+<rect x="2771.78" y="206.78" width="48.31" height="163.22" fill="#3978b5"/>
+<text x="2795.93" y="202.78" text-anchor="middle" font-family="sans-serif" font-size="9">15728.77</text>
+<text x="2795.93" y="382" transform="rotate(55 2795.93 382)" text-anchor="start" font-family="sans-serif" font-size="9">H_zenos_bookshelf memory:post_library_render_idle</text>
+<rect x="2840.79" y="127.80" width="48.31" height="242.20" fill="#3978b5"/>
+<text x="2864.95" y="123.80" text-anchor="middle" font-family="sans-serif" font-size="9">23339.18</text>
+<text x="2864.95" y="382" transform="rotate(55 2864.95 382)" text-anchor="start" font-family="sans-serif" font-size="9">H_zenos_bookshelf memory:post_library_render_idle</text>
+<rect x="2909.80" y="181.62" width="48.31" height="188.38" fill="#3978b5"/>
+<text x="2933.96" y="177.62" text-anchor="middle" font-family="sans-serif" font-size="9">18152.80</text>
+<text x="2933.96" y="382" transform="rotate(55 2933.96 382)" text-anchor="start" font-family="sans-serif" font-size="9">H_zenos_bookshelf memory:post_library_render_idle</text>
+<rect x="2978.81" y="193.12" width="48.31" height="176.88" fill="#3978b5"/>
+<text x="3002.97" y="189.12" text-anchor="middle" font-family="sans-serif" font-size="9">17044.32</text>
+<text x="3002.97" y="382" transform="rotate(55 3002.97 382)" text-anchor="start" font-family="sans-serif" font-size="9">H_zenos_bookshelf memory:post_library_render_idle</text>
+<rect x="3047.82" y="210.16" width="48.31" height="159.84" fill="#3978b5"/>
+<text x="3071.98" y="206.16" text-anchor="middle" font-family="sans-serif" font-size="9">15402.38</text>
+<text x="3071.98" y="382" transform="rotate(55 3071.98 382)" text-anchor="start" font-family="sans-serif" font-size="9">H_zenos_bookshelf memory:post_library_render_idle</text>
+<rect x="3116.84" y="272.87" width="48.31" height="97.13" fill="#3978b5"/>
+<text x="3140.99" y="268.87" text-anchor="middle" font-family="sans-serif" font-size="9">9359.34</text>
+<text x="3140.99" y="382" transform="rotate(55 3140.99 382)" text-anchor="start" font-family="sans-serif" font-size="9">I_vos_bookshelf memory:post_library_render_idle</text>
+<rect x="3185.85" y="164.25" width="48.31" height="205.75" fill="#3978b5"/>
+<text x="3210.00" y="160.25" text-anchor="middle" font-family="sans-serif" font-size="9">19826.45</text>
+<text x="3210.00" y="382" transform="rotate(55 3210.00 382)" text-anchor="start" font-family="sans-serif" font-size="9">I_vos_bookshelf memory:post_library_render_idle</text>
+<rect x="3254.86" y="55.00" width="48.31" height="315.00" fill="#3978b5"/>
+<text x="3279.01" y="51.00" text-anchor="middle" font-family="sans-serif" font-size="9">30354.30</text>
+<text x="3279.01" y="382" transform="rotate(55 3279.01 382)" text-anchor="start" font-family="sans-serif" font-size="9">I_vos_bookshelf memory:post_library_render_idle</text>
+<rect x="3323.87" y="271.28" width="48.31" height="98.72" fill="#3978b5"/>
+<text x="3348.02" y="267.28" text-anchor="middle" font-family="sans-serif" font-size="9">9513.35</text>
+<text x="3348.02" y="382" transform="rotate(55 3348.02 382)" text-anchor="start" font-family="sans-serif" font-size="9">I_vos_bookshelf memory:post_library_render_idle</text>
+<rect x="3392.88" y="271.58" width="48.31" height="98.42" fill="#3978b5"/>
+<text x="3417.03" y="267.58" text-anchor="middle" font-family="sans-serif" font-size="9">9484.08</text>
+<text x="3417.03" y="382" transform="rotate(55 3417.03 382)" text-anchor="start" font-family="sans-serif" font-size="9">I_vos_bookshelf memory:post_library_render_idle</text>
+<rect x="3461.89" y="217.79" width="48.31" height="152.21" fill="#3978b5"/>
+<text x="3486.04" y="213.79" text-anchor="middle" font-family="sans-serif" font-size="9">14666.97</text>
+<text x="3486.04" y="382" transform="rotate(55 3486.04 382)" text-anchor="start" font-family="sans-serif" font-size="9">J_simpleui_vos memory:post_library_render_idle</text>
+<rect x="3530.90" y="155.47" width="48.31" height="214.53" fill="#3978b5"/>
+<text x="3555.05" y="151.47" text-anchor="middle" font-family="sans-serif" font-size="9">20672.65</text>
+<text x="3555.05" y="382" transform="rotate(55 3555.05 382)" text-anchor="start" font-family="sans-serif" font-size="9">J_simpleui_vos memory:post_library_render_idle</text>
+<rect x="3599.91" y="203.24" width="48.31" height="166.76" fill="#3978b5"/>
+<text x="3624.07" y="199.24" text-anchor="middle" font-family="sans-serif" font-size="9">16069.49</text>
+<text x="3624.07" y="382" transform="rotate(55 3624.07 382)" text-anchor="start" font-family="sans-serif" font-size="9">J_simpleui_vos memory:post_library_render_idle</text>
+<rect x="3668.92" y="215.50" width="48.31" height="154.50" fill="#3978b5"/>
+<text x="3693.08" y="211.50" text-anchor="middle" font-family="sans-serif" font-size="9">14888.50</text>
+<text x="3693.08" y="382" transform="rotate(55 3693.08 382)" text-anchor="start" font-family="sans-serif" font-size="9">J_simpleui_vos memory:post_library_render_idle</text>
+<rect x="3737.93" y="215.62" width="48.31" height="154.38" fill="#3978b5"/>
+<text x="3762.09" y="211.62" text-anchor="middle" font-family="sans-serif" font-size="9">14876.90</text>
+<text x="3762.09" y="382" transform="rotate(55 3762.09 382)" text-anchor="start" font-family="sans-serif" font-size="9">J_simpleui_vos memory:post_library_render_idle</text>
+<rect x="3806.95" y="213.19" width="48.31" height="156.81" fill="#3978b5"/>
+<text x="3831.10" y="209.19" text-anchor="middle" font-family="sans-serif" font-size="9">15110.70</text>
+<text x="3831.10" y="382" transform="rotate(55 3831.10 382)" text-anchor="start" font-family="sans-serif" font-size="9">K_simpleui_vos_bookshelf memory:post_library_render_idle</text>
+<rect x="3875.96" y="149.95" width="48.31" height="220.05" fill="#3978b5"/>
+<text x="3900.11" y="145.95" text-anchor="middle" font-family="sans-serif" font-size="9">21204.72</text>
+<text x="3900.11" y="382" transform="rotate(55 3900.11 382)" text-anchor="start" font-family="sans-serif" font-size="9">K_simpleui_vos_bookshelf memory:post_library_render_idle</text>
+<rect x="3944.97" y="200.35" width="48.31" height="169.65" fill="#3978b5"/>
+<text x="3969.12" y="196.35" text-anchor="middle" font-family="sans-serif" font-size="9">16348.00</text>
+<text x="3969.12" y="382" transform="rotate(55 3969.12 382)" text-anchor="start" font-family="sans-serif" font-size="9">K_simpleui_vos_bookshelf memory:post_library_render_idle</text>
+<rect x="4013.98" y="209.83" width="48.31" height="160.17" fill="#3978b5"/>
+<text x="4038.13" y="205.83" text-anchor="middle" font-family="sans-serif" font-size="9">15434.37</text>
+<text x="4038.13" y="382" transform="rotate(55 4038.13 382)" text-anchor="start" font-family="sans-serif" font-size="9">K_simpleui_vos_bookshelf memory:post_library_render_idle</text>
+<rect x="4082.99" y="210.23" width="48.31" height="159.77" fill="#3978b5"/>
+<text x="4107.14" y="206.23" text-anchor="middle" font-family="sans-serif" font-size="9">15395.81</text>
+<text x="4107.14" y="382" transform="rotate(55 4107.14 382)" text-anchor="start" font-family="sans-serif" font-size="9">K_simpleui_vos_bookshelf memory:post_library_render_idle</text>
+<rect x="4152.00" y="277.25" width="48.31" height="92.75" fill="#3978b5"/>
+<text x="4176.15" y="273.25" text-anchor="middle" font-family="sans-serif" font-size="9">8937.70</text>
+<text x="4176.15" y="382" transform="rotate(55 4176.15 382)" text-anchor="start" font-family="sans-serif" font-size="9">K_vos memory:post_library_render_idle</text>
+<rect x="4221.01" y="275.77" width="48.31" height="94.23" fill="#3978b5"/>
+<text x="4245.16" y="271.77" text-anchor="middle" font-family="sans-serif" font-size="9">9079.98</text>
+<text x="4245.16" y="382" transform="rotate(55 4245.16 382)" text-anchor="start" font-family="sans-serif" font-size="9">L_project_title_vos memory:post_library_render_idle</text>
+<rect x="4290.02" y="245.30" width="48.31" height="124.70" fill="#3978b5"/>
+<text x="4314.18" y="241.30" text-anchor="middle" font-family="sans-serif" font-size="9">12015.97</text>
+<text x="4314.18" y="382" transform="rotate(55 4314.18 382)" text-anchor="start" font-family="sans-serif" font-size="9">L_project_title_vos memory:post_library_render_idle</text>
+<rect x="4359.03" y="269.55" width="48.31" height="100.45" fill="#3978b5"/>
+<text x="4383.19" y="265.55" text-anchor="middle" font-family="sans-serif" font-size="9">9679.78</text>
+<text x="4383.19" y="382" transform="rotate(55 4383.19 382)" text-anchor="start" font-family="sans-serif" font-size="9">L_project_title_vos memory:post_library_render_idle</text>
+<rect x="4428.04" y="275.96" width="48.31" height="94.04" fill="#3978b5"/>
+<text x="4452.20" y="271.96" text-anchor="middle" font-family="sans-serif" font-size="9">9061.65</text>
+<text x="4452.20" y="382" transform="rotate(55 4452.20 382)" text-anchor="start" font-family="sans-serif" font-size="9">L_project_title_vos memory:post_library_render_idle</text>
+<rect x="4497.05" y="275.93" width="48.31" height="94.07" fill="#3978b5"/>
+<text x="4521.21" y="271.93" text-anchor="middle" font-family="sans-serif" font-size="9">9064.81</text>
+<text x="4521.21" y="382" transform="rotate(55 4521.21 382)" text-anchor="start" font-family="sans-serif" font-size="9">L_project_title_vos memory:post_library_render_idle</text>
+<rect x="4566.07" y="264.02" width="48.31" height="105.98" fill="#3978b5"/>
+<text x="4590.22" y="260.02" text-anchor="middle" font-family="sans-serif" font-size="9">10213.00</text>
+<text x="4590.22" y="382" transform="rotate(55 4590.22 382)" text-anchor="start" font-family="sans-serif" font-size="9">M_leanui memory:post_library_render_idle</text>
+<rect x="4635.08" y="264.37" width="48.31" height="105.63" fill="#3978b5"/>
+<text x="4659.23" y="260.37" text-anchor="middle" font-family="sans-serif" font-size="9">10179.15</text>
+<text x="4659.23" y="382" transform="rotate(55 4659.23 382)" text-anchor="start" font-family="sans-serif" font-size="9">M_leanui memory:post_library_render_idle</text>
+<rect x="4704.09" y="232.63" width="48.31" height="137.37" fill="#3978b5"/>
+<text x="4728.24" y="228.63" text-anchor="middle" font-family="sans-serif" font-size="9">13237.51</text>
+<text x="4728.24" y="382" transform="rotate(55 4728.24 382)" text-anchor="start" font-family="sans-serif" font-size="9">M_leanui memory:post_library_render_idle</text>
+<rect x="4773.10" y="254.44" width="48.31" height="115.56" fill="#3978b5"/>
+<text x="4797.25" y="250.44" text-anchor="middle" font-family="sans-serif" font-size="9">11135.47</text>
+<text x="4797.25" y="382" transform="rotate(55 4797.25 382)" text-anchor="start" font-family="sans-serif" font-size="9">M_leanui memory:post_library_render_idle</text>
+<rect x="4842.11" y="263.31" width="48.31" height="106.69" fill="#3978b5"/>
+<text x="4866.26" y="259.31" text-anchor="middle" font-family="sans-serif" font-size="9">10281.09</text>
+<text x="4866.26" y="382" transform="rotate(55 4866.26 382)" text-anchor="start" font-family="sans-serif" font-size="9">M_leanui memory:post_library_render_idle</text>
+<rect x="4911.12" y="263.42" width="48.31" height="106.58" fill="#3978b5"/>
+<text x="4935.27" y="259.42" text-anchor="middle" font-family="sans-serif" font-size="9">10269.95</text>
+<text x="4935.27" y="382" transform="rotate(55 4935.27 382)" text-anchor="start" font-family="sans-serif" font-size="9">M_leanui memory:post_library_render_idle</text>
+<rect x="4980.13" y="280.62" width="48.31" height="89.38" fill="#3978b5"/>
+<text x="5004.29" y="276.62" text-anchor="middle" font-family="sans-serif" font-size="9">8612.70</text>
+<text x="5004.29" y="382" transform="rotate(55 5004.29 382)" text-anchor="start" font-family="sans-serif" font-size="9">N_m1n1mal memory:post_library_render_idle</text>
+<rect x="5049.14" y="282.83" width="48.31" height="87.17" fill="#3978b5"/>
+<text x="5073.30" y="278.83" text-anchor="middle" font-family="sans-serif" font-size="9">8399.53</text>
+<text x="5073.30" y="382" transform="rotate(55 5073.30 382)" text-anchor="start" font-family="sans-serif" font-size="9">N_m1n1mal memory:post_library_render_idle</text>
+<rect x="5118.15" y="65.68" width="48.31" height="304.32" fill="#3978b5"/>
+<text x="5142.31" y="61.68" text-anchor="middle" font-family="sans-serif" font-size="9">29324.82</text>
+<text x="5142.31" y="382" transform="rotate(55 5142.31 382)" text-anchor="start" font-family="sans-serif" font-size="9">N_m1n1mal memory:post_library_render_idle</text>
+<rect x="5187.16" y="102.82" width="48.31" height="267.18" fill="#3978b5"/>
+<text x="5211.32" y="98.82" text-anchor="middle" font-family="sans-serif" font-size="9">25745.89</text>
+<text x="5211.32" y="382" transform="rotate(55 5211.32 382)" text-anchor="start" font-family="sans-serif" font-size="9">N_m1n1mal memory:post_library_render_idle</text>
+<rect x="5256.18" y="282.51" width="48.31" height="87.49" fill="#3978b5"/>
+<text x="5280.33" y="278.51" text-anchor="middle" font-family="sans-serif" font-size="9">8430.46</text>
+<text x="5280.33" y="382" transform="rotate(55 5280.33 382)" text-anchor="start" font-family="sans-serif" font-size="9">N_m1n1mal memory:post_library_render_idle</text>
+<rect x="5325.19" y="282.49" width="48.31" height="87.51" fill="#3978b5"/>
+<text x="5349.34" y="278.49" text-anchor="middle" font-family="sans-serif" font-size="9">8433.03</text>
+<text x="5349.34" y="382" transform="rotate(55 5349.34 382)" text-anchor="start" font-family="sans-serif" font-size="9">N_m1n1mal memory:post_library_render_idle</text>
+<rect x="5394.20" y="282.00" width="48.31" height="88.00" fill="#3978b5"/>
+<text x="5418.35" y="278.00" text-anchor="middle" font-family="sans-serif" font-size="9">8480.22</text>
+<text x="5418.35" y="382" transform="rotate(55 5418.35 382)" text-anchor="start" font-family="sans-serif" font-size="9">A_stock memory:post_library_render_idle</text>
+<rect x="5463.21" y="277.30" width="48.31" height="92.70" fill="#3978b5"/>
+<text x="5487.36" y="273.30" text-anchor="middle" font-family="sans-serif" font-size="9">8932.83</text>
+<text x="5487.36" y="382" transform="rotate(55 5487.36 382)" text-anchor="start" font-family="sans-serif" font-size="9">B_bookshelf memory:post_library_render_idle</text>
+<rect x="5532.22" y="222.10" width="48.31" height="147.90" fill="#3978b5"/>
+<text x="5556.37" y="218.10" text-anchor="middle" font-family="sans-serif" font-size="9">14251.95</text>
+<text x="5556.37" y="382" transform="rotate(55 5556.37 382)" text-anchor="start" font-family="sans-serif" font-size="9">C_simpleui memory:post_library_render_idle</text>
+<rect x="5601.23" y="208.24" width="48.31" height="161.76" fill="#3978b5"/>
+<text x="5625.38" y="204.24" text-anchor="middle" font-family="sans-serif" font-size="9">15588.03</text>
+<text x="5625.38" y="382" transform="rotate(55 5625.38 382)" text-anchor="start" font-family="sans-serif" font-size="9">D_zenos memory:post_library_render_idle</text>
+<rect x="5670.24" y="283.19" width="48.31" height="86.81" fill="#3978b5"/>
+<text x="5694.40" y="279.19" text-anchor="middle" font-family="sans-serif" font-size="9">8365.73</text>
+<text x="5694.40" y="382" transform="rotate(55 5694.40 382)" text-anchor="start" font-family="sans-serif" font-size="9">E_project_title memory:post_library_render_idle</text>
+<rect x="5739.25" y="276.90" width="48.31" height="93.10" fill="#3978b5"/>
+<text x="5763.41" y="272.90" text-anchor="middle" font-family="sans-serif" font-size="9">8971.76</text>
+<text x="5763.41" y="382" transform="rotate(55 5763.41 382)" text-anchor="start" font-family="sans-serif" font-size="9">F_vos memory:post_library_render_idle</text>
+<rect x="5808.26" y="216.48" width="48.31" height="153.52" fill="#3978b5"/>
+<text x="5832.42" y="212.48" text-anchor="middle" font-family="sans-serif" font-size="9">14793.29</text>
+<text x="5832.42" y="382" transform="rotate(55 5832.42 382)" text-anchor="start" font-family="sans-serif" font-size="9">G_simpleui_bookshelf memory:post_library_render_idle</text>
+<rect x="5877.27" y="202.15" width="48.31" height="167.85" fill="#3978b5"/>
+<text x="5901.43" y="198.15" text-anchor="middle" font-family="sans-serif" font-size="9">16174.98</text>
+<text x="5901.43" y="382" transform="rotate(55 5901.43 382)" text-anchor="start" font-family="sans-serif" font-size="9">H_zenos_bookshelf memory:post_library_render_idle</text>
+<rect x="5946.29" y="270.67" width="48.31" height="99.33" fill="#3978b5"/>
+<text x="5970.44" y="266.67" text-anchor="middle" font-family="sans-serif" font-size="9">9571.67</text>
+<text x="5970.44" y="382" transform="rotate(55 5970.44 382)" text-anchor="start" font-family="sans-serif" font-size="9">I_vos_bookshelf memory:post_library_render_idle</text>
+<rect x="6015.30" y="217.65" width="48.31" height="152.35" fill="#3978b5"/>
+<text x="6039.45" y="213.65" text-anchor="middle" font-family="sans-serif" font-size="9">14681.17</text>
+<text x="6039.45" y="382" transform="rotate(55 6039.45 382)" text-anchor="start" font-family="sans-serif" font-size="9">J_simpleui_vos memory:post_library_render_idle</text>
+<rect x="6084.31" y="211.40" width="48.31" height="158.60" fill="#3978b5"/>
+<text x="6108.46" y="207.40" text-anchor="middle" font-family="sans-serif" font-size="9">15283.15</text>
+<text x="6108.46" y="382" transform="rotate(55 6108.46 382)" text-anchor="start" font-family="sans-serif" font-size="9">K_simpleui_vos_bookshelf memory:post_library_render_idle</text>
+<rect x="6153.32" y="275.92" width="48.31" height="94.08" fill="#3978b5"/>
+<text x="6177.47" y="271.92" text-anchor="middle" font-family="sans-serif" font-size="9">9066.29</text>
+<text x="6177.47" y="382" transform="rotate(55 6177.47 382)" text-anchor="start" font-family="sans-serif" font-size="9">L_project_title_vos memory:post_library_render_idle</text>
+<rect x="6222.33" y="263.92" width="48.31" height="106.08" fill="#3978b5"/>
+<text x="6246.48" y="259.92" text-anchor="middle" font-family="sans-serif" font-size="9">10222.24</text>
+<text x="6246.48" y="382" transform="rotate(55 6246.48 382)" text-anchor="start" font-family="sans-serif" font-size="9">M_leanui memory:post_library_render_idle</text>
+<rect x="6291.34" y="281.26" width="48.31" height="88.74" fill="#3978b5"/>
+<text x="6315.49" y="277.26" text-anchor="middle" font-family="sans-serif" font-size="9">8551.19</text>
+<text x="6315.49" y="382" transform="rotate(55 6315.49 382)" text-anchor="start" font-family="sans-serif" font-size="9">N_m1n1mal memory:post_library_render_idle</text>
+</svg>

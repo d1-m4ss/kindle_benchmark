@@ -8,58 +8,101 @@ It answers a practical question: **which UI changes stay close to Stock KOReader
 
 ## Quick links
 
-- [Phase 1 synthetic report](results/runs/2026-09-03-full/phase1/REPORT.md)
-- [Phase 2 real-library report](results/runs/2026-09-03-full/phase2/REPORT.md)
-- [Bookends control](results/runs/2026-09-03-bookends10-fixed/phase2/BOOKENDS_REPORT.md)
-- [100 ms flash-delay study](results/runs/2026-09-03-flash100/phase1/REPORT.md)
+- Current baseline, all stacks except Project:Title: [Phase 1](results/runs/2026-10-27-m1n1mal-v3/phase1/REPORT.md), [Phase 2](results/runs/2026-10-27-m1n1mal-v3/phase2/REPORT.md), [notes](results/runs/2026-10-27-m1n1mal-v3/NOTES.md)
+- Project:Title with the cover list enabled: [Phase 1](results/runs/2026-10-27-pt-covers/phase1/REPORT.md), [Phase 2](results/runs/2026-10-27-pt-covers/phase2/REPORT.md)
+- Earlier campaigns: [2026-09-03 Phase 1](results/runs/2026-09-03-full/phase1/REPORT.md), [Phase 2](results/runs/2026-09-03-full/phase2/REPORT.md), [Bookends control](results/runs/2026-09-03-bookends10-fixed/phase2/BOOKENDS_REPORT.md), [100 ms flash-delay study](results/runs/2026-09-03-flash100/phase1/REPORT.md)
 - [Campaign runbook](RUNBOOK.md)
 - [Scenario definitions and contracts](SCENARIOS.md)
 
 ## Headline results
 
-There is no universal winner: the stacks prioritize different UI behaviours. The
-latest full baseline is `2026-09-03-full`; its campaign metadata records the
-runner and benchmark-harness hashes used for that run. Current source includes
-later harness changes, while the remeasured Bookends control is published
-separately as `2026-09-03-bookends10-fixed`. Every dedicated paging cell has
-three isolated process runs and passed the transition, framebuffer and screenshot
-evidence gates.
+There is no universal winner: the stacks prioritize different UI behaviours.
+The current numbers come from two campaigns that share one harness for every
+scenario they measure:
 
-- **Project:Title** had the best overall lightweight profile in this campaign:
-  fastest steady restart to the real library, fastest first render, fastest
-  minimally instrumented book open and the lowest post-stress live Lua heap.
-- **Project:Title + VOS** retained excellent paging and open-book results, but its
-  steady restart was much slower than Project:Title alone in this run.
-- **Bookshelf** left the normal library close to Stock and showed a lower
-  `open_book_minimal` median in this campaign (117.5 ms versus 147.9 ms for
-  Stock). That is an observation, not evidence that Bookshelf causally speeds
-  up the reader-open path. In its dedicated shelf, the default animation
-  dominated page-turn latency; animation-off isolates a much smaller renderer
-  cost.
-- **SimpleUI** traded substantially more startup, first-render time and retained
-  Lua state for its richer home/dashboard shell.
+- `2026-10-27-m1n1mal-v3`: all 14 stacks (the 12 earlier ones, LeanUI and
+  m1n1mal + pagecount) at the pins listed under *Pinned software*. Its
+  Project:Title rows were measured **without covers** and are superseded.
+- `2026-10-27-pt-covers`: Project:Title and Project:Title + VOS only, with
+  the cover list enabled. The tables below take their Project:Title rows from
+  this campaign. The runner changed between the two (Project:Title's first-run
+  setup is no longer pre-marked done, `--configs` now also scopes the Phase 2
+  gate, and result files carry a `library_probe`); no other stack's behaviour
+  changed, but the two campaigns have different runner hashes and are not one
+  campaign.
+
+Every cell below is an emulator measurement; see the limits in the next
+section.
+
+- **Stock, Bookshelf and m1n1mal + pagecount** are indistinguishable on the real
+  library: steady restart to the library 269–274 ms, library render 25–27 ms,
+  open book 105–111 ms (single-process differences of a few ms are inside the
+  run-to-run spread). m1n1mal + pagecount retained 15.3 MiB of live Lua heap after
+  the stress sequence versus 16.4 MiB for Stock.
+- **Project:Title with the cover list on** is no longer clearly ahead: restart
+  279 ms, open book 98 ms, but a sort change is slower than Stock and
+  m1n1mal (see the cover-list cost table). Earlier versions of this README
+  credited it with a large lead; that was measured without covers.
+- **SimpleUI** keeps its larger startup and memory cost: restart 431–466 ms,
+  library render 57–66 ms, 66–83 MiB live Lua heap, and about 230 ms to close
+  a book.
+- **ZenOS** restarts in 461 ms and renders the library in 33 ms; its page holds 5
+  entries, so paging comparisons are UX-level.
+- **Bookshelf** leaves the normal library close to Stock. In its dedicated shelf,
+  the default animation dominates page-turn latency; animation-off isolates a
+  much smaller renderer cost.
+- **Library paging** is 14–17.5 ms per page for every stack; distributions
+  overlap, so no paging ranking is claimed.
+
+### Cover list cost, and how Project:Title is measured
+
+A cover-list library (`list_image_meta`) costs more than the plain list. The
+harness pre-marked Project:Title's first-run setup as done, so in campaigns up to
+`2026-10-27-m1n1mal-v3` it never switched to its cover list, while every
+CoverBrowser-based stack ran with covers (probe: `cover_build_ui=False` for
+Project:Title). That compared a plain list with other stacks' cover lists.
+The runner no longer pre-marks the setup, the `library_probe` field in each raw
+result records the active mode, and Project:Title is now measured with covers
+on (`cover_build_ui=true`, verified in all its warm results).
+
+Controlled diagnostic (real 2692-book library, warm, median of 4 runs, ms;
+not part of a published campaign):
+
+| Stack | Open book (minimal) | Change sort | First render | Close book |
+|---|---:|---:|---:|---:|
+| Stock + cover list | 100.6 | 60.4 | 47.3 | 27.1 |
+| m1n1mal + pagecount | 100.2 | 56.1 | 37.0 | 28.9 |
+| Project:Title, covers on | 97.6 | 69.1 | 33.6 | 27.2 |
+| Project:Title, no covers (the old measurement) | 94.9 | 39.4 | 26.2 | 24.3 |
+
+Loading CoverBrowser with covers costs about 20 ms on a sort change, 17 ms on the
+first render and 6–9 ms on opening a book, for every stack that uses it.
 
 ### Synthetic stress case: FLAT 2000
 
 This table is the intentionally hostile case: 2,000 EPUBs in one folder. Values
 are warm medians in milliseconds; every shown value has 10 measured samples after
-two warmups. `Open book` is `open_book_minimal`, isolated from dirty-region
-instrumentation.
+two warmups, from a single process per stack. `Open book` is `open_book_minimal`,
+isolated from dirty-region instrumentation. Differences of a few milliseconds are
+inside the spread of one process; the Bookshelf, SimpleUI and LeanUI open-book values
+include effects of their own shells.
 
 | Stack | Library render | Open book |
 |---|---:|---:|
-| **Project:Title** | **40.6** | **48.2** |
-| Project:Title + VOS | 47.5 | 52.7 |
-| Stock | 54.7 | 104.9 |
-| SimpleUI + VOS + Bookshelf | 59.2 | 94.7 |
-| SimpleUI + VOS | 61.2 | 82.1 |
-| VOS | 61.6 | 84.5 |
-| SimpleUI + Bookshelf | 67.0 | 88.3 |
-| ZenOS | 67.4 | 99.2 |
-| ZenOS + Bookshelf | 70.5 | 108.4 |
-| SimpleUI | 70.8 | 91.2 |
-| VOS + Bookshelf | 77.1 | 90.6 |
-| Bookshelf | 82.5 | 113.4 |
+| LeanUI (local rebuild) | 36.6 | 56.5 |
+| m1n1mal + pagecount | 38.0 | 59.7 |
+| Bookshelf | 38.6 | 122.3 |
+| Stock | 38.9 | 59.3 |
+| Project:Title | 44.1 | 50.9 |
+| ZenOS + Bookshelf | 48.2 | 48.4 |
+| ZenOS | 49.1 | 69.8 |
+| VOS | 49.5 | 45.9 |
+| VOS + Bookshelf | 49.5 | 94.7 |
+| SimpleUI + VOS | 60.5 | 105.0 |
+| Project:Title + VOS | 63.2 | 48.4 |
+| SimpleUI + VOS + Bookshelf | 67.1 | 108.6 |
+| SimpleUI + Bookshelf | 75.4 | 89.3 |
+| SimpleUI | 78.1 | 90.5 |
 
 ### Real library: 2,692 EPUBs
 
@@ -72,49 +115,54 @@ The real corpus is the more practically useful result set. Restart values are th
 
 | Stack | Restart → library | Library render | Open book | Live Lua after stress |
 |---|---:|---:|---:|---:|
-| **Project:Title** | **504 ms** | **25.7 ms** | **105.8 ms** | **14.5 MiB** |
-| Stock | 548 ms | 31.5 ms | 147.9 ms | 26.6 MiB |
-| VOS | 562 ms | 42.8 ms | 140.2 ms | 29.0 MiB |
-| Bookshelf | 569 ms | 31.6 ms | 117.5 ms | 17.6 MiB |
-| VOS + Bookshelf | 625 ms | 44.3 ms | 136.7 ms | 26.5 MiB |
-| SimpleUI + VOS | 742 ms | 94.4 ms | 148.0 ms | 67.4 MiB |
-| SimpleUI | 746 ms | 128.9 ms | 142.3 ms | 61.2 MiB |
-| ZenOS | 754 ms | 42.3 ms | 137.7 ms | 37.2 MiB |
-| SimpleUI + VOS + Bookshelf | 754 ms | 97.9 ms | 143.2 ms | 71.8 MiB |
-| Project:Title + VOS | 762 ms | 40.0 ms | 107.1 ms | 14.6 MiB |
-| SimpleUI + Bookshelf | 767 ms | 101.9 ms | 136.9 ms | 67.1 MiB |
-| ZenOS + Bookshelf | 788 ms | 52.7 ms | 147.6 ms | 40.7 MiB |
+| Stock | 269 ms | 26.8 ms | 105.5 ms | 16.4 MiB |
+| Bookshelf | 273 ms | 25.5 ms | 110.7 ms | 21.0 MiB |
+| m1n1mal + pagecount | 274 ms | 26.3 ms | 110.8 ms | 15.3 MiB |
+| Project:Title | 279 ms | 30.4 ms | 98.1 ms | 16.8 MiB |
+| VOS | 296 ms | 34.3 ms | 113.9 ms | 17.5 MiB |
+| LeanUI (local rebuild) | 323 ms | 31.7 ms | 99.3 ms | 40.4 MiB |
+| VOS + Bookshelf | 323 ms | 34.6 ms | 125.7 ms | 25.6 MiB |
+| Project:Title + VOS | 333 ms | 46.3 ms | 103.2 ms | 16.5 MiB |
+| ZenOS + Bookshelf | 401 ms | 39.8 ms | 123.7 ms | 29.8 MiB |
+| SimpleUI + VOS + Bookshelf | 431 ms | 57.5 ms | 120.0 ms | 82.6 MiB |
+| SimpleUI + VOS | 431 ms | 57.2 ms | 132.9 ms | 73.4 MiB |
+| SimpleUI + Bookshelf | 446 ms | 60.1 ms | 118.6 ms | 74.3 MiB |
+| ZenOS | 461 ms | 33.1 ms | 130.4 ms | 22.3 MiB |
+| SimpleUI | 466 ms | 65.7 ms | 124.0 ms | 66.0 MiB |
 
 `RSS` is recorded too, but it is the whole macOS emulator process. It includes native libraries, mappings, allocator behaviour, and cached allocations, so forced-GC live Lua heap is the cleaner plugin-side signal.
 
-### Dedicated real-library paging
+### Real-library paging
 
-These medians come from three isolated process runs per stack. `Entries/page`
-always reports the visible page size. It must be read together with the 505-entry
-root above; `Real 2692` does not mean that paging traverses one flat list of 2,692
-books. Entries per page differ by UI, so comparisons across different layouts are
-UX-level comparisons, not equal-render-work claims.
+Warm medians of 30 transitions per stack in the Phase 2 library root (505 entries:
+500 EPUBs + 5 folders). `Entries/page` is the visible page size; comparisons across
+different layouts are UX-level, not equal-render-work claims. The dedicated
+three-process paging phases were not repeated in this round.
 
 | Stack | Entries/page | Sequential | Cached |
 |---|---:|---:|---:|
-| Stock | 10 | 14.26 ms | 16.81 ms |
-| Bookshelf | 10 | 14.71 ms | 16.93 ms |
-| SimpleUI | 8 | 16.41 ms | 28.63 ms |
-| ZenOS | 5 | 8.61 ms | 12.86 ms |
-| Project:Title | 14 | 9.07 ms | 8.98 ms |
-| VOS | 10 | 15.97 ms | 18.18 ms |
-| SimpleUI + Bookshelf | 8 | 18.57 ms | 32.11 ms |
-| ZenOS + Bookshelf | 5 | 8.50 ms | 12.79 ms |
-| VOS + Bookshelf | 10 | 16.77 ms | 19.30 ms |
-| SimpleUI + VOS | 8 | 16.49 ms | 28.99 ms |
-| SimpleUI + VOS + Bookshelf | 8 | 17.59 ms | 32.20 ms |
-| Project:Title + VOS | 14 | 8.72 ms | 8.48 ms |
+| Project:Title + VOS | 7 | 14.02 ms | 19.05 ms |
+| Project:Title | 7 | 14.80 ms | 20.75 ms |
+| SimpleUI + VOS | 9 | 15.13 ms | 14.91 ms |
+| VOS | 10 | 15.65 ms | 15.28 ms |
+| Bookshelf | 10 | 15.70 ms | 14.50 ms |
+| SimpleUI | 9 | 15.94 ms | 12.80 ms |
+| LeanUI (local rebuild) | 14 | 15.97 ms | 16.11 ms |
+| SimpleUI + Bookshelf | 9 | 16.08 ms | 13.13 ms |
+| SimpleUI + VOS + Bookshelf | 9 | 16.09 ms | 13.44 ms |
+| ZenOS | 5 | 16.10 ms | 16.13 ms |
+| ZenOS + Bookshelf | 5 | 16.10 ms | 16.13 ms |
+| VOS + Bookshelf | 10 | 17.24 ms | 14.99 ms |
+| m1n1mal + pagecount | 10 | 17.38 ms | 15.68 ms |
+| Stock | 10 | 17.52 ms | 15.68 ms |
 
 The separate `2026-09-03-flash100` sensitivity study added approximately
 97–106 ms to the median library transition. It is an injected SDL delay, not a
 physical Kindle model.
 
 ### Bookends control
+
+Measured in the 2026-09-03 campaign with Bookends v5.24.0 and not repeated in this round.
 
 Bookends was measured separately as Stock versus Stock + Bookends, rather than
 multiplying every stack by another on/off factor. No reader page-turn penalty
@@ -161,6 +209,12 @@ are aggregated report rows, not a count of individual warm iterations:
 | Bookends control | 38 | 0 | 2 |
 | Flash100 paging study | 276 | 0 | 0 |
 
+Campaigns `2026-10-27-m1n1mal-v3` and `2026-10-27-pt-covers` (14 stacks and the
+Project:Title re-run) report 1,440 + 180 PASS in Phase 1 and 545 + 72 PASS in
+Phase 2 with 0 FAILED; their UNSUPPORTED rows (156 + 20 and 8 + 2) are the same
+kind of stack-specific gaps. The `2026-10-27-m1n1mal-v3` Project:Title rows are
+superseded by `2026-10-27-pt-covers`.
+
 `UNSUPPORTED` entries describe actions that do not exist for the relevant stack or corpus shape, such as next-page navigation in a single-page library. They are reported explicitly rather than treated as success or as `0 ms`.
 
 ## Test environment
@@ -177,18 +231,21 @@ SDL logical window size and actual render-output size can differ on Retina macOS
 
 ### Pinned software
 
-Only tagged stable releases are pinned. Pre-release tags are deliberately excluded: ZenOS stays on `v3.2.2` while `v3.3.0-betaN` exists upstream, and Project:Title is pinned to the `2026.07-v3.8.3` tag rather than a commit after it.
+Only tagged stable releases are pinned. Pre-release tags are deliberately excluded (for example the ZenOS `v4.3.0-alphaN` tags), and Project:Title is pinned to the `2026.07-v3.8.3` tag rather than a commit after it. Exception: VOS is pinned to `v1.4`, one release behind the latest stable `v1.4.1`, because v1.4.1's automatic series folders (commit `51920c7`) make the `library_folder_enter` scenario fail in this harness while `v1.4` passes; the reason is recorded in `versions.lock.json`. KOReader is on its latest stable release.
 
 | Component | Release | Commit |
 |---|---|---|
 | KOReader | [`v2026.07.2`](https://github.com/koreader/koreader/releases/tag/v2026.07.2) | `9192014d8bd82a91dc1012473be0f238dedfdb54` |
 | KOReader base | v2013.03-3987-g6e4bc81 | `6e4bc81af4e04f78d81677a323a780a71b29702a` |
-| SimpleUI | [`2.7.0`](https://github.com/doctorhetfield-cmd/simpleui.koplugin/releases/tag/2.7.0) | `29dbfdea3298f8d4485faec38fd1691f76e35328` |
-| ZenOS | [`v3.2.2`](https://github.com/xZenLabs/zen-os/releases/tag/v3.2.2) | `6bf289431bd7eeac88e424f77ecbba6cfab9ab61` |
-| Bookshelf | [`v4.4.1`](https://github.com/AndyHazz/bookshelf.koplugin/releases/tag/v4.4.1) | `c20ffdec5170ba9595a9f1e534863e1b36474efc` |
-| Bookends | [`v5.24.0`](https://github.com/AndyHazz/bookends.koplugin/releases/tag/v5.24.0) | `7ae55d263ef2dcf4090f07cb25fd864c3958bd04` |
+| SimpleUI | [`3.0.1`](https://github.com/doctorhetfield-cmd/simpleui.koplugin/releases/tag/3.0.1) | `e5cd6dcb31fa759b9831223d4719f61126367cff` |
+| ZenOS | [`v4.2.0`](https://github.com/xZenLabs/zen-os/releases/tag/v4.2.0) | `a2d7230110eb1fa6f9e2e29944c49e5607a82bd6` |
+| Bookshelf | [`v6.0.3`](https://github.com/AndyHazz/bookshelf.koplugin/releases/tag/v6.0.3) | `c37580a1ca5040d2423e45b9bdd429776117f3c1` |
+| Bookends | [`v5.31.0`](https://github.com/AndyHazz/bookends.koplugin/releases/tag/v5.31.0) | `8f6e1c6b5770864e0cfed6be93435b5d6427eba5` |
 | Project:Title | [`2026.07-v3.8.3`](https://github.com/joshuacant/ProjectTitle/releases/tag/2026.07-v3.8.3) | `f29b5328f408362a95282ed8786a5b691536260c` |
-| VOS | [`v1.3.4`](https://github.com/SeriousHornet/vos.koplugin/releases/tag/v1.3.4) | `a8c661997b36165b5e75965c5903dbc9ffecebea` |
+| VOS | [`v1.4`](https://github.com/SeriousHornet/vos.koplugin/releases/tag/v1.4) | `f4793dd43881e980419fd3ffb56abfb69beff5d6` |
+| LeanUI (abandoned local rebuild) | `rebuild-local-2026-10-27` (local) | `5c5b2d5bcdfefccfc3a65d218c1cf913b2fec3d8` |
+| m1n1mal (local) | `local-2026-10-27` (local) | `44ea3f53b2ae4903497735d067b74b78214b4b1b` |
+| pagecount (same source tree as m1n1mal) | `local-2026-10-27` (local) | `44ea3f53b2ae4903497735d067b74b78214b4b1b` |
 
 `versions.lock.json` is the single source of truth. `setup.sh` and `scripts/run_benchmarks.py` both read it, so bumping a dependency is a one-file edit:
 
@@ -198,6 +255,9 @@ Only tagged stable releases are pinned. Pre-release tags are deliberately exclud
 4. Start a **new campaign**. The lock file's SHA-256 is part of the campaign identity, so a running campaign refuses to mix revisions and results from different locks are not comparable.
 
 #### Baseline change
+
+For `2026-10-27-*` the plugins were moved to their latest stable releases: SimpleUI 2.7.1 → 3.0.1, ZenOS v3.3.1 → v4.2.0, Bookshelf v5.2.1 → v6.0.3, Bookends v5.26.0 → v5.31.0, VOS v1.3.4 → v1.4. SimpleUI 3.0 starts in the file manager by default, so the harness now sets `start_with = homescreen_simpleui` to keep measuring it from its Home Screen. m1n1mal and pagecount (a small quick panel, corner lines and background page counts on top of KOReader's own library) were added as stack `N`. Earlier campaigns used older pins and are not comparable.
+
 
 The pinned revisions above changed after the `2026-08-31-fixed` campaign was published: KOReader `1e2fa5f1` → `9192014d`, KOReader base `6232b260` → `6e4bc81a`, Bookshelf `643bc21f` (v4.4.0) → `c20ffdec` (v4.4.1), Project:Title `4dc97e62` → `f29b5328`. The published `2026-08-31-fixed` campaign predates this bump and also predates the paging-instrumentation and hierarchical-dataset fixes below — its paging/cached-paging numbers are not comparable to a campaign run against the current pinned revisions. See the deprecation banner in that campaign's phase1/phase2 reports.
 
@@ -230,6 +290,8 @@ Phase 1 stacks:
 | J | SimpleUI + VOS |
 | K | SimpleUI + VOS + Bookshelf |
 | L | Project:Title + VOS |
+| M | LeanUI (local rebuild) |
+| N | m1n1mal + pagecount |
 
 ### Phase 2: your real library
 
@@ -282,9 +344,9 @@ Every paging metric — library and Bookshelf alike — therefore measures the s
 
 `reader_page_turn` is measured inside one pinned document, chosen deterministically from the books nearest the corpus median size. Page-turn latency tracks document size and complexity, and this corpus spans 59 KB to 29 MB, so rotating books would blend unrelated documents into one median. `open_book` deliberately keeps rotating through ten deterministic books, because opening the same file repeatedly would measure a warm document cache instead of a cold open.
 
-Phase 2 uses the same 12 stacks: Stock, Bookshelf, SimpleUI, ZenOS,
+Phase 2 uses the same 14 stacks (A–N above): Stock, Bookshelf, SimpleUI, ZenOS,
 Project:Title, VOS, SimpleUI + Bookshelf, ZenOS + Bookshelf, VOS + Bookshelf,
-SimpleUI + VOS, SimpleUI + VOS + Bookshelf, and Project:Title + VOS. Bookends
+SimpleUI + VOS, SimpleUI + VOS + Bookshelf, Project:Title + VOS, LeanUI and m1n1mal + pagecount. Bookends
 is the separate controlled Stock comparison described above.
 
 ## Run it

@@ -16,6 +16,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts.run_benchmarks import (
+    PHASE1_CONFIGS,
     Job, PAGING_MIN_ROOT_BOOKS, REAL_FOLDER_BOOKS, REAL_ROOT_BOOKS, RunLayout,
     SCHEMA_VERSION, bookends_blocks, ensure_layout, paging_phase1_blocks,
     plan_real_corpus_layout, prepare_real_corpora_for_jobs,
@@ -309,7 +310,7 @@ class TestPagingValidation(unittest.TestCase):
 
     def test_paging_phase1_has_three_process_runs_per_dataset(self):
         blocks = paging_phase1_blocks("test_campaign", process_runs=3)
-        self.assertEqual(len(blocks), 13)
+        self.assertEqual(len(blocks), len(PHASE1_CONFIGS))
         self.assertEqual(sorted({len(jobs) for jobs in blocks.values()}), [6])
         self.assertEqual(
             sorted({job.run_id.rsplit("_r", 1)[-1] for jobs in blocks.values() for job in jobs}),

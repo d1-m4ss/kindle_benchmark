@@ -20,13 +20,13 @@
   },
   "plugins": {
     "leanui": {
-      "repo": "/Users/d13mas/Documents/scripts/koreader_plugin/leanui.koplugin",
+      "repo": "../../koreader_plugin/leanui-rebuild/leanui.koplugin",
       "checkout_path": "plugins_source/leanui",
       "plugin_dir": "leanui.koplugin",
       "loaded_name": "leanui",
-      "tag": "v0.5.0",
-      "commit": "2bd063af78cd5652edc6784b80e26dc097657552",
-      "date": "2026-09-03T20:17:33+03:00",
+      "tag": "rebuild-local-2026-10-27",
+      "commit": "5c5b2d5bcdfefccfc3a65d218c1cf913b2fec3d8",
+      "date": "2026-10-27T12:02:23+02:00",
       "release_url": "local",
       "tree_url": "local"
     },
@@ -35,44 +35,44 @@
       "checkout_path": "plugins_source/simpleui",
       "plugin_dir": "simpleui.koplugin",
       "loaded_name": "simpleui",
-      "tag": "2.7.1",
-      "commit": "79dfd7e3bffb45c3072e1e50562cbe122644d1fe",
-      "date": "2026-09-07T19:31:48+01:00",
-      "release_url": "https://github.com/doctorhetfield-cmd/simpleui.koplugin/releases/tag/2.7.1",
-      "tree_url": "https://github.com/doctorhetfield-cmd/simpleui.koplugin/tree/79dfd7e3bffb45c3072e1e50562cbe122644d1fe"
+      "tag": "3.0.1",
+      "commit": "e5cd6dcb31fa759b9831223d4719f61126367cff",
+      "date": "2026-10-27T08:58:12Z",
+      "release_url": "https://github.com/doctorhetfield-cmd/simpleui.koplugin/releases/tag/3.0.1",
+      "tree_url": "https://github.com/doctorhetfield-cmd/simpleui.koplugin/tree/e5cd6dcb31fa759b9831223d4719f61126367cff"
     },
     "zenos": {
       "repo": "https://github.com/xZenLabs/zen-os.git",
       "checkout_path": "plugins_source/zenos",
       "plugin_dir": "zenos.koplugin",
       "loaded_name": "zenos",
-      "tag": "v3.2.2",
-      "commit": "6bf289431bd7eeac88e424f77ecbba6cfab9ab61",
-      "date": "2026-08-28T23:28:18-04:00",
-      "release_url": "https://github.com/xZenLabs/zen-os/releases/tag/v3.2.2",
-      "tree_url": "https://github.com/xZenLabs/zen-os/tree/6bf289431bd7eeac88e424f77ecbba6cfab9ab61"
+      "tag": "v4.2.0",
+      "commit": "a2d7230110eb1fa6f9e2e29944c49e5607a82bd6",
+      "date": "2026-10-15T12:53:41-04:00",
+      "release_url": "https://github.com/xZenLabs/zen-os/releases/tag/v4.2.0",
+      "tree_url": "https://github.com/xZenLabs/zen-os/tree/a2d7230110eb1fa6f9e2e29944c49e5607a82bd6"
     },
     "bookshelf": {
       "repo": "https://github.com/AndyHazz/bookshelf.koplugin.git",
       "checkout_path": "plugins_source/bookshelf",
       "plugin_dir": "bookshelf.koplugin",
       "loaded_name": "bookshelf",
-      "tag": "v5.0.0",
-      "commit": "a6eca2429ef92cf1bae103ef1e3f0af634937a66",
-      "date": "2026-09-11T20:06:30+01:00",
-      "release_url": "https://github.com/AndyHazz/bookshelf.koplugin/releases/tag/v5.0.0",
-      "tree_url": "https://github.com/AndyHazz/bookshelf.koplugin/tree/a6eca2429ef92cf1bae103ef1e3f0af634937a66"
+      "tag": "v6.0.3",
+      "commit": "c37580a1ca5040d2423e45b9bdd429776117f3c1",
+      "date": "2026-10-26T04:18:09Z",
+      "release_url": "https://github.com/AndyHazz/bookshelf.koplugin/releases/tag/v6.0.3",
+      "tree_url": "https://github.com/AndyHazz/bookshelf.koplugin/tree/c37580a1ca5040d2423e45b9bdd429776117f3c1"
     },
     "bookends": {
       "repo": "https://github.com/AndyHazz/bookends.koplugin.git",
       "checkout_path": "plugins_source/bookends",
       "plugin_dir": "bookends.koplugin",
       "loaded_name": "bookends",
-      "tag": "v5.25.0",
-      "commit": "655b6a4dd2cbf7c322a5d86a825cb51e3322debe",
-      "date": "2026-09-04T23:28:52+01:00",
-      "release_url": "https://github.com/AndyHazz/bookends.koplugin/releases/tag/v5.25.0",
-      "tree_url": "https://github.com/AndyHazz/bookends.koplugin/tree/655b6a4dd2cbf7c322a5d86a825cb51e3322debe"
+      "tag": "v5.31.0",
+      "commit": "8f6e1c6b5770864e0cfed6be93435b5d6427eba5",
+      "date": "2026-10-18T23:05:48+01:00",
+      "release_url": "https://github.com/AndyHazz/bookends.koplugin/releases/tag/v5.31.0",
+      "tree_url": "https://github.com/AndyHazz/bookends.koplugin/tree/8f6e1c6b5770864e0cfed6be93435b5d6427eba5"
     },
     "project_title": {
       "repo": "https://github.com/joshuacant/ProjectTitle.git",
@@ -90,11 +90,36 @@
       "checkout_path": "plugins_source/vos",
       "plugin_dir": "vos.koplugin",
       "loaded_name": "vos",
-      "tag": "v1.3.4",
-      "commit": "a8c661997b36165b5e75965c5903dbc9ffecebea",
-      "date": "2026-08-24T10:17:27+08:00",
-      "release_url": "https://github.com/SeriousHornet/vos.koplugin/releases/tag/v1.3.4",
-      "tree_url": "https://github.com/SeriousHornet/vos.koplugin/tree/a8c661997b36165b5e75965c5903dbc9ffecebea"
+      "tag": "v1.4",
+      "commit": "f4793dd43881e980419fd3ffb56abfb69beff5d6",
+      "date": "2026-10-25T22:39:09+08:00",
+      "release_url": "https://github.com/SeriousHornet/vos.koplugin/releases/tag/v1.4",
+      "tree_url": "https://github.com/SeriousHornet/vos.koplugin/tree/f4793dd43881e980419fd3ffb56abfb69beff5d6",
+      "note": "Latest stable is v1.4.1, but its automatic series folders (commit 51920c7) make library_folder_enter fail in this harness; v1.4 is the newest release without that feature."
+    },
+    "m1n1mal": {
+      "repo": "../../koreader_plugin/m1n1mal",
+      "checkout_path": "plugins_source/m1n1mal",
+      "plugin_dir": "m1n1mal.koplugin",
+      "plugin_subpath": "m1n1mal.koplugin",
+      "loaded_name": "m1n1mal",
+      "tag": "local-2026-10-27",
+      "commit": "44ea3f53b2ae4903497735d067b74b78214b4b1b",
+      "date": "2026-10-27T18:12:40+02:00",
+      "release_url": "local",
+      "tree_url": "local"
+    },
+    "pagecount": {
+      "repo": "../../koreader_plugin/m1n1mal",
+      "checkout_path": "plugins_source/pagecount",
+      "plugin_dir": "pagecount.koplugin",
+      "plugin_subpath": "pagecount.koplugin",
+      "loaded_name": "pagecount",
+      "tag": "local-2026-10-27",
+      "commit": "44ea3f53b2ae4903497735d067b74b78214b4b1b",
+      "date": "2026-10-27T18:12:40+02:00",
+      "release_url": "local",
+      "tree_url": "local"
     }
   }
 }

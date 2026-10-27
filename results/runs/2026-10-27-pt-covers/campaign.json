@@ -1,0 +1,9 @@
+{
+  "benchmark_harness_sha256": "02d0ba91801cd3f859bc86b85d2f8a8111f820021cb6b9f25e53a6ed1347f2b5",
+  "campaign": "2026-10-27-pt-covers",
+  "created_utc": "2026-10-27T19:38:30.029953+00:00",
+  "emulate_reader_flash_ms": null,
+  "runner_sha256": "52835e08cfedca44c66327427d0361bd9305c8c62946fb4b1f7b124bb719e4ea",
+  "sdl_video_driver": "dummy",
+  "versions_lock_sha256": "71c62562577d75d79b6dab0405876eeae7ea19ad7d5db59667c6c9cf1bd57e06"
+}

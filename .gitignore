@@ -33,7 +33,11 @@ results/runs/*
 !results/runs/2026-09-03-flash100/
 !results/runs/2026-09-03-bookends10-fixed/
 !results/runs/2026-09-12-full/
+!results/runs/2026-10-27-m1n1mal-v3/
+!results/runs/2026-10-27-pt-covers/
 results/runs/**/raw/
 results/runs/**/logs/
 results/runs/**/checkpoints/
 results/runs/**/screenshots/
+plugins_source/m1n1mal/
+plugins_source/pagecount/
