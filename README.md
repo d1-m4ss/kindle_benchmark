@@ -6,6 +6,22 @@ It answers a practical question: **which UI changes stay close to Stock KOReader
 
 > This is a controlled emulator comparison, not a benchmark of physical Kindle latency. It is useful for relative work, memory, and redraw comparisons; it cannot turn a Mac millisecond value into a Kindle millisecond value.
 
+## Bottom line: how each plugin changed since the previous round
+
+**Mixed, with no plugin better across the board.** ZenOS cut its retained memory the most, SimpleUI renders the library faster, Bookshelf stays close to Stock but its own shelf pages slower, and several plugins got relatively slower at closing a book. Details per plugin:
+
+
+![Previous vs current round, per plugin](docs/charts/before_after.svg)
+
+Previous round: campaign `2026-09-12-full` (SimpleUI 2.7.1, ZenOS 3.2.2, Bookshelf 5.0.0, VOS 1.3.4); current: the 2026-10-27 campaigns (SimpleUI 3.0.1, ZenOS 4.2.0, Bookshelf 6.0.3, VOS 1.4.1). Absolute times are not comparable between the rounds (the current runs are headless and Stock itself restarts about twice as fast), so the chart compares each plugin with Stock of the same round. Project:Title is the same release in both; its change is only that it now runs with covers.
+
+- **ZenOS**: retained heap above Stock fell from +23 to +8 MiB; library render improved from 1.4x to 1.2x Stock. Restart, open and close got relatively slower.
+- **SimpleUI**: library render improved (about 3.5x to 2.4x Stock) and heap is about the same (+56 to +52 MiB); closing a book got much slower (2.7x to 8.1x Stock).
+- **Bookshelf**: close to Stock in both rounds (heap +5 to +6 MiB). Its own shelf is slower to page: 84 to 133 ms per page with the default animation, 26 to 38 ms with it off; shelf open and first render are slightly faster.
+- **VOS**: about the same, a little heavier relative to Stock.
+
+Two different harness setups and several plugin releases changed at once, so this shows direction, not the cause of any change.
+
 ## Quick links
 
 - Campaigns of 2026-10-27 (reports with all scenarios): [all stacks, Phase 1](results/runs/2026-10-27-m1n1mal-v3/phase1/REPORT.md) and [Phase 2](results/runs/2026-10-27-m1n1mal-v3/phase2/REPORT.md); [Project:Title with covers](results/runs/2026-10-27-pt-covers/phase2/REPORT.md); [VOS v1.4.1 stacks](results/runs/2026-10-27-vos-141/phase2/REPORT.md); [Bookends control](results/runs/2026-10-27-bookends/phase2/BOOKENDS_REPORT.md). Each row in the tables below comes from the newest campaign that measured it.
@@ -33,19 +49,6 @@ Real library of 2,692 EPUBs, KOReader v2026.07.2 in the SDL emulator, every plug
 ![Closing a book](docs/charts/real_close_book.svg)
 
 ![Bookends control](docs/charts/bookends_control.svg)
-
-### What changed since the previous round
-
-![Previous vs current round, per plugin](docs/charts/before_after.svg)
-
-Previous round: campaign `2026-09-12-full` (SimpleUI 2.7.1, ZenOS 3.2.2, Bookshelf 5.0.0, VOS 1.3.4); current: the 2026-10-27 campaigns (SimpleUI 3.0.1, ZenOS 4.2.0, Bookshelf 6.0.3, VOS 1.4.1). Absolute times are not comparable between the rounds (the current runs are headless and Stock itself restarts about twice as fast), so the chart compares each plugin with Stock of the same round. Project:Title is the same release in both; its change is only that it now runs with covers.
-
-- **ZenOS**: retained heap above Stock fell from +23 to +8 MiB; library render improved from 1.4x to 1.2x Stock. Restart, open and close got relatively slower.
-- **SimpleUI**: library render improved (about 3.5x to 2.4x Stock) and heap is about the same (+56 to +52 MiB); closing a book got much slower (2.7x to 8.1x Stock).
-- **Bookshelf**: close to Stock in both rounds (heap +5 to +6 MiB). Its own shelf is slower to page: 84 to 133 ms per page with the default animation, 26 to 38 ms with it off; shelf open and first render are slightly faster.
-- **VOS**: about the same, a little heavier relative to Stock.
-
-Two different harness setups and several plugin releases changed at once, so this shows direction, not the cause of any change.
 
 **m1n1mal + pagecount** is my own minimal plugin pair (quick panel, corner status lines, background page counts on top of KOReader's own library). I made it for myself and have not published it yet; it is included only as a reference point.
 
