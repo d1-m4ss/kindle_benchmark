@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="372" viewBox="0 0 760 372" font-family="Helvetica, Arial, sans-serif" font-size="13">
+<rect width="760" height="372" fill="#ffffff"/>
+<text x="12" y="26" font-size="15" font-weight="bold" fill="#1f2328">Closing a book, lower is better</text>
+<text x="192" y="59" text-anchor="end" fill="#1f2328">Project:Title</text>
+<rect x="200" y="47" width="51.9" height="16" rx="2" fill="#8c959f"/>
+<text x="257.9" y="59" fill="#57606a">28 ms</text>
+<text x="192" y="83" text-anchor="end" fill="#1f2328">Stock</text>
+<rect x="200" y="71" width="53.2" height="16" rx="2" fill="#0969da"/>
+<text x="259.2" y="83" fill="#57606a">29 ms</text>
+<text x="192" y="107" text-anchor="end" fill="#1f2328">m1n1mal + pagecount</text>
+<rect x="200" y="95" width="53.9" height="16" rx="2" fill="#2da44e"/>
+<text x="259.9" y="107" fill="#57606a">29 ms</text>
+<text x="192" y="131" text-anchor="end" fill="#1f2328">Bookshelf</text>
+<rect x="200" y="119" width="55.5" height="16" rx="2" fill="#8c959f"/>
+<text x="261.5" y="131" fill="#57606a">30 ms</text>
+<text x="192" y="155" text-anchor="end" fill="#1f2328">ZenOS + Bookshelf</text>
+<rect x="200" y="143" width="67.8" height="16" rx="2" fill="#8c959f"/>
+<text x="273.8" y="155" fill="#57606a">36 ms</text>
+<text x="192" y="179" text-anchor="end" fill="#1f2328">VOS + Bookshelf</text>
+<rect x="200" y="167" width="75.6" height="16" rx="2" fill="#8c959f"/>
+<text x="281.6" y="179" fill="#57606a">41 ms</text>
+<text x="192" y="203" text-anchor="end" fill="#1f2328">VOS</text>
+<rect x="200" y="191" width="85.4" height="16" rx="2" fill="#8c959f"/>
+<text x="291.4" y="203" fill="#57606a">46 ms</text>
+<text x="192" y="227" text-anchor="end" fill="#1f2328">Project:Title + VOS</text>
+<rect x="200" y="215" width="105.6" height="16" rx="2" fill="#8c959f"/>
+<text x="311.6" y="227" fill="#57606a">57 ms</text>
+<text x="192" y="251" text-anchor="end" fill="#1f2328">ZenOS</text>
+<rect x="200" y="239" width="111.4" height="16" rx="2" fill="#8c959f"/>
+<text x="317.4" y="251" fill="#57606a">60 ms</text>
+<text x="192" y="275" text-anchor="end" fill="#1f2328">SimpleUI + Bookshelf</text>
+<rect x="200" y="263" width="391.4" height="16" rx="2" fill="#8c959f"/>
+<text x="597.4" y="275" fill="#57606a">210 ms</text>
+<text x="192" y="299" text-anchor="end" fill="#1f2328">SimpleUI</text>
+<rect x="200" y="287" width="432.4" height="16" rx="2" fill="#8c959f"/>
+<text x="638.4" y="299" fill="#57606a">232 ms</text>
+<text x="192" y="323" text-anchor="end" fill="#1f2328">SimpleUI + VOS</text>
+<rect x="200" y="311" width="461.2" height="16" rx="2" fill="#8c959f"/>
+<text x="667.2" y="323" fill="#57606a">247 ms</text>
+<text x="192" y="347" text-anchor="end" fill="#1f2328">SimpleUI + VOS + Bookshelf</text>
+<rect x="200" y="335" width="470.0" height="16" rx="2" fill="#8c959f"/>
+<text x="676.0" y="347" fill="#57606a">252 ms</text>
+</svg>

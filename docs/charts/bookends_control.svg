@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="226" viewBox="0 0 760 226" font-family="Helvetica, Arial, sans-serif" font-size="13">
+<rect width="760" height="226" fill="#ffffff"/>
+<text x="12" y="26" font-size="15" font-weight="bold" fill="#1f2328">Bookends v5.31.0 control (real library), lower is better</text>
+<text x="162" y="74" text-anchor="end" font-weight="bold" fill="#1f2328">Reader page turn</text>
+<rect x="170" y="47" width="134.1" height="16" rx="2" fill="#0969da"/>
+<text x="310.1" y="59" fill="#57606a">Stock: 4.7 ms</text>
+<rect x="170" y="69" width="480.0" height="16" rx="2" fill="#bf8700"/>
+<text x="656.0" y="81" fill="#57606a">+ Bookends: 16.7 ms</text>
+<text x="162" y="132" text-anchor="end" font-weight="bold" fill="#1f2328">Closing a book</text>
+<rect x="170" y="105" width="260.3" height="16" rx="2" fill="#0969da"/>
+<text x="436.3" y="117" fill="#57606a">Stock: 26.6 ms</text>
+<rect x="170" y="127" width="480.0" height="16" rx="2" fill="#bf8700"/>
+<text x="656.0" y="139" fill="#57606a">+ Bookends: 49.1 ms</text>
+<text x="162" y="190" text-anchor="end" font-weight="bold" fill="#1f2328">Live Lua heap</text>
+<rect x="170" y="163" width="380.3" height="16" rx="2" fill="#0969da"/>
+<text x="556.3" y="175" fill="#57606a">Stock: 14.3 MiB</text>
+<rect x="170" y="185" width="480.0" height="16" rx="2" fill="#bf8700"/>
+<text x="656.0" y="197" fill="#57606a">+ Bookends: 18.0 MiB</text>
+</svg>

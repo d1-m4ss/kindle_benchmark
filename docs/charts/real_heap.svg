@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="372" viewBox="0 0 760 372" font-family="Helvetica, Arial, sans-serif" font-size="13">
+<rect width="760" height="372" fill="#ffffff"/>
+<text x="12" y="26" font-size="15" font-weight="bold" fill="#1f2328">Live Lua heap after stress (forced GC), lower is better</text>
+<text x="192" y="59" text-anchor="end" fill="#1f2328">Project:Title</text>
+<rect x="200" y="47" width="75.5" height="16" rx="2" fill="#8c959f"/>
+<text x="281.5" y="59" fill="#57606a">13.9 MiB</text>
+<text x="192" y="83" text-anchor="end" fill="#1f2328">m1n1mal + pagecount</text>
+<rect x="200" y="71" width="76.6" height="16" rx="2" fill="#2da44e"/>
+<text x="282.6" y="83" fill="#57606a">14.1 MiB</text>
+<text x="192" y="107" text-anchor="end" fill="#1f2328">Stock</text>
+<rect x="200" y="95" width="77.0" height="16" rx="2" fill="#0969da"/>
+<text x="283.0" y="107" fill="#57606a">14.1 MiB</text>
+<text x="192" y="131" text-anchor="end" fill="#1f2328">Project:Title + VOS</text>
+<rect x="200" y="119" width="83.5" height="16" rx="2" fill="#8c959f"/>
+<text x="289.5" y="131" fill="#57606a">15.3 MiB</text>
+<text x="192" y="155" text-anchor="end" fill="#1f2328">VOS</text>
+<rect x="200" y="143" width="85.1" height="16" rx="2" fill="#8c959f"/>
+<text x="291.1" y="155" fill="#57606a">15.6 MiB</text>
+<text x="192" y="179" text-anchor="end" fill="#1f2328">Bookshelf</text>
+<rect x="200" y="167" width="110.4" height="16" rx="2" fill="#8c959f"/>
+<text x="316.4" y="179" fill="#57606a">20.3 MiB</text>
+<text x="192" y="203" text-anchor="end" fill="#1f2328">VOS + Bookshelf</text>
+<rect x="200" y="191" width="118.2" height="16" rx="2" fill="#8c959f"/>
+<text x="324.2" y="203" fill="#57606a">21.7 MiB</text>
+<text x="192" y="227" text-anchor="end" fill="#1f2328">ZenOS</text>
+<rect x="200" y="215" width="121.2" height="16" rx="2" fill="#8c959f"/>
+<text x="327.2" y="227" fill="#57606a">22.3 MiB</text>
+<text x="192" y="251" text-anchor="end" fill="#1f2328">ZenOS + Bookshelf</text>
+<rect x="200" y="239" width="160.5" height="16" rx="2" fill="#8c959f"/>
+<text x="366.5" y="251" fill="#57606a">29.5 MiB</text>
+<text x="192" y="275" text-anchor="end" fill="#1f2328">SimpleUI</text>
+<rect x="200" y="263" width="358.9" height="16" rx="2" fill="#8c959f"/>
+<text x="564.9" y="275" fill="#57606a">66.0 MiB</text>
+<text x="192" y="299" text-anchor="end" fill="#1f2328">SimpleUI + Bookshelf</text>
+<rect x="200" y="287" width="404.2" height="16" rx="2" fill="#8c959f"/>
+<text x="610.2" y="299" fill="#57606a">74.3 MiB</text>
+<text x="192" y="323" text-anchor="end" fill="#1f2328">SimpleUI + VOS</text>
+<rect x="200" y="311" width="426.6" height="16" rx="2" fill="#8c959f"/>
+<text x="632.6" y="323" fill="#57606a">78.4 MiB</text>
+<text x="192" y="347" text-anchor="end" fill="#1f2328">SimpleUI + VOS + Bookshelf</text>
+<rect x="200" y="335" width="470.0" height="16" rx="2" fill="#8c959f"/>
+<text x="676.0" y="347" fill="#57606a">86.4 MiB</text>
+</svg>

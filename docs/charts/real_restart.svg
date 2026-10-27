@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="372" viewBox="0 0 760 372" font-family="Helvetica, Arial, sans-serif" font-size="13">
+<rect width="760" height="372" fill="#ffffff"/>
+<text x="12" y="26" font-size="15" font-weight="bold" fill="#1f2328">Real library (2,692 EPUBs): restart to usable library, lower is better</text>
+<text x="192" y="59" text-anchor="end" fill="#1f2328">Stock</text>
+<rect x="200" y="47" width="271.0" height="16" rx="2" fill="#0969da"/>
+<text x="477.0" y="59" fill="#57606a">269 ms</text>
+<text x="192" y="83" text-anchor="end" fill="#1f2328">Bookshelf</text>
+<rect x="200" y="71" width="275.5" height="16" rx="2" fill="#8c959f"/>
+<text x="481.5" y="83" fill="#57606a">273 ms</text>
+<text x="192" y="107" text-anchor="end" fill="#1f2328">m1n1mal + pagecount</text>
+<rect x="200" y="95" width="276.3" height="16" rx="2" fill="#2da44e"/>
+<text x="482.3" y="107" fill="#57606a">274 ms</text>
+<text x="192" y="131" text-anchor="end" fill="#1f2328">Project:Title</text>
+<rect x="200" y="119" width="281.1" height="16" rx="2" fill="#8c959f"/>
+<text x="487.1" y="131" fill="#57606a">279 ms</text>
+<text x="192" y="155" text-anchor="end" fill="#1f2328">VOS</text>
+<rect x="200" y="143" width="293.4" height="16" rx="2" fill="#8c959f"/>
+<text x="499.4" y="155" fill="#57606a">291 ms</text>
+<text x="192" y="179" text-anchor="end" fill="#1f2328">VOS + Bookshelf</text>
+<rect x="200" y="167" width="308.3" height="16" rx="2" fill="#8c959f"/>
+<text x="514.3" y="179" fill="#57606a">306 ms</text>
+<text x="192" y="203" text-anchor="end" fill="#1f2328">Project:Title + VOS</text>
+<rect x="200" y="191" width="336.0" height="16" rx="2" fill="#8c959f"/>
+<text x="542.0" y="203" fill="#57606a">333 ms</text>
+<text x="192" y="227" text-anchor="end" fill="#1f2328">ZenOS + Bookshelf</text>
+<rect x="200" y="215" width="404.7" height="16" rx="2" fill="#8c959f"/>
+<text x="610.7" y="227" fill="#57606a">401 ms</text>
+<text x="192" y="251" text-anchor="end" fill="#1f2328">SimpleUI + VOS</text>
+<rect x="200" y="239" width="412.1" height="16" rx="2" fill="#8c959f"/>
+<text x="618.1" y="251" fill="#57606a">409 ms</text>
+<text x="192" y="275" text-anchor="end" fill="#1f2328">SimpleUI + VOS + Bookshelf</text>
+<rect x="200" y="263" width="429.9" height="16" rx="2" fill="#8c959f"/>
+<text x="635.9" y="275" fill="#57606a">426 ms</text>
+<text x="192" y="299" text-anchor="end" fill="#1f2328">SimpleUI + Bookshelf</text>
+<rect x="200" y="287" width="449.4" height="16" rx="2" fill="#8c959f"/>
+<text x="655.4" y="299" fill="#57606a">446 ms</text>
+<text x="192" y="323" text-anchor="end" fill="#1f2328">ZenOS</text>
+<rect x="200" y="311" width="464.8" height="16" rx="2" fill="#8c959f"/>
+<text x="670.8" y="323" fill="#57606a">461 ms</text>
+<text x="192" y="347" text-anchor="end" fill="#1f2328">SimpleUI</text>
+<rect x="200" y="335" width="470.0" height="16" rx="2" fill="#8c959f"/>
+<text x="676.0" y="347" fill="#57606a">466 ms</text>
+</svg>

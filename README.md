@@ -8,15 +8,36 @@ It answers a practical question: **which UI changes stay close to Stock KOReader
 
 ## Quick links
 
-- Current baseline, all stacks except Project:Title: [Phase 1](results/runs/2026-10-27-m1n1mal-v3/phase1/REPORT.md), [Phase 2](results/runs/2026-10-27-m1n1mal-v3/phase2/REPORT.md), [notes](results/runs/2026-10-27-m1n1mal-v3/NOTES.md)
-- Project:Title with the cover list enabled: [Phase 1](results/runs/2026-10-27-pt-covers/phase1/REPORT.md), [Phase 2](results/runs/2026-10-27-pt-covers/phase2/REPORT.md)
-- Earlier campaigns: [2026-09-03 Phase 1](results/runs/2026-09-03-full/phase1/REPORT.md), [Phase 2](results/runs/2026-09-03-full/phase2/REPORT.md), [Bookends control](results/runs/2026-09-03-bookends10-fixed/phase2/BOOKENDS_REPORT.md), [100 ms flash-delay study](results/runs/2026-09-03-flash100/phase1/REPORT.md)
-- [Campaign runbook](RUNBOOK.md)
-- [Scenario definitions and contracts](SCENARIOS.md)
+- Campaigns of 2026-10-27 (reports with all scenarios): [all stacks, Phase 1](results/runs/2026-10-27-m1n1mal-v3/phase1/REPORT.md) and [Phase 2](results/runs/2026-10-27-m1n1mal-v3/phase2/REPORT.md); [Project:Title with covers](results/runs/2026-10-27-pt-covers/phase2/REPORT.md); [VOS v1.4.1 stacks](results/runs/2026-10-27-vos-141/phase2/REPORT.md); [Bookends control](results/runs/2026-10-27-bookends/phase2/BOOKENDS_REPORT.md). Each row in the tables below comes from the newest campaign that measured it.
+- Earlier (older pins): [2026-09-03 Phase 1](results/runs/2026-09-03-full/phase1/REPORT.md), [Phase 2](results/runs/2026-09-03-full/phase2/REPORT.md), [100 ms flash-delay study](results/runs/2026-09-03-flash100/phase1/REPORT.md)
+- [Campaign runbook](RUNBOOK.md) · [Scenario definitions](SCENARIOS.md)
 
-## Headline results
+## Results at a glance (2026-10-27)
 
-There is no universal winner: the stacks prioritize different UI behaviours.
+Real library of 2,692 EPUBs, KOReader v2026.07.2 in the SDL emulator, every plugin on its latest stable release.
+
+| | Result |
+|---|---|
+| **Fast and light** | Stock, Bookshelf, VOS, Project:Title (cover list on) and my own minimal plugin (m1n1mal + pagecount): restart 269–291 ms, 14–16 MiB live Lua heap (Bookshelf 20 MiB). |
+| **Heaviest** | SimpleUI: restart 409–466 ms, 66–86 MiB heap, 210–250 ms to close a book (Stock: 29 ms). |
+| **In between** | ZenOS: restart 461 ms, 22 MiB; adding Bookshelf to VOS or ZenOS costs about 7 MiB more heap. |
+| **Bookends** | Page turn in the book 4.7 → 16.7 ms, closing a book 27 → 49 ms, +3.7 MiB heap. Small in absolute terms, not negligible. |
+| **Correction** | Project:Title's lead in the earlier report came from running without its cover list. With covers it is about as light as Stock, not clearly faster. |
+| **Library paging** | 15–17.5 ms per page for every stack, distributions overlap: no ranking. |
+
+![Restart to usable library](docs/charts/real_restart.svg)
+
+![Live Lua heap after stress](docs/charts/real_heap.svg)
+
+![Closing a book](docs/charts/real_close_book.svg)
+
+![Bookends control](docs/charts/bookends_control.svg)
+
+**m1n1mal + pagecount** is my own minimal plugin pair (quick panel, corner status lines, background page counts on top of KOReader's own library). I made it for myself and have not published it yet; it is included only as a reference point.
+
+Emulator on Apple Silicon, not a Kindle: read the numbers as relative. Tables for every stack, the synthetic libraries and the Bookends control follow below; `scripts/make_summary_charts.py` regenerates the charts from the published CSVs.
+
+## Details: campaigns, tables and notes
 
 **Test date: 2026-10-27** (all campaigns below, same host and pinned KOReader).
 The current numbers come from four campaigns, each measuring only the configs
@@ -260,8 +281,8 @@ Only tagged stable releases are pinned. Pre-release tags are deliberately exclud
 | Project:Title | [`2026.07-v3.8.3`](https://github.com/joshuacant/ProjectTitle/releases/tag/2026.07-v3.8.3) | `f29b5328f408362a95282ed8786a5b691536260c` |
 | VOS | [`v1.4.1`](https://github.com/SeriousHornet/vos.koplugin/releases/tag/v1.4.1) | `a5c91d882290af68b437c049bed10e03a3b03be4` |
 | LeanUI (abandoned local rebuild) | `rebuild-local-2026-10-27` (local) | `5c5b2d5bcdfefccfc3a65d218c1cf913b2fec3d8` |
-| m1n1mal (local) | `local-2026-10-27` (local) | `44ea3f53b2ae4903497735d067b74b78214b4b1b` |
-| pagecount (same source tree as m1n1mal) | `local-2026-10-27` (local) | `44ea3f53b2ae4903497735d067b74b78214b4b1b` |
+| m1n1mal (my own plugin, not published yet) | `local-2026-10-27` (local) | `44ea3f53b2ae4903497735d067b74b78214b4b1b` |
+| pagecount (part of m1n1mal, not published yet) | `local-2026-10-27` (local) | `44ea3f53b2ae4903497735d067b74b78214b4b1b` |
 
 `versions.lock.json` is the single source of truth. `setup.sh` and `scripts/run_benchmarks.py` both read it, so bumping a dependency is a one-file edit:
 
