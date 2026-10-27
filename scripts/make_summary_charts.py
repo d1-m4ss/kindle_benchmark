@@ -87,6 +87,70 @@ def bookends_control(path: Path) -> None:
     path.write_text("\n".join(out) + "\n")
 
 
+def before_after(path: Path) -> None:
+    """Each plugin alone, previous vs current round, relative to Stock of the same campaign.
+
+    Absolute times are not comparable between the rounds (the current runs are
+    headless and Stock itself restarts about twice as fast), so times are shown
+    as a multiple of that campaign's Stock and heap as MiB above Stock.
+    """
+    old_csv = list(csv.DictReader(open(RUNS / "2026-09-12-full" / "phase2" / "RESULTS.csv")))
+
+    def get(rows, stack, scenario, mode, column="wall_time_ms_median"):
+        for r in rows:
+            if (r["Stack"], r["Scenario"], r["Mode"], r["Status"]) == (stack, scenario, mode, "PASS") and r.get(column):
+                return float(r[column])
+        raise KeyError((stack, scenario))
+
+    plugins = [("R1_bookshelf", "Bookshelf 5.0.0→6.0.3"), ("R5_vos", "VOS 1.3.4→1.4.1"),
+               ("R3_zenos", "ZenOS 3.2.2→4.2.0"), ("R2_simpleui", "SimpleUI 2.7.1→3.0.1"),
+               ("R4_project_title", "Project:Title (no covers→covers)")]
+    panels = [("Restart to library (× Stock)", "process:spawn_to_library_ready_ms", "real_steady_cold", "wall_time_ms_median", "x"),
+              ("Open book (× Stock)", "open_book_minimal", "warm", "wall_time_ms_median", "x"),
+              ("Close book (× Stock)", "close_book", "warm", "wall_time_ms_median", "x"),
+              ("Live Lua heap (MiB above Stock)", "memory:post_stress_idle", "warm", "forced_gc_live_heap_kb_median", "mib")]
+
+    def rel(rows_for, stack, scenario, mode, column, kind):
+        a = metric_from(rows_for(stack), stack, scenario, mode, column)
+        b = metric_from(rows_for("R0_stock"), "R0_stock", scenario, mode, column)
+        return (a - b) / 1024 if kind == "mib" else a / b
+
+    def metric_from(rows, stack, scenario, mode, column):
+        return get(rows, stack, scenario, mode, column)
+
+    def rows_old(_stack): return old_csv
+
+    def rows_new(stack):
+        campaign = SOURCES.get(stack, BASE)
+        if campaign not in _cache:
+            _cache[campaign] = list(csv.DictReader(open(RUNS / campaign / "phase2" / "RESULTS.csv")))
+        return _cache[campaign]
+
+    width, pw, ph, top, left = 900, 440, 214, 44, 12
+    height = top + 2 * ph + 40
+    out = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}" font-family="Helvetica, Arial, sans-serif" font-size="12">',
+           f'<rect width="{width}" height="{height}" fill="#ffffff"/>',
+           '<text x="12" y="24" font-size="15" font-weight="bold" fill="#1f2328">Each plugin alone: previous round (gray) vs current (color), relative to Stock of the same round</text>']
+    for idx, (title, scenario, mode, column, kind) in enumerate(panels):
+        ox, oy = left + (idx % 2) * (pw + 8), top + (idx // 2) * ph
+        vals = [(label, rel(rows_old, k, scenario, mode, column, kind), rel(rows_new, k, scenario, mode, column, kind)) for k, label in plugins]
+        peak = max(max(abs(o), abs(n)) for _, o, n in vals)
+        scale = (pw - 200 - 70) / peak
+        out.append(f'<text x="{ox}" y="{oy + 16}" font-weight="bold" fill="#1f2328">{title}</text>')
+        for r, (label, o, n) in enumerate(vals):
+            y = oy + 28 + r * 34
+            out.append(f'<text x="{ox + 192}" y="{y + 20}" text-anchor="end" fill="#1f2328" font-size="11">{label}</text>')
+            fmt = (lambda v: f"{v:+.0f} MiB") if kind == "mib" else (lambda v: f"{v:.2f}x")
+            for j, (v, color) in enumerate(((o, "#afb8c1"), (n, "#0969da"))):
+                w = max(1.0, abs(v) * scale)
+                x0 = ox + 200 if v >= 0 else ox + 200 - w
+                out.append(f'<rect x="{x0:.1f}" y="{y + 2 + j * 14}" width="{w:.1f}" height="12" rx="2" fill="{color}"/>')
+                out.append(f'<text x="{ox + 200 + (w if v >= 0 else 0) + 5:.1f}" y="{y + 12 + j * 14}" fill="#57606a" font-size="10">{fmt(v)}</text>')
+    out.append(f'<text x="12" y="{height - 12}" fill="#57606a" font-size="11">Different run setups: the current runs are headless and Stock itself restarts ~2x faster, so only ratios to Stock are compared.</text>')
+    out.append("</svg>")
+    path.write_text("\n".join(out) + "\n")
+
+
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     restart = [(n, metric(k, "process:spawn_to_library_ready_ms", "real_steady_cold")) for k, n in NAMES.items()]
@@ -96,6 +160,7 @@ def main() -> None:
     bars("Live Lua heap after stress (forced GC), lower is better", "MiB", heap, OUT / "real_heap.svg", 1)
     bars("Closing a book, lower is better", "ms", close, OUT / "real_close_book.svg")
     bookends_control(OUT / "bookends_control.svg")
+    before_after(OUT / "before_after.svg")
 
 
 if __name__ == "__main__":

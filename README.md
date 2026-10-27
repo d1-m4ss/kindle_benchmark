@@ -34,6 +34,19 @@ Real library of 2,692 EPUBs, KOReader v2026.07.2 in the SDL emulator, every plug
 
 ![Bookends control](docs/charts/bookends_control.svg)
 
+### What changed since the previous round
+
+![Previous vs current round, per plugin](docs/charts/before_after.svg)
+
+Previous round: campaign `2026-09-12-full` (SimpleUI 2.7.1, ZenOS 3.2.2, Bookshelf 5.0.0, VOS 1.3.4); current: the 2026-10-27 campaigns (SimpleUI 3.0.1, ZenOS 4.2.0, Bookshelf 6.0.3, VOS 1.4.1). Absolute times are not comparable between the rounds (the current runs are headless and Stock itself restarts about twice as fast), so the chart compares each plugin with Stock of the same round. Project:Title is the same release in both; its change is only that it now runs with covers.
+
+- **ZenOS**: retained heap above Stock fell from +23 to +8 MiB; library render improved from 1.4x to 1.2x Stock. Restart, open and close got relatively slower.
+- **SimpleUI**: library render improved (about 3.5x to 2.4x Stock) and heap is about the same (+56 to +52 MiB); closing a book got much slower (2.7x to 8.1x Stock).
+- **Bookshelf**: close to Stock in both rounds (heap +5 to +6 MiB). Its own shelf is slower to page: 84 to 133 ms per page with the default animation, 26 to 38 ms with it off; shelf open and first render are slightly faster.
+- **VOS**: about the same, a little heavier relative to Stock.
+
+Two different harness setups and several plugin releases changed at once, so this shows direction, not the cause of any change.
+
 **m1n1mal + pagecount** is my own minimal plugin pair (quick panel, corner status lines, background page counts on top of KOReader's own library). I made it for myself and have not published it yet; it is included only as a reference point.
 
 Emulator on Apple Silicon, not a Kindle: read the numbers as relative. Tables for every stack, the synthetic libraries and the Bookends control follow below; `scripts/make_summary_charts.py` regenerates the charts from the published CSVs.

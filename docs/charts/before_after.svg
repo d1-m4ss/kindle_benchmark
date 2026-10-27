@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="512" viewBox="0 0 900 512" font-family="Helvetica, Arial, sans-serif" font-size="12">
+<rect width="900" height="512" fill="#ffffff"/>
+<text x="12" y="24" font-size="15" font-weight="bold" fill="#1f2328">Each plugin alone: previous round (gray) vs current (color), relative to Stock of the same round</text>
+<text x="12" y="60" font-weight="bold" fill="#1f2328">Restart to library (× Stock)</text>
+<text x="204" y="92" text-anchor="end" fill="#1f2328" font-size="11">Bookshelf 5.0.0→6.0.3</text>
+<rect x="212.0" y="74" width="95.3" height="12" rx="2" fill="#afb8c1"/>
+<text x="312.3" y="84" fill="#57606a" font-size="10">0.97x</text>
+<rect x="212.0" y="88" width="99.7" height="12" rx="2" fill="#0969da"/>
+<text x="316.7" y="98" fill="#57606a" font-size="10">1.02x</text>
+<text x="204" y="126" text-anchor="end" fill="#1f2328" font-size="11">VOS 1.3.4→1.4.1</text>
+<rect x="212.0" y="108" width="108.0" height="12" rx="2" fill="#afb8c1"/>
+<text x="325.0" y="118" fill="#57606a" font-size="10">1.10x</text>
+<rect x="212.0" y="122" width="106.1" height="12" rx="2" fill="#0969da"/>
+<text x="323.1" y="132" fill="#57606a" font-size="10">1.08x</text>
+<text x="204" y="160" text-anchor="end" fill="#1f2328" font-size="11">ZenOS 3.2.2→4.2.0</text>
+<rect x="212.0" y="142" width="138.2" height="12" rx="2" fill="#afb8c1"/>
+<text x="355.2" y="152" fill="#57606a" font-size="10">1.41x</text>
+<rect x="212.0" y="156" width="168.1" height="12" rx="2" fill="#0969da"/>
+<text x="385.1" y="166" fill="#57606a" font-size="10">1.72x</text>
+<text x="204" y="194" text-anchor="end" fill="#1f2328" font-size="11">SimpleUI 2.7.1→3.0.1</text>
+<rect x="212.0" y="176" width="141.3" height="12" rx="2" fill="#afb8c1"/>
+<text x="358.3" y="186" fill="#57606a" font-size="10">1.44x</text>
+<rect x="212.0" y="190" width="170.0" height="12" rx="2" fill="#0969da"/>
+<text x="387.0" y="200" fill="#57606a" font-size="10">1.73x</text>
+<text x="204" y="228" text-anchor="end" fill="#1f2328" font-size="11">Project:Title (no covers→covers)</text>
+<rect x="212.0" y="210" width="91.8" height="12" rx="2" fill="#afb8c1"/>
+<text x="308.8" y="220" fill="#57606a" font-size="10">0.94x</text>
+<rect x="212.0" y="224" width="101.7" height="12" rx="2" fill="#0969da"/>
+<text x="318.7" y="234" fill="#57606a" font-size="10">1.04x</text>
+<text x="460" y="60" font-weight="bold" fill="#1f2328">Open book (× Stock)</text>
+<text x="652" y="92" text-anchor="end" fill="#1f2328" font-size="11">Bookshelf 5.0.0→6.0.3</text>
+<rect x="660.0" y="74" width="147.8" height="12" rx="2" fill="#afb8c1"/>
+<text x="812.8" y="84" fill="#57606a" font-size="10">1.08x</text>
+<rect x="660.0" y="88" width="144.2" height="12" rx="2" fill="#0969da"/>
+<text x="809.2" y="98" fill="#57606a" font-size="10">1.05x</text>
+<text x="652" y="126" text-anchor="end" fill="#1f2328" font-size="11">VOS 1.3.4→1.4.1</text>
+<rect x="660.0" y="108" width="138.8" height="12" rx="2" fill="#afb8c1"/>
+<text x="803.8" y="118" fill="#57606a" font-size="10">1.01x</text>
+<rect x="660.0" y="122" width="146.6" height="12" rx="2" fill="#0969da"/>
+<text x="811.6" y="132" fill="#57606a" font-size="10">1.07x</text>
+<text x="652" y="160" text-anchor="end" fill="#1f2328" font-size="11">ZenOS 3.2.2→4.2.0</text>
+<rect x="660.0" y="142" width="151.8" height="12" rx="2" fill="#afb8c1"/>
+<text x="816.8" y="152" fill="#57606a" font-size="10">1.10x</text>
+<rect x="660.0" y="156" width="170.0" height="12" rx="2" fill="#0969da"/>
+<text x="835.0" y="166" fill="#57606a" font-size="10">1.24x</text>
+<text x="652" y="194" text-anchor="end" fill="#1f2328" font-size="11">SimpleUI 2.7.1→3.0.1</text>
+<rect x="660.0" y="176" width="156.0" height="12" rx="2" fill="#afb8c1"/>
+<text x="821.0" y="186" fill="#57606a" font-size="10">1.14x</text>
+<rect x="660.0" y="190" width="161.6" height="12" rx="2" fill="#0969da"/>
+<text x="826.6" y="200" fill="#57606a" font-size="10">1.18x</text>
+<text x="652" y="228" text-anchor="end" fill="#1f2328" font-size="11">Project:Title (no covers→covers)</text>
+<rect x="660.0" y="210" width="126.5" height="12" rx="2" fill="#afb8c1"/>
+<text x="791.5" y="220" fill="#57606a" font-size="10">0.92x</text>
+<rect x="660.0" y="224" width="127.9" height="12" rx="2" fill="#0969da"/>
+<text x="792.9" y="234" fill="#57606a" font-size="10">0.93x</text>
+<text x="12" y="274" font-weight="bold" fill="#1f2328">Close book (× Stock)</text>
+<text x="204" y="306" text-anchor="end" fill="#1f2328" font-size="11">Bookshelf 5.0.0→6.0.3</text>
+<rect x="212.0" y="288" width="17.9" height="12" rx="2" fill="#afb8c1"/>
+<text x="234.9" y="298" fill="#57606a" font-size="10">0.86x</text>
+<rect x="212.0" y="302" width="21.8" height="12" rx="2" fill="#0969da"/>
+<text x="238.8" y="312" fill="#57606a" font-size="10">1.04x</text>
+<text x="204" y="340" text-anchor="end" fill="#1f2328" font-size="11">VOS 1.3.4→1.4.1</text>
+<rect x="212.0" y="322" width="23.3" height="12" rx="2" fill="#afb8c1"/>
+<text x="240.3" y="332" fill="#57606a" font-size="10">1.12x</text>
+<rect x="212.0" y="336" width="33.6" height="12" rx="2" fill="#0969da"/>
+<text x="250.6" y="346" fill="#57606a" font-size="10">1.61x</text>
+<text x="204" y="374" text-anchor="end" fill="#1f2328" font-size="11">ZenOS 3.2.2→4.2.0</text>
+<rect x="212.0" y="356" width="21.0" height="12" rx="2" fill="#afb8c1"/>
+<text x="238.0" y="366" fill="#57606a" font-size="10">1.01x</text>
+<rect x="212.0" y="370" width="43.8" height="12" rx="2" fill="#0969da"/>
+<text x="260.8" y="380" fill="#57606a" font-size="10">2.10x</text>
+<text x="204" y="408" text-anchor="end" fill="#1f2328" font-size="11">SimpleUI 2.7.1→3.0.1</text>
+<rect x="212.0" y="390" width="56.5" height="12" rx="2" fill="#afb8c1"/>
+<text x="273.5" y="400" fill="#57606a" font-size="10">2.70x</text>
+<rect x="212.0" y="404" width="170.0" height="12" rx="2" fill="#0969da"/>
+<text x="387.0" y="414" fill="#57606a" font-size="10">8.13x</text>
+<text x="204" y="442" text-anchor="end" fill="#1f2328" font-size="11">Project:Title (no covers→covers)</text>
+<rect x="212.0" y="424" width="12.0" height="12" rx="2" fill="#afb8c1"/>
+<text x="229.0" y="434" fill="#57606a" font-size="10">0.57x</text>
+<rect x="212.0" y="438" width="20.4" height="12" rx="2" fill="#0969da"/>
+<text x="237.4" y="448" fill="#57606a" font-size="10">0.98x</text>
+<text x="460" y="274" font-weight="bold" fill="#1f2328">Live Lua heap (MiB above Stock)</text>
+<text x="652" y="306" text-anchor="end" fill="#1f2328" font-size="11">Bookshelf 5.0.0→6.0.3</text>
+<rect x="660.0" y="288" width="15.7" height="12" rx="2" fill="#afb8c1"/>
+<text x="680.7" y="298" fill="#57606a" font-size="10">+5 MiB</text>
+<rect x="660.0" y="302" width="18.7" height="12" rx="2" fill="#0969da"/>
+<text x="683.7" y="312" fill="#57606a" font-size="10">+6 MiB</text>
+<text x="652" y="340" text-anchor="end" fill="#1f2328" font-size="11">VOS 1.3.4→1.4.1</text>
+<rect x="660.0" y="322" width="1.2" height="12" rx="2" fill="#afb8c1"/>
+<text x="666.2" y="332" fill="#57606a" font-size="10">+0 MiB</text>
+<rect x="660.0" y="336" width="4.5" height="12" rx="2" fill="#0969da"/>
+<text x="669.5" y="346" fill="#57606a" font-size="10">+1 MiB</text>
+<text x="652" y="374" text-anchor="end" fill="#1f2328" font-size="11">ZenOS 3.2.2→4.2.0</text>
+<rect x="660.0" y="356" width="71.1" height="12" rx="2" fill="#afb8c1"/>
+<text x="736.1" y="366" fill="#57606a" font-size="10">+23 MiB</text>
+<rect x="660.0" y="370" width="24.7" height="12" rx="2" fill="#0969da"/>
+<text x="689.7" y="380" fill="#57606a" font-size="10">+8 MiB</text>
+<text x="652" y="408" text-anchor="end" fill="#1f2328" font-size="11">SimpleUI 2.7.1→3.0.1</text>
+<rect x="660.0" y="390" width="170.0" height="12" rx="2" fill="#afb8c1"/>
+<text x="835.0" y="400" fill="#57606a" font-size="10">+56 MiB</text>
+<rect x="660.0" y="404" width="157.8" height="12" rx="2" fill="#0969da"/>
+<text x="822.8" y="414" fill="#57606a" font-size="10">+52 MiB</text>
+<text x="652" y="442" text-anchor="end" fill="#1f2328" font-size="11">Project:Title (no covers→covers)</text>
+<rect x="655.6" y="424" width="4.4" height="12" rx="2" fill="#afb8c1"/>
+<text x="665.0" y="434" fill="#57606a" font-size="10">-1 MiB</text>
+<rect x="659.0" y="438" width="1.0" height="12" rx="2" fill="#0969da"/>
+<text x="665.0" y="448" fill="#57606a" font-size="10">-0 MiB</text>
+<text x="12" y="500" fill="#57606a" font-size="11">Different run setups: the current runs are headless and Stock itself restarts ~2x faster, so only ratios to Stock are compared.</text>
+</svg>
