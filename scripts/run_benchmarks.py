@@ -434,6 +434,17 @@ def setup_isolated_home(job: Job) -> Path:
             settings.write_text('return { quick_menu_settings = { library = { mode = '
                                 + json.dumps(job.library_mode)
                                 + ', background = { mode = "off" } } } }\n')
+    if "vos" in job.plugins:
+        # VOS >= 1.4.1 defaults to hide_empty_folders=true and leaves any empty
+        # folder it is asked to open. The flat synthetic libraries have no real
+        # subfolder: the folder-enter target is a book's (empty) .sdr sidecar
+        # directory, so the scenario would be redirected to the parent. Turn only
+        # that option off; every other VOS setting stays at its default.
+        settings_dir = home / "settings"
+        settings_dir.mkdir(parents=True, exist_ok=True)
+        vos_settings = settings_dir / "visual_overhaul.lua"
+        if not vos_settings.exists():
+            vos_settings.write_text('return { extras = { hide_empty_folders = false } }\n')
     if "project_title" in job.plugins:
         settings_dir = home / "settings"
         settings_dir.mkdir(parents=True, exist_ok=True)

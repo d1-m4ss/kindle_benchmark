@@ -7,3 +7,5 @@ only the Project:Title configs have Phase 1 and Phase 2 data. The runner hash di
 `2026-10-27-m1n1mal-v3` (Project:Title setup no longer pre-marked done; `--configs` scopes the Phase 2 gate).
 VOS is pinned to v1.4 (see the v3 notes). `versions.lock.json` was edited afterwards only to make local plugin
 paths relative.
+
+Only the `E_project_title` / `R4_project_title` rows are used in the README; the Project:Title + VOS rows here ran on VOS v1.4 and are superseded by `2026-10-27-vos-141`.

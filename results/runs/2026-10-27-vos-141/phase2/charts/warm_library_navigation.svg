@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1050" height="520" viewBox="0 0 1050 520">
+<rect width="100%" height="100%" fill="white"/>
+<text x="525.0" y="28" text-anchor="middle" font-family="sans-serif" font-size="18">Warm library navigation</text>
+<text x="18" y="212.5" transform="rotate(-90 18 212.5)" text-anchor="middle" font-family="sans-serif" font-size="12">Median latency (ms)</text>
+<line x1="70" y1="55" x2="70" y2="370" stroke="black"/>
+<line x1="70" y1="370" x2="1030" y2="370" stroke="black"/>
+<rect x="79.60" y="284.07" width="44.80" height="85.93" fill="#3978b5"/>
+<text x="102.00" y="280.07" text-anchor="middle" font-family="sans-serif" font-size="9">14.27</text>
+<text x="102.00" y="382" transform="rotate(55 102.00 382)" text-anchor="start" font-family="sans-serif" font-size="9">R10_simpleui_vos_bookshelf library_cached_paging</text>
+<rect x="143.60" y="55.00" width="44.80" height="315.00" fill="#3978b5"/>
+<text x="166.00" y="51.00" text-anchor="middle" font-family="sans-serif" font-size="9">52.31</text>
+<text x="166.00" y="382" transform="rotate(55 166.00 382)" text-anchor="start" font-family="sans-serif" font-size="9">R10_simpleui_vos_bookshelf library_first_render</text>
+<rect x="207.60" y="273.09" width="44.80" height="96.91" fill="#3978b5"/>
+<text x="230.00" y="269.09" text-anchor="middle" font-family="sans-serif" font-size="9">16.09</text>
+<text x="230.00" y="382" transform="rotate(55 230.00 382)" text-anchor="start" font-family="sans-serif" font-size="9">R10_simpleui_vos_bookshelf library_sequential_paging</text>
+<rect x="271.60" y="257.89" width="44.80" height="112.11" fill="#3978b5"/>
+<text x="294.00" y="253.89" text-anchor="middle" font-family="sans-serif" font-size="9">18.62</text>
+<text x="294.00" y="382" transform="rotate(55 294.00 382)" text-anchor="start" font-family="sans-serif" font-size="9">R11_project_title_vos library_cached_paging</text>
+<rect x="335.60" y="93.72" width="44.80" height="276.28" fill="#3978b5"/>
+<text x="358.00" y="89.72" text-anchor="middle" font-family="sans-serif" font-size="9">45.88</text>
+<text x="358.00" y="382" transform="rotate(55 358.00 382)" text-anchor="start" font-family="sans-serif" font-size="9">R11_project_title_vos library_first_render</text>
+<rect x="399.60" y="278.84" width="44.80" height="91.16" fill="#3978b5"/>
+<text x="422.00" y="274.84" text-anchor="middle" font-family="sans-serif" font-size="9">15.14</text>
+<text x="422.00" y="382" transform="rotate(55 422.00 382)" text-anchor="start" font-family="sans-serif" font-size="9">R11_project_title_vos library_sequential_paging</text>
+<rect x="463.60" y="281.71" width="44.80" height="88.29" fill="#3978b5"/>
+<text x="486.00" y="277.71" text-anchor="middle" font-family="sans-serif" font-size="9">14.66</text>
+<text x="486.00" y="382" transform="rotate(55 486.00 382)" text-anchor="start" font-family="sans-serif" font-size="9">R5_vos library_cached_paging</text>
+<rect x="527.60" y="162.40" width="44.80" height="207.60" fill="#3978b5"/>
+<text x="550.00" y="158.40" text-anchor="middle" font-family="sans-serif" font-size="9">34.48</text>
+<text x="550.00" y="382" transform="rotate(55 550.00 382)" text-anchor="start" font-family="sans-serif" font-size="9">R5_vos library_first_render</text>
+<rect x="591.60" y="276.98" width="44.80" height="93.02" fill="#3978b5"/>
+<text x="614.00" y="272.98" text-anchor="middle" font-family="sans-serif" font-size="9">15.45</text>
+<text x="614.00" y="382" transform="rotate(55 614.00 382)" text-anchor="start" font-family="sans-serif" font-size="9">R5_vos library_sequential_paging</text>
+<rect x="655.60" y="279.14" width="44.80" height="90.86" fill="#3978b5"/>
+<text x="678.00" y="275.14" text-anchor="middle" font-family="sans-serif" font-size="9">15.09</text>
+<text x="678.00" y="382" transform="rotate(55 678.00 382)" text-anchor="start" font-family="sans-serif" font-size="9">R8_vos_bookshelf library_cached_paging</text>
+<rect x="719.60" y="162.23" width="44.80" height="207.77" fill="#3978b5"/>
+<text x="742.00" y="158.23" text-anchor="middle" font-family="sans-serif" font-size="9">34.51</text>
+<text x="742.00" y="382" transform="rotate(55 742.00 382)" text-anchor="start" font-family="sans-serif" font-size="9">R8_vos_bookshelf library_first_render</text>
+<rect x="783.60" y="272.89" width="44.80" height="97.11" fill="#3978b5"/>
+<text x="806.00" y="268.89" text-anchor="middle" font-family="sans-serif" font-size="9">16.13</text>
+<text x="806.00" y="382" transform="rotate(55 806.00 382)" text-anchor="start" font-family="sans-serif" font-size="9">R8_vos_bookshelf library_sequential_paging</text>
+<rect x="847.60" y="281.78" width="44.80" height="88.22" fill="#3978b5"/>
+<text x="870.00" y="277.78" text-anchor="middle" font-family="sans-serif" font-size="9">14.65</text>
+<text x="870.00" y="382" transform="rotate(55 870.00 382)" text-anchor="start" font-family="sans-serif" font-size="9">R9_simpleui_vos library_cached_paging</text>
+<rect x="911.60" y="61.85" width="44.80" height="308.15" fill="#3978b5"/>
+<text x="934.00" y="57.85" text-anchor="middle" font-family="sans-serif" font-size="9">51.18</text>
+<text x="934.00" y="382" transform="rotate(55 934.00 382)" text-anchor="start" font-family="sans-serif" font-size="9">R9_simpleui_vos library_first_render</text>
+<rect x="975.60" y="272.90" width="44.80" height="97.10" fill="#3978b5"/>
+<text x="998.00" y="268.90" text-anchor="middle" font-family="sans-serif" font-size="9">16.12</text>
+<text x="998.00" y="382" transform="rotate(55 998.00 382)" text-anchor="start" font-family="sans-serif" font-size="9">R9_simpleui_vos library_sequential_paging</text>
+</svg>

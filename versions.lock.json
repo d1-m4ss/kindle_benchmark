@@ -90,12 +90,11 @@
       "checkout_path": "plugins_source/vos",
       "plugin_dir": "vos.koplugin",
       "loaded_name": "vos",
-      "tag": "v1.4",
-      "commit": "f4793dd43881e980419fd3ffb56abfb69beff5d6",
-      "date": "2026-10-25T22:39:09+08:00",
-      "release_url": "https://github.com/SeriousHornet/vos.koplugin/releases/tag/v1.4",
-      "tree_url": "https://github.com/SeriousHornet/vos.koplugin/tree/f4793dd43881e980419fd3ffb56abfb69beff5d6",
-      "note": "Latest stable is v1.4.1, but its automatic series folders (commit 51920c7) make library_folder_enter fail in this harness; v1.4 is the newest release without that feature."
+      "tag": "v1.4.1",
+      "commit": "a5c91d882290af68b437c049bed10e03a3b03be4",
+      "date": "2026-10-26T14:03:31+08:00",
+      "release_url": "https://github.com/SeriousHornet/vos.koplugin/releases/tag/v1.4.1",
+      "tree_url": "https://github.com/SeriousHornet/vos.koplugin/tree/a5c91d882290af68b437c049bed10e03a3b03be4"
     },
     "m1n1mal": {
       "repo": "../../koreader_plugin/m1n1mal",

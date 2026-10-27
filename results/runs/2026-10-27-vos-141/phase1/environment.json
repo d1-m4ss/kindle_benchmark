@@ -1,0 +1,22 @@
+{
+  "benchmark_harness_sha256": "02d0ba91801cd3f859bc86b85d2f8a8111f820021cb6b9f25e53a6ed1347f2b5",
+  "campaign": "2026-10-27-vos-141",
+  "created_or_verified_utc": "2026-10-27T19:59:13.993632+00:00",
+  "emulate_reader_flash_ms": null,
+  "host": {
+    "machine": "arm64",
+    "python": "3.14.9",
+    "release": "27.0.0",
+    "system": "Darwin"
+  },
+  "phase": "phase1",
+  "runner_sha256": "9d796581876bf6a24f1c11b9a24f04387b575eaea0e4fb73423722c35eb2610e",
+  "sdl_video_driver": "dummy",
+  "target": {
+    "dpi": 300,
+    "grayscale": true,
+    "height": 1648,
+    "width": 1236
+  },
+  "versions_lock_sha256": "c792a7f6cfd87cad3e4f4f44f45eae9070b409392d420b44dc24bb4639bd823d"
+}

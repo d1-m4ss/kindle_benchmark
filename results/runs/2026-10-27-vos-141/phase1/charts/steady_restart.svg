@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="520" viewBox="0 0 800 520">
+<rect width="100%" height="100%" fill="white"/>
+<text x="400.0" y="28" text-anchor="middle" font-family="sans-serif" font-size="18">Steady-state restart to usable library</text>
+<text x="18" y="212.5" transform="rotate(-90 18 212.5)" text-anchor="middle" font-family="sans-serif" font-size="12">Median latency (ms)</text>
+<line x1="70" y1="55" x2="70" y2="370" stroke="black"/>
+<line x1="70" y1="370" x2="780" y2="370" stroke="black"/>
+<rect x="91.30" y="128.78" width="99.40" height="241.22" fill="#3978b5"/>
+<text x="141.00" y="124.78" text-anchor="middle" font-family="sans-serif" font-size="9">241.18</text>
+<text x="141.00" y="382" transform="rotate(55 141.00 382)" text-anchor="start" font-family="sans-serif" font-size="9">F_vos process:spawn_to_library_ready_ms</text>
+<rect x="233.30" y="130.90" width="99.40" height="239.10" fill="#3978b5"/>
+<text x="283.00" y="126.90" text-anchor="middle" font-family="sans-serif" font-size="9">239.06</text>
+<text x="283.00" y="382" transform="rotate(55 283.00 382)" text-anchor="start" font-family="sans-serif" font-size="9">I_vos_bookshelf process:spawn_to_library_ready_ms</text>
+<rect x="375.30" y="55.00" width="99.40" height="315.00" fill="#3978b5"/>
+<text x="425.00" y="51.00" text-anchor="middle" font-family="sans-serif" font-size="9">314.94</text>
+<text x="425.00" y="382" transform="rotate(55 425.00 382)" text-anchor="start" font-family="sans-serif" font-size="9">J_simpleui_vos process:spawn_to_library_ready_ms</text>
+<rect x="517.30" y="63.80" width="99.40" height="306.20" fill="#3978b5"/>
+<text x="567.00" y="59.80" text-anchor="middle" font-family="sans-serif" font-size="9">306.14</text>
+<text x="567.00" y="382" transform="rotate(55 567.00 382)" text-anchor="start" font-family="sans-serif" font-size="9">K_simpleui_vos_bookshelf process:spawn_to_library_ready_ms</text>
+<rect x="659.30" y="114.05" width="99.40" height="255.95" fill="#3978b5"/>
+<text x="709.00" y="110.05" text-anchor="middle" font-family="sans-serif" font-size="9">255.90</text>
+<text x="709.00" y="382" transform="rotate(55 709.00 382)" text-anchor="start" font-family="sans-serif" font-size="9">L_project_title_vos process:spawn_to_library_ready_ms</text>
+</svg>

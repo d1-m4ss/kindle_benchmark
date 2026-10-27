@@ -35,6 +35,8 @@ results/runs/*
 !results/runs/2026-09-12-full/
 !results/runs/2026-10-27-m1n1mal-v3/
 !results/runs/2026-10-27-pt-covers/
+!results/runs/2026-10-27-vos-141/
+!results/runs/2026-10-27-bookends/
 results/runs/**/raw/
 results/runs/**/logs/
 results/runs/**/checkpoints/
