@@ -119,6 +119,18 @@
       "date": "2026-10-27T18:12:40+02:00",
       "release_url": "local",
       "tree_url": "local"
+    },
+    "cyberui": {
+      "repo": "https://github.com/EmirErtorer/CyberUI.koplugin.git",
+      "checkout_path": "plugins_source/cyberui",
+      "plugin_dir": "cyberui.koplugin",
+      "loaded_name": "cyberui",
+      "tag": "v1.0.0",
+      "commit": "b7e61e0fe34bc8a650b37da335a1a73a1b234ded",
+      "date": "2026-10-24T03:03:42+03:00",
+      "release_url": "https://github.com/EmirErtorer/CyberUI.koplugin/releases/tag/v1.0.0",
+      "tree_url": "https://github.com/EmirErtorer/CyberUI.koplugin/tree/b7e61e0fe34bc8a650b37da335a1a73a1b234ded",
+      "note": "Latest stable release; v1.0.5 is a pre-release."
     }
   }
 }

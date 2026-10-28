@@ -37,9 +37,11 @@ results/runs/*
 !results/runs/2026-10-27-pt-covers/
 !results/runs/2026-10-27-vos-141/
 !results/runs/2026-10-27-bookends/
+!results/runs/2026-10-28-cyberui-b/
 results/runs/**/raw/
 results/runs/**/logs/
 results/runs/**/checkpoints/
 results/runs/**/screenshots/
 plugins_source/m1n1mal/
 plugins_source/pagecount/
+plugins_source/cyberui/

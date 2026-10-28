@@ -364,10 +364,19 @@ function Benchmark:runHarness()
         return result or { success = false, reason = "Reset returned no result" }
     end
 
+    -- Adapters of UIs that paint their own window (not the FileChooser) name
+    -- the paint target and how to read its visible content.
+    local adapter_hook = {}
     local paint_observer = PaintObserver.install(UIManager, function()
+        local a = adapter_hook.adapter
+        if a and a.paint_target then return a:paint_target() end
         local fm = require("apps/filemanager/filemanager").instance
         return fm and fm.file_chooser
-    end, Adapters.visible_signature, time.monotonic)
+    end, function(target)
+        local a = adapter_hook.adapter
+        if a and a.paint_signature then return a:paint_signature(target) end
+        return Adapters.visible_signature(target)
+    end, time.monotonic)
 
     local function measured(action_fn, instrumented)
         local before = memory_snapshot(false)
@@ -551,6 +560,7 @@ function Benchmark:runHarness()
     if #target_folders > 0 then sample_folder = target_folders[1] end
     results.deterministic_target_counts = { books = #target_books, folders = #target_folders }
     local adapter = Adapters.get_adapter(config_name, library_dir, sample_book, sample_folder)
+    adapter_hook.adapter = adapter
     if (profile == "paging" or profile == "smoke_validation") and target_leaf_folder then
         -- The runner only names a leaf folder when the library root holds too
         -- few books to page through. This narrows the measured workload, so

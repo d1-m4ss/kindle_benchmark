@@ -1169,7 +1169,381 @@ function LeanUIAdapter:start_to_home()
     return self:unsupported("LeanUI has no standalone Home Screen")
 end
 
+
+-- CyberUI is a full-screen window of its own (a home screen plus its own paged
+-- library, sorting and folders) that sits above KOReader's file browser, so the
+-- library scenarios drive its screens, not the FileChooser underneath.
+local CyberUIAdapter = setmetatable({}, { __index = StockAdapter })
+CyberUIAdapter.__index = CyberUIAdapter
+
+local cyber_last_grid
+
+local function cyber_app()
+    local ok, App = pcall(require, "cyberui/app")
+    return ok and App or nil
+end
+
+local function cyber_host()
+    for _, entry in ipairs(UIManager._window_stack or {}) do
+        local w = entry.widget or entry
+        if w and w.name == "cyberui" and type(w.setRoot) == "function" then return w end
+    end
+end
+
+-- Remember the library's grid (the only one with the 1.72 cell ratio) and the
+-- capacity it laid out, so the visible page can be read back.
+local function cyber_hook_grid()
+    local Grid = require("cyberui/ui/grid")
+    if Grid._bench_hooked then return end
+    Grid._bench_hooked = true
+    local layout = Grid.layout
+    Grid.layout = function(self, w, h)
+        if self.ratio == 1.72 then
+            local on_layout = self.on_layout
+            self.on_layout = function(cap, pages, page)
+                self._bench_cap = cap
+                if on_layout then return on_layout(cap, pages, page) end
+            end
+            cyber_last_grid = self
+        end
+        return layout(self, w, h)
+    end
+end
+
+local function cyber_library()
+    local App = cyber_app()
+    local screen = App and App.isOpen() and App.current()
+    if screen and screen.id == "library" then return screen end
+end
+
+function CyberUIAdapter:ensure_filemanager()
+    local root = self.paging_root or self.library_dir
+    local settings = rawget(_G, "G_reader_settings")
+    if settings and root then
+        if settings:readSetting("home_dir") ~= root then
+            settings:saveSetting("home_dir", root)
+            settings:saveSetting("lastdir", root)
+            settings:flush()
+        end
+    end
+    local FM = require("apps/filemanager/filemanager")
+    if not FM.instance then FM:showFiles(root) end
+    cyber_hook_grid()
+    local App = cyber_app()
+    if App and not App.isOpen() then App.open() end
+    return FM
+end
+
+-- Transient notices (for example CoverBrowser's "Book info cache database
+-- updated" on a fresh home) sit above the host; they are not part of what is
+-- measured, so close them like the SimpleUI adapter does.
+local function cyber_dismiss_notices()
+    for i = #(UIManager._window_stack or {}), 1, -1 do
+        local entry = UIManager._window_stack[i]
+        local w = entry and (entry.widget or entry)
+        if w and w ~= cyber_host() and (w.name == "infomessage" or w.is_infomessage or w.timeout or w.modal) then
+            pcall(function() UIManager:close(w) end)
+        end
+    end
+end
+
+function CyberUIAdapter:startup_ready()
+    cyber_hook_grid()
+    cyber_dismiss_notices()
+    local App = cyber_app()
+    local host = cyber_host()
+    if App and App.isOpen() and host and top_widget() == host then
+        return self:ok({ startup_widget = "cyberui_home" })
+    end
+    local stack_labels = {}
+    for _, entry in ipairs(UIManager._window_stack or {}) do
+        local w = entry.widget or entry
+        stack_labels[#stack_labels + 1] = widget_label(w) .. ":" .. tostring(w.name or w.id or w.title or w.text)
+    end
+    return self:fail(string.format("CyberUI home is not on top: open=%s host=%s top=%s stack=%s",
+        tostring(App and App.isOpen()), tostring(host ~= nil), tostring(widget_label(top_widget())), table.concat(stack_labels, ">")))
+end
+
+function CyberUIAdapter:start_to_home()
+    cyber_dismiss_notices()
+    local App = cyber_app()
+    local screen = App and App.isOpen() and App.current()
+    if not screen then return self:fail("CyberUI is not open") end
+    App.go("home")
+    return self:deferred(function()
+        local now = App.current()
+        if App.isOpen() and now and now.id == "home" and top_widget() == cyber_host() then
+            return self:ok({ screen = "cyberui_home", expected_refresh = true })
+        end
+        return self:fail("CyberUI home is not visible on top")
+    end)
+end
+
+function CyberUIAdapter:get_page_info()
+    local screen = cyber_library()
+    if not screen then
+        self:ensure_filemanager()
+        local App = cyber_app()
+        if App.current() and App.current().id ~= "library" then App.go("library") end
+        screen = cyber_library()
+    end
+    local grid = cyber_last_grid
+    if not screen or not grid or not grid.items or not grid._bench_cap then return nil end
+    local first = (grid.page - 1) * grid._bench_cap
+    local items, parts = {}, {}
+    for i = 1, #grid.children do
+        local item = grid.items[first + i]
+        local val = item and (item.path or (item.folder and item.folder.path))
+        if val then items[#items + 1] = val; parts[#parts + 1] = val end
+    end
+    local sig = table.concat(parts, "\31")
+    return {
+        current_page = tonumber(screen.page) or 1,
+        total_pages = tonumber(screen.pages) or 1,
+        visible_count = #items,
+        visible_signature = sig ~= "" and sig or nil,
+        visible_items = items,
+        per_page_capacity = grid._bench_cap,
+    }
+end
+
+function CyberUIAdapter:paint_target()
+    return cyber_host()
+end
+
+function CyberUIAdapter:paint_signature()
+    local App = cyber_app()
+    local screen = App and App.isOpen() and App.current()
+    if not screen then return nil end
+    if screen.id == "library" then
+        local info = self:get_page_info()
+        return info and info.visible_signature and string.format("library|%s|%s", tostring(info.current_page), info.visible_signature) or nil
+    end
+    return "screen|" .. tostring(screen.id)
+end
+
+function CyberUIAdapter:goto_page(target_page)
+    local screen = cyber_library()
+    if not screen then
+        self:get_page_info()
+        screen = cyber_library()
+    end
+    if not screen then return false end
+    screen.page = 1
+    screen:setPage(target_page)
+    if target_page == 1 then cyber_app().render("ui") end
+    return true
+end
+
+function CyberUIAdapter:home_to_library()
+    cyber_dismiss_notices()
+    local App = cyber_app()
+    if not (App and App.isOpen()) then self:ensure_filemanager(); App = cyber_app() end
+    if cyber_library() then return self:fail("Already at CyberUI library before home_to_library") end
+    App.go("library")
+    return self:deferred(function()
+        local info = self:get_page_info()
+        if cyber_library() and top_widget() == cyber_host() and info and info.visible_signature then
+            return self:ok({ active_widget = "cyberui_library", visible_signature = info.visible_signature, expected_refresh = true })
+        end
+        return self:fail("CyberUI library is not visible with loaded items")
+    end)
+end
+
+function CyberUIAdapter:library_first_render()
+    local App = cyber_app()
+    if not (App and App.isOpen()) then self:ensure_filemanager(); App = cyber_app() end
+    -- a fresh library screen: first page, nothing cached on the screen object
+    App.go("library")
+    return self:deferred(function()
+        local info = self:get_page_info()
+        if cyber_library() and top_widget() == cyber_host() and info and info.visible_signature then
+            return self:ok({ items_loaded = info.visible_count, visible_signature = info.visible_signature, expected_refresh = true })
+        end
+        return self:fail("library_first_render fail: CyberUI library has no visible items")
+    end)
+end
+
+local function cyber_page_transition(self, from_page, to_page, forward)
+    local screen = cyber_library()
+    if not screen then self:get_page_info(); screen = cyber_library() end
+    if not screen then return self:fail("CyberUI library is unavailable") end
+    local info_before = self:get_page_info()
+    if not info_before then return self:fail("Failed to get page info before transition") end
+    if info_before.current_page ~= from_page then
+        return self:fail(string.format("Precondition failed: current page %s != expected %s", tostring(info_before.current_page), tostring(from_page)))
+    end
+    if forward then
+        if to_page ~= from_page + 1 then return self:fail("Invalid sequential transition: to_page != from_page + 1") end
+        if from_page >= info_before.total_pages then return self:unsupported("Already at the last page; cannot navigate forward without wrapping") end
+    else
+        if to_page ~= from_page - 1 then return self:fail("Invalid backward transition: to_page != from_page - 1") end
+        if from_page <= 1 then return self:unsupported("Already at page 1; cannot navigate backward") end
+    end
+    if info_before.visible_count == 0 or info_before.visible_signature == nil then
+        return self:fail("Precondition failed: empty visible signature or zero items before transition")
+    end
+    screen:setPage(to_page)
+    return self:deferred(function()
+        local info_after = self:get_page_info()
+        if not info_after or top_widget() ~= cyber_host() then return self:fail("CyberUI library is not visible after page transition") end
+        if info_after.current_page ~= to_page then
+            return self:fail(string.format("Page number mismatch: got %s, expected %s", tostring(info_after.current_page), tostring(to_page)))
+        end
+        if info_after.visible_count == 0 or info_after.visible_signature == nil then
+            return self:fail("Postcondition failed: page has zero items or empty signature after transition")
+        end
+        if info_after.visible_signature == info_before.visible_signature then
+            return self:fail("Postcondition failed: visible signature did not change across page turn")
+        end
+        local occlusion = occlusion_report(cyber_host())
+        return self:ok({
+            page_before = info_before.current_page, page_after = info_after.current_page,
+            visible_count_before = info_before.visible_count, visible_count_after = info_after.visible_count,
+            visible_signature_before = info_before.visible_signature, visible_signature_after = info_after.visible_signature,
+            visible_items_before = info_before.visible_items, visible_items_after = info_after.visible_items,
+            total_pages = info_after.total_pages,
+            top_widget = occlusion.top_widget, windows_above_measured = occlusion.windows_above,
+            windows_above_names = occlusion.windows_above_names,
+            measured_widget_on_stack = occlusion.measured_widget_on_stack,
+            fullscreen_above = occlusion.fullscreen_above, expected_refresh = true,
+        })
+    end)
+end
+
+function CyberUIAdapter:library_next_page_transition(from_page, to_page)
+    return cyber_page_transition(self, from_page, to_page, true)
+end
+
+function CyberUIAdapter:library_prev_page_transition(from_page, to_page)
+    return cyber_page_transition(self, from_page, to_page, false)
+end
+
+function CyberUIAdapter:library_folder_enter()
+    if not self.sample_folder then return self:unsupported("No deterministic subfolder exists") end
+    local screen = cyber_library()
+    if not screen then self:get_page_info(); screen = cyber_library() end
+    if not screen or not screen.trail then return self:fail("CyberUI library is unavailable") end
+    screen:go(self.sample_folder)
+    return self:deferred(function()
+        local now = cyber_library()
+        if now and now:dir() == self.sample_folder and top_widget() == cyber_host() then
+            local info = self:get_page_info()
+            return self:ok({ path = self.sample_folder, visible_signature = info and info.visible_signature or "", expected_refresh = true })
+        end
+        return self:fail("Folder-enter path postcondition failed")
+    end)
+end
+
+function CyberUIAdapter:library_folder_back()
+    local screen = cyber_library()
+    if not screen then self:get_page_info(); screen = cyber_library() end
+    if not screen or not screen.trail then return self:fail("CyberUI library is unavailable") end
+    screen:goTo(1)
+    return self:deferred(function()
+        local now = cyber_library()
+        if now and #now.trail == 1 and top_widget() == cyber_host() then
+            return self:ok({ path = self.library_dir, expected_refresh = true })
+        end
+        return self:fail("Folder-back postcondition failed")
+    end)
+end
+
+-- Page one (folders first, then the sorted books) under a sort order.
+local function cyber_first_page(screen, order, cap)
+    local Data = require("cyberui/data/library")
+    local folders, books = screen:source()
+    books = Data.sort(books, order)
+    local parts = {}
+    for _, f in ipairs(folders) do parts[#parts + 1] = f.path end
+    for _, p in ipairs(books) do parts[#parts + 1] = p end
+    local out = {}
+    for n = 1, math.min(cap, #parts) do out[n] = parts[n] end
+    return table.concat(out, "\31")
+end
+
+function CyberUIAdapter:change_sort_mode()
+    local screen = cyber_library()
+    if not screen then self:get_page_info(); screen = cyber_library() end
+    if not screen then return self:unsupported("CyberUI library is unavailable") end
+    local Settings = require("cyberui/settings")
+    local info = self:get_page_info()
+    local cap = info and info.per_page_capacity or 8
+    if not self._sort_pair then
+        -- Find two of CyberUI's sort orders that put different books on page one
+        -- for this corpus, so a sort change is visible and verifiable.
+        local orders = require("cyberui/data/library").SORTS
+        for _, a in ipairs(orders) do
+            for _, b in ipairs(orders) do
+                if a < b and cyber_first_page(screen, a, cap) ~= cyber_first_page(screen, b, cap) then
+                    self._sort_pair = { a, b }
+                    break
+                end
+            end
+            if self._sort_pair then break end
+        end
+        if not self._sort_pair then self._sort_pair = false end
+    end
+    if not self._sort_pair then
+        return self:unsupported("CyberUI sort orders give the same first page on this corpus (no visible sort change)")
+    end
+    local before = Settings.get("library_sort", "recent")
+    local after = before == self._sort_pair[1] and self._sort_pair[2] or self._sort_pair[1]
+    local sig_before = (self:get_page_info() or {}).visible_signature
+    Settings.save("library_sort", after)
+    screen.page = 1
+    cyber_app().render("ui")
+    return self:deferred(function()
+        local now = self:get_page_info()
+        if Settings.get("library_sort") == after and now and now.visible_signature and now.visible_signature ~= sig_before then
+            return self:ok({ sort_before = before, sort_after = after, expected_refresh = true })
+        end
+        return self:fail(string.format("change_sort_mode fail: sort=%s expected=%s", tostring(Settings.get("library_sort")), after))
+    end)
+end
+
+function CyberUIAdapter:open_book()
+    if not self.sample_book then return self:unsupported("Deterministic target book is missing") end
+    cyber_app().openBook(self.sample_book)
+    local ReaderUI = require("apps/reader/readerui")
+    return self:deferred(function()
+        local reader = ReaderUI.instance
+        if reader and is_shown(reader) and reader.document
+                and realpath(reader.document.file) == self.sample_book and reader.view then
+            return self:ok({ book = self.sample_book, expected_refresh = true })
+        end
+        return self:fail("Target ReaderUI/document/rendered view is not active on the window stack")
+    end)
+end
+
+function CyberUIAdapter:close_book()
+    local ReaderUI = require("apps/reader/readerui")
+    local Event = require("ui/event")
+    if not ReaderUI.instance or not is_shown(ReaderUI.instance) then
+        return self:fail("No active ReaderUI for close_book")
+    end
+    -- the Home event reaches CyberUI's handler first (its fast way home)
+    ReaderUI.instance:handleEvent(Event:new("Home"))
+    return self:deferred(function()
+        local App = cyber_app()
+        if ReaderUI.instance == nil and App and App.isOpen() and top_widget() == cyber_host() then
+            return self:ok({ restored_widget = "cyberui", expected_refresh = true })
+        end
+        return self:fail(string.format("close_book fail: closed=%s cyber_open=%s top=%s",
+            tostring(ReaderUI.instance == nil), tostring(App and App.isOpen()), tostring(widget_label(top_widget()))))
+    end, 3)
+end
+
+function CyberUIAdapter:open_quick_settings()
+    return self:unsupported("CyberUI has no quick-settings panel (KOReader's menu is restyled)")
+end
+
+function CyberUIAdapter:close_quick_settings()
+    return self:unsupported("CyberUI has no quick-settings panel (KOReader's menu is restyled)")
+end
+
 local function backend_for(config_name)
+    if config_name:find("cyberui", 1, true) then return CyberUIAdapter end
     if config_name:find("leanui", 1, true) then return LeanUIAdapter end
     if config_name:find("simpleui", 1, true) then return SimpleUIAdapter end
     if config_name:find("zenos", 1, true) then return ZenOSAdapter end

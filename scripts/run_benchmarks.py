@@ -125,6 +125,7 @@ PHASE1_CONFIGS = OrderedDict({
     "L_project_title_vos": ["project_title", "vos"],
     "M_leanui": ["leanui"],
     "N_m1n1mal": ["m1n1mal", "pagecount"],
+    "O_cyberui": ["cyberui"],
 })
 PHASE2_CONFIGS = OrderedDict({
     "R0_stock": [],
@@ -141,6 +142,7 @@ PHASE2_CONFIGS = OrderedDict({
     "R11_project_title_vos": ["project_title", "vos"],
     "R12_leanui": ["leanui"],
     "R13_m1n1mal": ["m1n1mal", "pagecount"],
+    "R14_cyberui": ["cyberui"],
 })
 PLUGIN_SUBPATHS = {name: info.get("plugin_subpath", "") for name, info in VERSIONS["plugins"].items()}
 PLUGIN_DIRS = {name: info["plugin_dir"] for name, info in VERSIONS["plugins"].items()}
@@ -410,6 +412,8 @@ def setup_isolated_home(job: Job) -> Path:
         # SimpleUI >= 3.0 defaults to the FileManager; earlier campaigns measured
         # it starting on its Home Screen, so pin that explicitly.
         start_with_str = '    ["start_with"] = "homescreen_simpleui",\n' if "simpleui" in job.plugins else ''
+        if "cyberui" in job.plugins:
+            start_with_str = '    ["start_with"] = "cyberui",\n'
         leanui_settings_str = (
             '    ["leanui_settings"] = {\n'
             '        ["enabled"] = true,\n'
@@ -446,6 +450,13 @@ def setup_isolated_home(job: Job) -> Path:
             settings.write_text('return { quick_menu_settings = { library = { mode = '
                                 + json.dumps(job.library_mode)
                                 + ', background = { mode = "off" } } } }\n')
+    if "cyberui" in job.plugins:
+        # CyberUI is the home screen; keep its daily update check (network) off.
+        settings_dir = home / "settings"
+        settings_dir.mkdir(parents=True, exist_ok=True)
+        cyber_settings = settings_dir / "cyberui.lua"
+        if not cyber_settings.exists():
+            cyber_settings.write_text('return { update_auto = false }\n')
     if "vos" in job.plugins:
         # VOS >= 1.4.1 defaults to hide_empty_folders=true and leaves any empty
         # folder it is asked to open. The flat synthetic libraries have no real
@@ -1197,7 +1208,7 @@ def validation_jobs(campaign: str) -> list[Job]:
 def phase1_blocks(campaign: str, first_runs: int = 3, steady_runs: int = 3) -> OrderedDict[str, list[Job]]:
     blocks: OrderedDict[str, list[Job]] = OrderedDict()
     corpora = (("flat", 50), ("flat", 2000), ("hierarchical", 50), ("hierarchical", 2000))
-    primary_first = {"A_stock", "B_bookshelf", "C_simpleui", "D_zenos", "J_project_title_vos", "M_leanui", "N_m1n1mal"}
+    primary_first = {"A_stock", "B_bookshelf", "C_simpleui", "D_zenos", "J_project_title_vos", "M_leanui", "N_m1n1mal", "O_cyberui"}
     large_library = str(ROOT / "libraries" / "hierarchical" / "books_2000")
 
     for config, plugins in PHASE1_CONFIGS.items():

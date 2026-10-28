@@ -39,6 +39,7 @@ Real library of 2,692 EPUBs, KOReader v2026.07.2 in the SDL emulator, every plug
 | **In between** | ZenOS: restart 461 ms, 22 MiB; adding Bookshelf to VOS or ZenOS costs about 7 MiB more heap. |
 | **Bookends** | Page turn in the book 4.7 → 16.7 ms, closing a book 27 → 49 ms, +3.7 MiB heap. Small in absolute terms, not negligible. |
 | **Bookshelf's own shelf** | Page turn 133 ms with the default animation, 38 ms (fastest 22 ms) with it off, versus 17.5 ms for Stock's list. A deliberate cost; the library rows for Bookshelf measure the stock browser (see below). |
+| **CyberUI** (new) | Restart 279 ms, 13.3 MiB heap, close book 32 ms: close to Stock. Its own library actions finish within one frame (action CPU 1.5–2.1 ms vs 20–44 ms for Stock's render/sort), so their wall times sit at the harness's 16 ms frame floor. |
 | **Correction** | Project:Title's lead in the earlier report came from running without its cover list. With covers it is about as light as Stock, not clearly faster. |
 | **Library paging** | 15–17.5 ms per page for every stack, distributions overlap: no ranking. |
 
@@ -135,6 +136,7 @@ include effects of their own shells.
 
 | Stack | Library render | Open book |
 |---|---:|---:|
+| CyberUI | 16.1 | 45.8 |
 | LeanUI (local rebuild) | 36.6 | 56.5 |
 | m1n1mal + pagecount | 38.0 | 59.7 |
 | Bookshelf | 38.6 | 122.3 |
@@ -165,6 +167,7 @@ The real corpus is the more practically useful result set. Restart values are th
 | Bookshelf | 273 ms | 25.5 ms | 110.7 ms | 20.3 MiB |
 | m1n1mal + pagecount | 274 ms | 26.3 ms | 110.8 ms | 14.1 MiB |
 | Project:Title | 279 ms | 30.4 ms | 98.1 ms | 13.9 MiB |
+| CyberUI | 279 ms | 16.1 ms | 93.5 ms | 13.3 MiB |
 | VOS | 291 ms | 34.5 ms | 112.5 ms | 15.6 MiB |
 | VOS + Bookshelf | 306 ms | 34.5 ms | 127.3 ms | 21.7 MiB |
 | LeanUI (local rebuild) | 323 ms | 31.7 ms | 99.3 ms | 15.0 MiB |
@@ -199,12 +202,17 @@ three-process paging phases were not repeated in this round.
 | ZenOS + Bookshelf | 5 | 16.1 (6.4) | 16.1 (6.5) |
 | SimpleUI + VOS | 9 | 16.1 (7.3) | 14.7 (9.8) |
 | VOS + Bookshelf | 10 | 16.1 (13.3) | 15.1 (8.8) |
+| CyberUI | 8 | 16.1 (10.7) | 16.1 (9.2) |
 | m1n1mal + pagecount | 10 | 17.4 (13.6) | 15.7 (10.6) |
 | Stock | 10 | 17.5 (12.6) | 15.7 (9.5) |
 
 The separate `2026-09-03-flash100` sensitivity study added approximately
 97–106 ms to the median library transition. It is an injected SDL delay, not a
 physical Kindle model.
+
+### CyberUI
+
+CyberUI v1.0.0 (latest stable; v1.0.5 is a pre-release) was added at a contributor's request (campaign `2026-10-28-cyberui-b`, 0 FAILED). It is a full-screen home plus its own library that sits above the stock browser, so the harness drives its screens directly; it has no quick-settings panel, so those two scenarios are UNSUPPORTED. Its library actions finish in one frame: action CPU 1.5-2.1 ms versus 20-44 ms for Stock's render, sort and folder enter. The wall times are therefore pinned at the harness's 16 ms frame floor (16.1 ms), so differences below one frame are not measurable here; close book (32 ms) and restart (279 ms) are close to Stock. Its sort scenario uses the two of its four sort orders that show different books on page one for the corpus.
 
 ### Bookends control
 
@@ -297,6 +305,7 @@ Only tagged stable releases are pinned. Pre-release tags are deliberately exclud
 | Bookends | [`v5.31.0`](https://github.com/AndyHazz/bookends.koplugin/releases/tag/v5.31.0) | `8f6e1c6b5770864e0cfed6be93435b5d6427eba5` |
 | Project:Title | [`2026.07-v3.8.3`](https://github.com/joshuacant/ProjectTitle/releases/tag/2026.07-v3.8.3) | `f29b5328f408362a95282ed8786a5b691536260c` |
 | VOS | [`v1.4.1`](https://github.com/SeriousHornet/vos.koplugin/releases/tag/v1.4.1) | `a5c91d882290af68b437c049bed10e03a3b03be4` |
+| CyberUI | [`v1.0.0`](https://github.com/EmirErtorer/CyberUI.koplugin/releases/tag/v1.0.0) | `b7e61e0fe34bc8a650b37da335a1a73a1b234ded` |
 | LeanUI (abandoned local rebuild) | `rebuild-local-2026-10-27` (local) | `5c5b2d5bcdfefccfc3a65d218c1cf913b2fec3d8` |
 | m1n1mal (my own plugin, not published yet) | `local-2026-10-27` (local) | `44ea3f53b2ae4903497735d067b74b78214b4b1b` |
 | pagecount (part of m1n1mal, not published yet) | `local-2026-10-27` (local) | `44ea3f53b2ae4903497735d067b74b78214b4b1b` |
@@ -346,6 +355,7 @@ Phase 1 stacks:
 | L | Project:Title + VOS |
 | M | LeanUI (local rebuild) |
 | N | m1n1mal + pagecount |
+| O | CyberUI |
 
 ### Phase 2: your real library
 
@@ -398,9 +408,9 @@ Every paging metric — library and Bookshelf alike — therefore measures the s
 
 `reader_page_turn` is measured inside one pinned document, chosen deterministically from the books nearest the corpus median size. Page-turn latency tracks document size and complexity, and this corpus spans 59 KB to 29 MB, so rotating books would blend unrelated documents into one median. `open_book` deliberately keeps rotating through ten deterministic books, because opening the same file repeatedly would measure a warm document cache instead of a cold open.
 
-Phase 2 uses the same 14 stacks (A–N above): Stock, Bookshelf, SimpleUI, ZenOS,
+Phase 2 uses the same 15 stacks (A–O above): Stock, Bookshelf, SimpleUI, ZenOS,
 Project:Title, VOS, SimpleUI + Bookshelf, ZenOS + Bookshelf, VOS + Bookshelf,
-SimpleUI + VOS, SimpleUI + VOS + Bookshelf, Project:Title + VOS, LeanUI and m1n1mal + pagecount. Bookends
+SimpleUI + VOS, SimpleUI + VOS + Bookshelf, Project:Title + VOS, LeanUI, m1n1mal + pagecount and CyberUI. Bookends
 is the separate controlled Stock comparison described above.
 
 ## Run it

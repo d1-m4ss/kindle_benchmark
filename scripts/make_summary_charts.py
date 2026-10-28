@@ -16,14 +16,15 @@ OUT = ROOT / "docs" / "charts"
 BASE = "2026-10-27-m1n1mal-v3"
 PT = "2026-10-27-pt-covers"
 VOS = "2026-10-27-vos-141"
-SOURCES = {"R4_project_title": PT, **{k: VOS for k in (
+CY = "2026-10-28-cyberui-b"
+SOURCES = {"R14_cyberui": CY, "R4_project_title": PT, **{k: VOS for k in (
     "R5_vos", "R8_vos_bookshelf", "R9_simpleui_vos", "R10_simpleui_vos_bookshelf", "R11_project_title_vos")}}
 NAMES = {
     "R0_stock": "Stock", "R1_bookshelf": "Bookshelf", "R2_simpleui": "SimpleUI", "R3_zenos": "ZenOS",
     "R4_project_title": "Project:Title", "R5_vos": "VOS", "R6_simpleui_bookshelf": "SimpleUI + Bookshelf",
     "R7_zenos_bookshelf": "ZenOS + Bookshelf", "R8_vos_bookshelf": "VOS + Bookshelf",
     "R9_simpleui_vos": "SimpleUI + VOS", "R10_simpleui_vos_bookshelf": "SimpleUI + VOS + Bookshelf",
-    "R11_project_title_vos": "Project:Title + VOS", "R13_m1n1mal": "m1n1mal + pagecount",
+    "R11_project_title_vos": "Project:Title + VOS", "R13_m1n1mal": "m1n1mal + pagecount", "R14_cyberui": "CyberUI",
 }
 _cache: dict[str, list[dict]] = {}
 
