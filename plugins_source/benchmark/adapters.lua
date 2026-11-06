@@ -993,15 +993,26 @@ function SimpleUIAdapter:ensure_filemanager()
             settings:flush()
         end
     end
+    local FM = require("apps/filemanager/filemanager")
     local ok_core, UI_core = pcall(require, "infra/sui_core")
+    local hs_inst
     if ok_core and UI_core and UI_core.getOpenScreen then
-        local _, hs_inst = UI_core.getOpenScreen()
-        if hs_inst then
-            UIManager:close(hs_inst)
-        end
+        local _
+        _, hs_inst = UI_core.getOpenScreen()
+    end
+    -- Already on the library at the root: navigating to it again would redraw
+    -- it, work the action being measured did not ask for.
+    local top = top_widget()
+    local on_top = FM.instance and is_shown(FM.instance)
+        and (top == FM.instance or top == FM.instance.show_parent)
+    if not hs_inst and on_top and FM.instance.file_chooser
+            and realpath(FM.instance.file_chooser.path) == root then
+        return FM
+    end
+    if hs_inst then
+        UIManager:close(hs_inst)
     end
     Dispatcher:execute({ simpleui_go_library = true })
-    local FM = require("apps/filemanager/filemanager")
     if not FM.instance then
         FM:showFiles(root)
     elseif FM.instance.file_chooser and realpath(FM.instance.file_chooser.path) ~= root then
@@ -1024,13 +1035,21 @@ function ZenOSAdapter:ensure_filemanager()
             settings:flush()
         end
     end
+    local FM = require("apps/filemanager/filemanager")
+    -- Already on the library at the root: opening the Books tab again would
+    -- rebuild it, a build the action being measured did not ask for.
+    local top = top_widget()
+    local on_top = FM.instance and is_shown(FM.instance)
+        and (top == FM.instance or top == FM.instance.show_parent)
+    if on_top and FM.instance.file_chooser and realpath(FM.instance.file_chooser.path) == root then
+        return FM
+    end
     local open_tab = rawget(_G, "__ZEN_UI_NAVBAR_OPEN_TAB")
     if type(open_tab) == "function" then
         open_tab("books")
     else
         Dispatcher:execute({ zen_ui_show_library = true })
     end
-    local FM = require("apps/filemanager/filemanager")
     if not FM.instance then
         FM:showFiles(root)
     elseif FM.instance.file_chooser and realpath(FM.instance.file_chooser.path) ~= root then
@@ -1110,8 +1129,11 @@ function ZenOSAdapter:home_to_library()
     else
         Dispatcher:execute({ zen_ui_show_library = true })
     end
-    local _, instance = self:filemanager()
-    if instance then instance:reinit(self.library_dir) end
+    -- The Books tab has already built the library; reinit only if it landed elsewhere.
+    local _, instance, opened_chooser = self:filemanager()
+    if instance and not (opened_chooser and realpath(opened_chooser.path) == self.library_dir) then
+        instance:reinit(self.library_dir)
+    end
     return self:deferred(function()
         local _, instance_after, chooser = self:filemanager()
         if instance_after and is_shown(instance_after) and chooser

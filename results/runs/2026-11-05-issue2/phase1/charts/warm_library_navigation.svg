@@ -1,0 +1,175 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="3920" height="520" viewBox="0 0 3920 520">
+<rect width="100%" height="100%" fill="white"/>
+<text x="1960.0" y="28" text-anchor="middle" font-family="sans-serif" font-size="18">Warm library navigation</text>
+<text x="18" y="212.5" transform="rotate(-90 18 212.5)" text-anchor="middle" font-family="sans-serif" font-size="12">Median latency (ms)</text>
+<line x1="70" y1="55" x2="70" y2="370" stroke="black"/>
+<line x1="70" y1="370" x2="3900" y2="370" stroke="black"/>
+<rect x="80.26" y="320.77" width="47.87" height="49.23" fill="#3978b5"/>
+<text x="104.20" y="316.77" text-anchor="middle" font-family="sans-serif" font-size="9">23.34</text>
+<text x="104.20" y="382" transform="rotate(55 104.20 382)" text-anchor="start" font-family="sans-serif" font-size="9">A_stock library_cached_paging</text>
+<rect x="148.65" y="279.94" width="47.87" height="90.06" fill="#3978b5"/>
+<text x="172.59" y="275.94" text-anchor="middle" font-family="sans-serif" font-size="9">42.69</text>
+<text x="172.59" y="382" transform="rotate(55 172.59 382)" text-anchor="start" font-family="sans-serif" font-size="9">A_stock library_first_render</text>
+<rect x="217.04" y="327.34" width="47.87" height="42.66" fill="#3978b5"/>
+<text x="240.98" y="323.34" text-anchor="middle" font-family="sans-serif" font-size="9">20.22</text>
+<text x="240.98" y="382" transform="rotate(55 240.98 382)" text-anchor="start" font-family="sans-serif" font-size="9">A_stock library_sequential_paging</text>
+<rect x="285.44" y="332.80" width="47.87" height="37.20" fill="#3978b5"/>
+<text x="309.38" y="328.80" text-anchor="middle" font-family="sans-serif" font-size="9">17.64</text>
+<text x="309.38" y="382" transform="rotate(55 309.38 382)" text-anchor="start" font-family="sans-serif" font-size="9">A_stock library_cached_paging</text>
+<rect x="353.83" y="304.44" width="47.87" height="65.56" fill="#3978b5"/>
+<text x="377.77" y="300.44" text-anchor="middle" font-family="sans-serif" font-size="9">31.08</text>
+<text x="377.77" y="382" transform="rotate(55 377.77 382)" text-anchor="start" font-family="sans-serif" font-size="9">A_stock library_first_render</text>
+<rect x="422.22" y="55.00" width="47.87" height="315.00" fill="#3978b5"/>
+<text x="446.16" y="51.00" text-anchor="middle" font-family="sans-serif" font-size="9">149.33</text>
+<text x="446.16" y="382" transform="rotate(55 446.16 382)" text-anchor="start" font-family="sans-serif" font-size="9">A_stock library_sequential_paging</text>
+<rect x="490.62" y="336.00" width="47.87" height="34.00" fill="#3978b5"/>
+<text x="514.55" y="332.00" text-anchor="middle" font-family="sans-serif" font-size="9">16.12</text>
+<text x="514.55" y="382" transform="rotate(55 514.55 382)" text-anchor="start" font-family="sans-serif" font-size="9">A_stock library_first_render</text>
+<rect x="559.01" y="336.02" width="47.87" height="33.98" fill="#3978b5"/>
+<text x="582.95" y="332.02" text-anchor="middle" font-family="sans-serif" font-size="9">16.11</text>
+<text x="582.95" y="382" transform="rotate(55 582.95 382)" text-anchor="start" font-family="sans-serif" font-size="9">A_stock library_first_render</text>
+<rect x="627.40" y="336.26" width="47.87" height="33.74" fill="#3978b5"/>
+<text x="651.34" y="332.26" text-anchor="middle" font-family="sans-serif" font-size="9">15.99</text>
+<text x="651.34" y="382" transform="rotate(55 651.34 382)" text-anchor="start" font-family="sans-serif" font-size="9">C_simpleui library_cached_paging</text>
+<rect x="695.79" y="190.25" width="47.87" height="179.75" fill="#3978b5"/>
+<text x="719.73" y="186.25" text-anchor="middle" font-family="sans-serif" font-size="9">85.21</text>
+<text x="719.73" y="382" transform="rotate(55 719.73 382)" text-anchor="start" font-family="sans-serif" font-size="9">C_simpleui library_first_render</text>
+<rect x="764.19" y="341.43" width="47.87" height="28.57" fill="#3978b5"/>
+<text x="788.12" y="337.43" text-anchor="middle" font-family="sans-serif" font-size="9">13.55</text>
+<text x="788.12" y="382" transform="rotate(55 788.12 382)" text-anchor="start" font-family="sans-serif" font-size="9">C_simpleui library_sequential_paging</text>
+<rect x="832.58" y="339.21" width="47.87" height="30.79" fill="#3978b5"/>
+<text x="856.52" y="335.21" text-anchor="middle" font-family="sans-serif" font-size="9">14.60</text>
+<text x="856.52" y="382" transform="rotate(55 856.52 382)" text-anchor="start" font-family="sans-serif" font-size="9">C_simpleui library_cached_paging</text>
+<rect x="900.97" y="273.89" width="47.87" height="96.11" fill="#3978b5"/>
+<text x="924.91" y="269.89" text-anchor="middle" font-family="sans-serif" font-size="9">45.56</text>
+<text x="924.91" y="382" transform="rotate(55 924.91 382)" text-anchor="start" font-family="sans-serif" font-size="9">C_simpleui library_first_render</text>
+<rect x="969.37" y="345.94" width="47.87" height="24.06" fill="#3978b5"/>
+<text x="993.30" y="341.94" text-anchor="middle" font-family="sans-serif" font-size="9">11.41</text>
+<text x="993.30" y="382" transform="rotate(55 993.30 382)" text-anchor="start" font-family="sans-serif" font-size="9">C_simpleui library_sequential_paging</text>
+<rect x="1037.76" y="300.87" width="47.87" height="69.13" fill="#3978b5"/>
+<text x="1061.70" y="296.87" text-anchor="middle" font-family="sans-serif" font-size="9">32.77</text>
+<text x="1061.70" y="382" transform="rotate(55 1061.70 382)" text-anchor="start" font-family="sans-serif" font-size="9">C_simpleui library_first_render</text>
+<rect x="1106.15" y="300.91" width="47.87" height="69.09" fill="#3978b5"/>
+<text x="1130.09" y="296.91" text-anchor="middle" font-family="sans-serif" font-size="9">32.75</text>
+<text x="1130.09" y="382" transform="rotate(55 1130.09 382)" text-anchor="start" font-family="sans-serif" font-size="9">C_simpleui library_first_render</text>
+<rect x="1174.54" y="340.26" width="47.87" height="29.74" fill="#3978b5"/>
+<text x="1198.48" y="336.26" text-anchor="middle" font-family="sans-serif" font-size="9">14.10</text>
+<text x="1198.48" y="382" transform="rotate(55 1198.48 382)" text-anchor="start" font-family="sans-serif" font-size="9">D_zenos library_cached_paging</text>
+<rect x="1242.94" y="313.15" width="47.87" height="56.85" fill="#3978b5"/>
+<text x="1266.88" y="309.15" text-anchor="middle" font-family="sans-serif" font-size="9">26.95</text>
+<text x="1266.88" y="382" transform="rotate(55 1266.88 382)" text-anchor="start" font-family="sans-serif" font-size="9">D_zenos library_first_render</text>
+<rect x="1311.33" y="336.35" width="47.87" height="33.65" fill="#3978b5"/>
+<text x="1335.27" y="332.35" text-anchor="middle" font-family="sans-serif" font-size="9">15.95</text>
+<text x="1335.27" y="382" transform="rotate(55 1335.27 382)" text-anchor="start" font-family="sans-serif" font-size="9">D_zenos library_sequential_paging</text>
+<rect x="1379.72" y="336.10" width="47.87" height="33.90" fill="#3978b5"/>
+<text x="1403.66" y="332.10" text-anchor="middle" font-family="sans-serif" font-size="9">16.07</text>
+<text x="1403.66" y="382" transform="rotate(55 1403.66 382)" text-anchor="start" font-family="sans-serif" font-size="9">D_zenos library_cached_paging</text>
+<rect x="1448.12" y="330.07" width="47.87" height="39.93" fill="#3978b5"/>
+<text x="1472.05" y="326.07" text-anchor="middle" font-family="sans-serif" font-size="9">18.93</text>
+<text x="1472.05" y="382" transform="rotate(55 1472.05 382)" text-anchor="start" font-family="sans-serif" font-size="9">D_zenos library_first_render</text>
+<rect x="1516.51" y="338.55" width="47.87" height="31.45" fill="#3978b5"/>
+<text x="1540.45" y="334.55" text-anchor="middle" font-family="sans-serif" font-size="9">14.91</text>
+<text x="1540.45" y="382" transform="rotate(55 1540.45 382)" text-anchor="start" font-family="sans-serif" font-size="9">D_zenos library_sequential_paging</text>
+<rect x="1584.90" y="336.13" width="47.87" height="33.87" fill="#3978b5"/>
+<text x="1608.84" y="332.13" text-anchor="middle" font-family="sans-serif" font-size="9">16.05</text>
+<text x="1608.84" y="382" transform="rotate(55 1608.84 382)" text-anchor="start" font-family="sans-serif" font-size="9">D_zenos library_first_render</text>
+<rect x="1653.29" y="336.03" width="47.87" height="33.97" fill="#3978b5"/>
+<text x="1677.23" y="332.03" text-anchor="middle" font-family="sans-serif" font-size="9">16.10</text>
+<text x="1677.23" y="382" transform="rotate(55 1677.23 382)" text-anchor="start" font-family="sans-serif" font-size="9">D_zenos library_first_render</text>
+<rect x="1721.69" y="337.78" width="47.87" height="32.22" fill="#3978b5"/>
+<text x="1745.62" y="333.78" text-anchor="middle" font-family="sans-serif" font-size="9">15.27</text>
+<text x="1745.62" y="382" transform="rotate(55 1745.62 382)" text-anchor="start" font-family="sans-serif" font-size="9">G_simpleui_bookshelf library_cached_paging</text>
+<rect x="1790.08" y="182.25" width="47.87" height="187.75" fill="#3978b5"/>
+<text x="1814.02" y="178.25" text-anchor="middle" font-family="sans-serif" font-size="9">89.00</text>
+<text x="1814.02" y="382" transform="rotate(55 1814.02 382)" text-anchor="start" font-family="sans-serif" font-size="9">G_simpleui_bookshelf library_first_render</text>
+<rect x="1858.47" y="338.10" width="47.87" height="31.90" fill="#3978b5"/>
+<text x="1882.41" y="334.10" text-anchor="middle" font-family="sans-serif" font-size="9">15.12</text>
+<text x="1882.41" y="382" transform="rotate(55 1882.41 382)" text-anchor="start" font-family="sans-serif" font-size="9">G_simpleui_bookshelf library_sequential_paging</text>
+<rect x="1926.87" y="336.58" width="47.87" height="33.42" fill="#3978b5"/>
+<text x="1950.80" y="332.58" text-anchor="middle" font-family="sans-serif" font-size="9">15.84</text>
+<text x="1950.80" y="382" transform="rotate(55 1950.80 382)" text-anchor="start" font-family="sans-serif" font-size="9">G_simpleui_bookshelf library_cached_paging</text>
+<rect x="1995.26" y="276.51" width="47.87" height="93.49" fill="#3978b5"/>
+<text x="2019.20" y="272.51" text-anchor="middle" font-family="sans-serif" font-size="9">44.32</text>
+<text x="2019.20" y="382" transform="rotate(55 2019.20 382)" text-anchor="start" font-family="sans-serif" font-size="9">G_simpleui_bookshelf library_first_render</text>
+<rect x="2063.65" y="346.81" width="47.87" height="23.19" fill="#3978b5"/>
+<text x="2087.59" y="342.81" text-anchor="middle" font-family="sans-serif" font-size="9">10.99</text>
+<text x="2087.59" y="382" transform="rotate(55 2087.59 382)" text-anchor="start" font-family="sans-serif" font-size="9">G_simpleui_bookshelf library_sequential_paging</text>
+<rect x="2132.04" y="300.89" width="47.87" height="69.11" fill="#3978b5"/>
+<text x="2155.98" y="296.89" text-anchor="middle" font-family="sans-serif" font-size="9">32.76</text>
+<text x="2155.98" y="382" transform="rotate(55 2155.98 382)" text-anchor="start" font-family="sans-serif" font-size="9">G_simpleui_bookshelf library_first_render</text>
+<rect x="2200.44" y="300.93" width="47.87" height="69.07" fill="#3978b5"/>
+<text x="2224.37" y="296.93" text-anchor="middle" font-family="sans-serif" font-size="9">32.74</text>
+<text x="2224.37" y="382" transform="rotate(55 2224.37 382)" text-anchor="start" font-family="sans-serif" font-size="9">G_simpleui_bookshelf library_first_render</text>
+<rect x="2268.83" y="337.68" width="47.87" height="32.32" fill="#3978b5"/>
+<text x="2292.77" y="333.68" text-anchor="middle" font-family="sans-serif" font-size="9">15.32</text>
+<text x="2292.77" y="382" transform="rotate(55 2292.77 382)" text-anchor="start" font-family="sans-serif" font-size="9">H_zenos_bookshelf library_cached_paging</text>
+<rect x="2337.22" y="311.48" width="47.87" height="58.52" fill="#3978b5"/>
+<text x="2361.16" y="307.48" text-anchor="middle" font-family="sans-serif" font-size="9">27.74</text>
+<text x="2361.16" y="382" transform="rotate(55 2361.16 382)" text-anchor="start" font-family="sans-serif" font-size="9">H_zenos_bookshelf library_first_render</text>
+<rect x="2405.62" y="336.20" width="47.87" height="33.80" fill="#3978b5"/>
+<text x="2429.55" y="332.20" text-anchor="middle" font-family="sans-serif" font-size="9">16.02</text>
+<text x="2429.55" y="382" transform="rotate(55 2429.55 382)" text-anchor="start" font-family="sans-serif" font-size="9">H_zenos_bookshelf library_sequential_paging</text>
+<rect x="2474.01" y="339.93" width="47.87" height="30.07" fill="#3978b5"/>
+<text x="2497.95" y="335.93" text-anchor="middle" font-family="sans-serif" font-size="9">14.25</text>
+<text x="2497.95" y="382" transform="rotate(55 2497.95 382)" text-anchor="start" font-family="sans-serif" font-size="9">H_zenos_bookshelf library_cached_paging</text>
+<rect x="2542.40" y="329.12" width="47.87" height="40.88" fill="#3978b5"/>
+<text x="2566.34" y="325.12" text-anchor="middle" font-family="sans-serif" font-size="9">19.38</text>
+<text x="2566.34" y="382" transform="rotate(55 2566.34 382)" text-anchor="start" font-family="sans-serif" font-size="9">H_zenos_bookshelf library_first_render</text>
+<rect x="2610.79" y="342.03" width="47.87" height="27.97" fill="#3978b5"/>
+<text x="2634.73" y="338.03" text-anchor="middle" font-family="sans-serif" font-size="9">13.26</text>
+<text x="2634.73" y="382" transform="rotate(55 2634.73 382)" text-anchor="start" font-family="sans-serif" font-size="9">H_zenos_bookshelf library_sequential_paging</text>
+<rect x="2679.19" y="335.97" width="47.87" height="34.03" fill="#3978b5"/>
+<text x="2703.12" y="331.97" text-anchor="middle" font-family="sans-serif" font-size="9">16.13</text>
+<text x="2703.12" y="382" transform="rotate(55 2703.12 382)" text-anchor="start" font-family="sans-serif" font-size="9">H_zenos_bookshelf library_first_render</text>
+<rect x="2747.58" y="336.06" width="47.87" height="33.94" fill="#3978b5"/>
+<text x="2771.52" y="332.06" text-anchor="middle" font-family="sans-serif" font-size="9">16.09</text>
+<text x="2771.52" y="382" transform="rotate(55 2771.52 382)" text-anchor="start" font-family="sans-serif" font-size="9">H_zenos_bookshelf library_first_render</text>
+<rect x="2815.97" y="342.19" width="47.87" height="27.81" fill="#3978b5"/>
+<text x="2839.91" y="338.19" text-anchor="middle" font-family="sans-serif" font-size="9">13.18</text>
+<text x="2839.91" y="382" transform="rotate(55 2839.91 382)" text-anchor="start" font-family="sans-serif" font-size="9">J_simpleui_vos library_cached_paging</text>
+<rect x="2884.37" y="211.94" width="47.87" height="158.06" fill="#3978b5"/>
+<text x="2908.30" y="207.94" text-anchor="middle" font-family="sans-serif" font-size="9">74.93</text>
+<text x="2908.30" y="382" transform="rotate(55 2908.30 382)" text-anchor="start" font-family="sans-serif" font-size="9">J_simpleui_vos library_first_render</text>
+<rect x="2952.76" y="340.18" width="47.87" height="29.82" fill="#3978b5"/>
+<text x="2976.70" y="336.18" text-anchor="middle" font-family="sans-serif" font-size="9">14.14</text>
+<text x="2976.70" y="382" transform="rotate(55 2976.70 382)" text-anchor="start" font-family="sans-serif" font-size="9">J_simpleui_vos library_sequential_paging</text>
+<rect x="3021.15" y="341.38" width="47.87" height="28.62" fill="#3978b5"/>
+<text x="3045.09" y="337.38" text-anchor="middle" font-family="sans-serif" font-size="9">13.57</text>
+<text x="3045.09" y="382" transform="rotate(55 3045.09 382)" text-anchor="start" font-family="sans-serif" font-size="9">J_simpleui_vos library_cached_paging</text>
+<rect x="3089.54" y="293.77" width="47.87" height="76.23" fill="#3978b5"/>
+<text x="3113.48" y="289.77" text-anchor="middle" font-family="sans-serif" font-size="9">36.14</text>
+<text x="3113.48" y="382" transform="rotate(55 3113.48 382)" text-anchor="start" font-family="sans-serif" font-size="9">J_simpleui_vos library_first_render</text>
+<rect x="3157.94" y="344.76" width="47.87" height="25.24" fill="#3978b5"/>
+<text x="3181.87" y="340.76" text-anchor="middle" font-family="sans-serif" font-size="9">11.96</text>
+<text x="3181.87" y="382" transform="rotate(55 3181.87 382)" text-anchor="start" font-family="sans-serif" font-size="9">J_simpleui_vos library_sequential_paging</text>
+<rect x="3226.33" y="300.85" width="47.87" height="69.15" fill="#3978b5"/>
+<text x="3250.27" y="296.85" text-anchor="middle" font-family="sans-serif" font-size="9">32.78</text>
+<text x="3250.27" y="382" transform="rotate(55 3250.27 382)" text-anchor="start" font-family="sans-serif" font-size="9">J_simpleui_vos library_first_render</text>
+<rect x="3294.72" y="300.88" width="47.87" height="69.12" fill="#3978b5"/>
+<text x="3318.66" y="296.88" text-anchor="middle" font-family="sans-serif" font-size="9">32.76</text>
+<text x="3318.66" y="382" transform="rotate(55 3318.66 382)" text-anchor="start" font-family="sans-serif" font-size="9">J_simpleui_vos library_first_render</text>
+<rect x="3363.12" y="340.72" width="47.87" height="29.28" fill="#3978b5"/>
+<text x="3387.05" y="336.72" text-anchor="middle" font-family="sans-serif" font-size="9">13.88</text>
+<text x="3387.05" y="382" transform="rotate(55 3387.05 382)" text-anchor="start" font-family="sans-serif" font-size="9">K_simpleui_vos_bookshelf library_cached_paging</text>
+<rect x="3431.51" y="210.89" width="47.87" height="159.11" fill="#3978b5"/>
+<text x="3455.45" y="206.89" text-anchor="middle" font-family="sans-serif" font-size="9">75.43</text>
+<text x="3455.45" y="382" transform="rotate(55 3455.45 382)" text-anchor="start" font-family="sans-serif" font-size="9">K_simpleui_vos_bookshelf library_first_render</text>
+<rect x="3499.90" y="336.17" width="47.87" height="33.83" fill="#3978b5"/>
+<text x="3523.84" y="332.17" text-anchor="middle" font-family="sans-serif" font-size="9">16.04</text>
+<text x="3523.84" y="382" transform="rotate(55 3523.84 382)" text-anchor="start" font-family="sans-serif" font-size="9">K_simpleui_vos_bookshelf library_sequential_paging</text>
+<rect x="3568.29" y="341.59" width="47.87" height="28.41" fill="#3978b5"/>
+<text x="3592.23" y="337.59" text-anchor="middle" font-family="sans-serif" font-size="9">13.47</text>
+<text x="3592.23" y="382" transform="rotate(55 3592.23 382)" text-anchor="start" font-family="sans-serif" font-size="9">K_simpleui_vos_bookshelf library_cached_paging</text>
+<rect x="3636.69" y="291.52" width="47.87" height="78.48" fill="#3978b5"/>
+<text x="3660.62" y="287.52" text-anchor="middle" font-family="sans-serif" font-size="9">37.20</text>
+<text x="3660.62" y="382" transform="rotate(55 3660.62 382)" text-anchor="start" font-family="sans-serif" font-size="9">K_simpleui_vos_bookshelf library_first_render</text>
+<rect x="3705.08" y="346.76" width="47.87" height="23.24" fill="#3978b5"/>
+<text x="3729.02" y="342.76" text-anchor="middle" font-family="sans-serif" font-size="9">11.02</text>
+<text x="3729.02" y="382" transform="rotate(55 3729.02 382)" text-anchor="start" font-family="sans-serif" font-size="9">K_simpleui_vos_bookshelf library_sequential_paging</text>
+<rect x="3773.47" y="300.89" width="47.87" height="69.11" fill="#3978b5"/>
+<text x="3797.41" y="296.89" text-anchor="middle" font-family="sans-serif" font-size="9">32.76</text>
+<text x="3797.41" y="382" transform="rotate(55 3797.41 382)" text-anchor="start" font-family="sans-serif" font-size="9">K_simpleui_vos_bookshelf library_first_render</text>
+<rect x="3841.87" y="300.92" width="47.87" height="69.08" fill="#3978b5"/>
+<text x="3865.80" y="296.92" text-anchor="middle" font-family="sans-serif" font-size="9">32.75</text>
+<text x="3865.80" y="382" transform="rotate(55 3865.80 382)" text-anchor="start" font-family="sans-serif" font-size="9">K_simpleui_vos_bookshelf library_first_render</text>
+</svg>

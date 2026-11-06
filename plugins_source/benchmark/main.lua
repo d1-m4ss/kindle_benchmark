@@ -597,11 +597,16 @@ function Benchmark:runHarness()
         adapter:set_sample_folder(target_folders[folder_target_index])
     end
 
-    local startup_settle = settle_ticks
-    if config_name:find("simpleui", 1, true) then startup_settle = math.max(settle_ticks, 4) end
-    self:_settleNaturally(startup_settle)
+    -- The same rule for every stack, since BENCHMARK_UI_READY is a published
+    -- metric: the usual settle, then at most two more ticks while the UI comes up.
+    self:_settleNaturally(settle_ticks)
     local startup_ready = #missing_plugins == 0 and adapter:startup_ready()
         or { success = false, reason = "Expected plugins are missing" }
+    for _ = 1, 2 do
+        if startup_ready.success or #missing_plugins > 0 then break end
+        self:_settleNaturally(1)
+        startup_ready = adapter:startup_ready()
+    end
     results.startup_ready_assertion = startup_ready
     if startup_ready.success then
         results.internal_harness_to_ui_ready_ms = precise_ms(time.monotonic() - self.harness_init_fts)

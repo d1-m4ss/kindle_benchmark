@@ -38,6 +38,8 @@ results/runs/*
 !results/runs/2026-10-27-vos-141/
 !results/runs/2026-10-27-bookends/
 !results/runs/2026-10-28-cyberui-b/
+!results/runs/2026-11-05-issue2/
+!results/runs/2026-11-06-simpleui/
 results/runs/**/raw/
 results/runs/**/logs/
 results/runs/**/checkpoints/

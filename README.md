@@ -6,21 +6,16 @@ It answers a practical question: **which UI changes stay close to Stock KOReader
 
 > This is a controlled emulator comparison, not a benchmark of physical Kindle latency. It is useful for relative work, memory, and redraw comparisons; it cannot turn a Mac millisecond value into a Kindle millisecond value.
 
-## Bottom line: how each plugin changed since the previous round
+## Corrections after issue #2 (2026-11-05)
 
-**Mixed, with no plugin better across the board.** ZenOS cut its retained memory the most, SimpleUI renders the library faster, Bookshelf stays close to Stock but its own shelf pages slower, and several plugins got relatively slower at closing a book. Details per plugin:
+ZenOS's author [reported harness problems](https://github.com/d1-m4ss/kindle_benchmark/issues/2). Checked against the code and raw results:
 
-
-![Previous vs current round, per plugin](docs/charts/before_after.svg)
-
-Previous round: campaign `2026-09-12-full` (SimpleUI 2.7.1, ZenOS 3.2.2, Bookshelf 5.0.0, VOS 1.3.4); current: the 2026-10-27 campaigns (SimpleUI 3.0.1, ZenOS 4.2.0, Bookshelf 6.0.3, VOS 1.4.1). Absolute times are not comparable between the rounds (the current runs are headless and Stock itself restarts about twice as fast), so the chart compares each plugin with Stock of the same round. Project:Title is the same release in both; its change is only that it now runs with covers.
-
-- **ZenOS**: retained heap above Stock fell from +23 to +8 MiB; library render improved from 1.4x to 1.2x Stock. Restart, open and close got relatively slower.
-- **SimpleUI**: library render improved (about 3.5x to 2.4x Stock) and heap is about the same (+56 to +52 MiB); closing a book got much slower (2.7x to 8.1x Stock).
-- **Bookshelf**: close to Stock in both rounds (heap +5 to +6 MiB). Its own shelf is slower to page: 84 to 133 ms per page with the default animation, 26 to 38 ms with it off; shelf open and first render are slightly faster.
-- **VOS**: about the same, a little heavier relative to Stock.
-
-Two different harness setups and several plugin releases changed at once, so this shows direction, not the cause of any change.
+- **ZenOS was built more often than Stock.** The adapter opened the Books tab and then forced a reinit in `home_to_library`, and did the same again in `library_first_render`. Fixed. Between campaigns, restart + navigation dropped from 461 to 403 ms, and library render from 33 to 17 ms (close to the harness's 16 ms frame floor; its page holds 5 entries). The navigation steps the fix touched account for about 16–31 ms of the drop across ZenOS and ZenOS + Bookshelf (about 23 ms by step medians); the rest is before the first screen, which the fix cannot affect, so it is not credited to the fix. Stock, re-measured as a control, moved from 269 to 271 ms.
+- **"Restart" included scripted navigation to the library.** It is now two numbers: restart to the first screen, and restart plus navigation. The first screen is Home on ZenOS, SimpleUI and CyberUI and the library on Stock, and the check confirms the widget is on the stack, not that it has painted, so neither number is a like-for-like comparison of the same screen.
+- **Bookshelf's library rows measure the stock browser with Bookshelf idle.** They are now labelled *not active*. Its shelf has its own scenarios. Heap after stress is the exception: the stress sequence opens the shelf, so that figure includes real use (before stress Bookshelf adds about 0.5 MiB, after it 6–7 MiB).
+- **The round-over-round comparison is withdrawn.** The earlier chart and per-plugin changes compared a windowed run with a headless one, where Stock itself restarted about twice as fast, so its ratios could move with no change in the plugin. The framebuffer was 1236×1648 in both rounds, so resolution was not the cause. The window versus headless setup is the likely one, though the harness also changed and no controlled run isolates it. Old plugin versions were not re-measured, so this README no longer claims how any plugin changed between rounds.
+- SimpleUI's first-screen check used to settle for 4 ticks and every other stack for 2. All stacks now use the same rule. Its effect is not separable from run-to-run noise.
+- **SimpleUI had the same kind of harness cost.** Its adapter always navigated to the library before the action being measured, on `library_first_render`, sort and quick settings. Fixed in `2026-11-06-simpleui`: library render dropped from 51–67 to 49–53 ms and sort from 144–178 to 132–150 ms across its four stacks, and a render's screen refreshes from 6 to 3. Stock does 1; the remaining 3 were not attributed. Restart + navigation dropped by 11–48 ms; about 6–29 ms of that comes after the first screen, where the fix acts, and the rest is not credited to it.
 
 ## Quick links
 
@@ -34,16 +29,18 @@ Real library of 2,692 EPUBs, KOReader v2026.07.2 in the SDL emulator, every plug
 
 | | Result |
 |---|---|
-| **Fast and light** | Stock, Bookshelf, VOS, Project:Title (cover list on) and my own minimal plugin (m1n1mal + pagecount): restart 269–291 ms, 14–16 MiB live Lua heap (Bookshelf 20 MiB). |
-| **Heaviest** | SimpleUI: restart 409–466 ms, 66–86 MiB heap, 210–250 ms to close a book (Stock: 29 ms). |
-| **In between** | ZenOS: restart 461 ms, 22 MiB; adding Bookshelf to VOS or ZenOS costs about 7 MiB more heap. |
+| **Fast and light** | Stock, Bookshelf, VOS, Project:Title (cover list on) and my own minimal plugin (m1n1mal + pagecount): restart + navigation 271–291 ms, 14–16 MiB live Lua heap (Bookshelf 20 MiB, which includes its shelf being used during stress). Bookshelf's restart is measured with the plugin loaded but not active. |
+| **Heaviest** | SimpleUI: restart to Home 332–384 ms, with navigation 410–454 ms, 66–86 MiB heap, 219–249 ms to close a book (Stock: 34 ms). |
+| **In between** | ZenOS: restart to Home 296–307 ms, with navigation 391–403 ms, 22 MiB; adding Bookshelf to VOS or ZenOS costs about 7 MiB more heap. |
 | **Bookends** | Page turn in the book 4.7 → 16.7 ms, closing a book 27 → 49 ms, +3.7 MiB heap. Small in absolute terms, not negligible. |
-| **Bookshelf's own shelf** | Page turn 133 ms with the default animation, 38 ms (fastest 22 ms) with it off, versus 17.5 ms for Stock's list. A deliberate cost; the library rows for Bookshelf measure the stock browser (see below). |
-| **CyberUI** (new) | Restart 279 ms, 13.3 MiB heap, close book 32 ms: close to Stock. Its own library actions finish within one frame (action CPU 1.5–2.1 ms vs 20–44 ms for Stock's render/sort), so their wall times sit at the harness's 16 ms frame floor. |
+| **Bookshelf's own shelf** | Page turn 133 ms with the default animation, 38 ms (fastest 22 ms) with it off, versus 16.6 ms for Stock's list. A deliberate cost; the library rows for Bookshelf measure the stock browser, with the plugin not active. |
+| **CyberUI** (new) | Restart + navigation 279 ms, 13.3 MiB heap, close book 32 ms: close to Stock. Its own library actions finish within one frame (action CPU 1.5–2.1 ms vs 20–44 ms for Stock's render/sort), so their wall times sit at the harness's 16 ms frame floor. |
 | **Correction** | Project:Title's lead in the earlier report came from running without its cover list. With covers it is about as light as Stock, not clearly faster. |
-| **Library paging** | 15–17.5 ms per page for every stack, distributions overlap: no ranking. |
+| **Library paging** | 15–17.4 ms per page for every stack, distributions overlap: no ranking. |
 
-![Restart to usable library](docs/charts/real_restart.svg)
+![Restart to first screen](docs/charts/real_boot.svg)
+
+![Restart plus navigation to library](docs/charts/real_restart.svg)
 
 ![Live Lua heap after stress](docs/charts/real_heap.svg)
 
@@ -57,9 +54,10 @@ Emulator on Apple Silicon, not a Kindle: read the numbers as relative. Tables fo
 
 ## Details: campaigns, tables and notes
 
-**Test date: 2026-10-27** (all campaigns below, same host and pinned KOReader).
-The current numbers come from four campaigns, each measuring only the configs
-it names, all with the same harness behaviour for the scenarios they share:
+**Test dates: 2026-10-27 to 2026-11-06** (all campaigns below, same host and pinned KOReader).
+The current numbers come from seven campaigns, each measuring only the configs
+it names. The 2026-10 campaigns share harness behaviour for the scenarios they have in common;
+the two 2026-11 campaigns differ from them (see below):
 
 - `2026-10-27-m1n1mal-v3`: all 14 stacks at the pins listed under *Pinned
   software* (VOS at v1.4). Its Project:Title and VOS rows are superseded.
@@ -67,6 +65,15 @@ it names, all with the same harness behaviour for the scenarios they share:
   (It also contains a Project:Title + VOS run on VOS v1.4, superseded below.)
 - `2026-10-27-vos-141`: every VOS-containing stack on VOS v1.4.1.
 - `2026-10-27-bookends`: the Stock versus Stock + Bookends reader control.
+- `2026-10-28-cyberui-b`: CyberUI alone.
+- `2026-11-05-issue2`: Stock and every ZenOS stack again after the harness fixes
+  above. It supersedes their earlier rows. Its harness also has other
+  changes that are not committed to this repository yet, so it does not match the committed harness: it records time spent in screen refresh calls, `library_folder_back` no longer
+  rebuilds at the root first, and `close_book`'s reset shows the book's page first. Stock's
+  close book moved from 28.5 to 33.9 ms (cause not established), so Stock now sits above
+  some stacks that were not re-run: do not rank small close-book differences across campaigns.
+- `2026-11-06-simpleui`: every SimpleUI stack on the same harness plus the SimpleUI adapter
+  fix. It supersedes their rows from `2026-11-05-issue2`.
 
 The tables take each row from the newest campaign that measured it. The
 campaigns have different runner hashes (Project:Title's first-run setup is no
@@ -78,27 +85,27 @@ Every cell below is an emulator measurement; see the limits in the next
 section.
 
 - **Stock, Bookshelf and m1n1mal + pagecount** are indistinguishable on the real
-  library: steady restart to the library 269–274 ms, library render 25–27 ms,
-  open book 105–111 ms (single-process differences of a few ms are inside the
-  run-to-run spread). The forced-GC live Lua heap after the stress sequence is the same for Stock and
-  m1n1mal + pagecount (14.1 MiB).
-- **Project:Title with the cover list on** is no longer clearly ahead: restart
+  library: steady restart + navigation 271–274 ms, library render 25–29 ms,
+  open book 104–111 ms (single-process differences of a few ms are inside the
+  run-to-run spread). The forced-GC live Lua heap after the stress sequence is about the same for Stock (14.0 MiB) and
+  m1n1mal + pagecount (14.1 MiB). Bookshelf is loaded but not active in these rows, except that its heap (20.3 MiB) includes shelf use during stress.
+- **Project:Title with the cover list on** is no longer clearly ahead: restart + navigation
   279 ms, open book 98 ms, but a sort change is slower than Stock and
   m1n1mal (see the cover-list cost table). Earlier versions of this README
   credited it with a large lead; that was measured without covers.
-- **SimpleUI** keeps its larger startup and memory cost: restart 409–466 ms,
-  library render 51–66 ms, 66–86 MiB live Lua heap, and about 210–250 ms to close
-  a book (Stock: 29 ms).
-- **ZenOS** restarts in 461 ms and renders the library in 33 ms; its page holds 5
-  entries, so paging comparisons are UX-level.
+- **SimpleUI** keeps its larger startup and memory cost: restart + navigation
+  410–454 ms, library render 49–53 ms, 66–86 MiB live Lua heap, and about 219–249 ms
+  to close a book (Stock: 34 ms).
+- **ZenOS** restarts to Home in 307 ms, 403 ms with navigation, and renders the library
+  in 17 ms; its page holds 5 entries, so paging comparisons are UX-level.
 - **Bookshelf** leaves the normal library close to Stock. In its dedicated shelf,
   the default animation dominates page-turn latency; animation-off isolates a
   much smaller renderer cost.
-- **VOS v1.4.1** is close to v1.4 on the real library (restart 291 ms, open book
+- **VOS v1.4.1** is close to v1.4 on the real library (restart + navigation 291 ms, open book
   112 ms). On the synthetic FLAT 2000 library its render time is higher (66 versus
   49 ms for v1.4 in the baseline campaign); that is one process per cell and was not
   investigated further. Its new automatic series folders are on by default.
-- **Library paging**: sequential 14.8–17.5 ms per page, cached 12.8–20.8 ms, for
+- **Library paging**: sequential 14.8–17.4 ms per page, cached 12.6–20.7 ms, for
   every stack; distributions overlap, so no paging ranking is claimed.
 
 ### Cover list cost, and how Project:Title is measured
@@ -137,20 +144,20 @@ include effects of their own shells.
 | Stack | Library render | Open book |
 |---|---:|---:|
 | CyberUI | 16.1 | 45.8 |
+| ZenOS | 27.0 | 58.6 |
+| ZenOS + Bookshelf (not active) | 27.7 | 60.8 |
 | LeanUI (local rebuild) | 36.6 | 56.5 |
 | m1n1mal + pagecount | 38.0 | 59.7 |
-| Bookshelf | 38.6 | 122.3 |
-| Stock | 38.9 | 59.3 |
+| Bookshelf (not active) | 38.6 | 122.3 |
+| Stock | 42.7 | 58.6 |
 | Project:Title | 44.1 | 50.9 |
-| ZenOS + Bookshelf | 48.2 | 48.4 |
-| ZenOS | 49.1 | 69.8 |
-| VOS + Bookshelf | 60.8 | 75.7 |
+| SimpleUI | 59.2 | 95.2 |
+| VOS + Bookshelf (not active) | 60.8 | 75.7 |
 | Project:Title + VOS | 61.0 | 45.5 |
 | VOS | 66.1 | 47.9 |
-| SimpleUI + VOS | 67.4 | 78.5 |
-| SimpleUI + VOS + Bookshelf | 68.9 | 83.5 |
-| SimpleUI + Bookshelf | 75.4 | 89.3 |
-| SimpleUI | 78.1 | 90.5 |
+| SimpleUI + VOS + Bookshelf (not active) | 66.1 | 82.4 |
+| SimpleUI + VOS | 68.0 | 87.1 |
+| SimpleUI + Bookshelf (not active) | 70.6 | 89.9 |
 
 ### Real library: 2,692 EPUBs
 
@@ -161,23 +168,25 @@ metadata/cache growth, folder navigation and the remaining Phase 2 scenarios.
 
 The real corpus is the more practically useful result set. Restart values are the median of three isolated process runs; render/open values are warm medians of 10 samples. Memory is one forced-GC checkpoint per stack after the same stress sequence, so it is an observed state point, not a replicated statistical median.
 
-| Stack | Restart → library | Library render | Open book | Live Lua after stress (forced GC) |
-|---|---:|---:|---:|---:|
-| Stock | 269 ms | 26.8 ms | 105.5 ms | 14.1 MiB |
-| Bookshelf | 273 ms | 25.5 ms | 110.7 ms | 20.3 MiB |
-| m1n1mal + pagecount | 274 ms | 26.3 ms | 110.8 ms | 14.1 MiB |
-| Project:Title | 279 ms | 30.4 ms | 98.1 ms | 13.9 MiB |
-| CyberUI | 279 ms | 16.1 ms | 93.5 ms | 13.3 MiB |
-| VOS | 291 ms | 34.5 ms | 112.5 ms | 15.6 MiB |
-| VOS + Bookshelf | 306 ms | 34.5 ms | 127.3 ms | 21.7 MiB |
-| LeanUI (local rebuild) | 323 ms | 31.7 ms | 99.3 ms | 15.0 MiB |
-| Project:Title + VOS | 333 ms | 45.9 ms | 104.6 ms | 15.3 MiB |
-| ZenOS + Bookshelf | 401 ms | 39.8 ms | 123.7 ms | 29.5 MiB |
-| SimpleUI + VOS | 409 ms | 51.2 ms | 123.6 ms | 78.4 MiB |
-| SimpleUI + VOS + Bookshelf | 426 ms | 52.3 ms | 130.6 ms | 86.4 MiB |
-| SimpleUI + Bookshelf | 446 ms | 60.1 ms | 118.6 ms | 74.3 MiB |
-| ZenOS | 461 ms | 33.1 ms | 130.4 ms | 22.3 MiB |
-| SimpleUI | 466 ms | 65.7 ms | 124.0 ms | 66.0 MiB |
+*Not active* covers every column except heap: the stress sequence before the heap checkpoint opens Bookshelf's shelf.
+
+| Stack | Restart → first screen | Restart + navigation to library | Library render | Open book | Live Lua after stress (forced GC) |
+|---|---:|---:|---:|---:|---:|
+| Stock | 207 ms | 271 ms | 29.1 ms | 103.9 ms | 14.0 MiB |
+| Bookshelf (not active) | 214 ms | 273 ms | 25.5 ms | 110.7 ms | 20.3 MiB |
+| m1n1mal + pagecount | 211 ms | 274 ms | 26.3 ms | 110.8 ms | 14.1 MiB |
+| Project:Title | 214 ms | 279 ms | 30.4 ms | 98.1 ms | 13.9 MiB |
+| CyberUI | 232 ms | 279 ms | 16.1 ms | 93.5 ms | 13.3 MiB |
+| VOS | 216 ms | 291 ms | 34.5 ms | 112.5 ms | 15.6 MiB |
+| VOS + Bookshelf (not active) | 223 ms | 306 ms | 34.5 ms | 127.3 ms | 21.7 MiB |
+| LeanUI (local rebuild) | 258 ms | 323 ms | 31.7 ms | 99.3 ms | 15.0 MiB |
+| Project:Title + VOS | 228 ms | 333 ms | 45.9 ms | 104.6 ms | 15.3 MiB |
+| ZenOS + Bookshelf (not active) | 296 ms | 391 ms | 17.7 ms | 124.0 ms | 29.5 MiB |
+| ZenOS | 307 ms | 403 ms | 17.3 ms | 126.1 ms | 22.2 MiB |
+| SimpleUI + VOS | 340 ms | 409 ms | 49.5 ms | 129.2 ms | 77.9 MiB |
+| SimpleUI | 332 ms | 413 ms | 50.0 ms | 119.3 ms | 66.0 MiB |
+| SimpleUI + VOS + Bookshelf (not active) | 350 ms | 425 ms | 49.4 ms | 129.5 ms | 85.9 MiB |
+| SimpleUI + Bookshelf (not active) | 384 ms | 454 ms | 52.6 ms | 123.9 ms | 74.1 MiB |
 
 `RSS` is recorded too, but it is the whole macOS emulator process. It includes native libraries, mappings, allocator behaviour, and cached allocations, so forced-GC live Lua heap is the cleaner plugin-side signal.
 
@@ -192,19 +201,19 @@ three-process paging phases were not repeated in this round.
 |---|---:|---:|---:|
 | Project:Title | 7 | 14.8 (12.0) | 20.7 (8.5) |
 | Project:Title + VOS | 7 | 15.1 (12.7) | 18.6 (9.0) |
+| SimpleUI | 9 | 15.3 (8.0) | 13.5 (11.1) |
 | VOS | 10 | 15.4 (13.3) | 14.7 (9.1) |
-| Bookshelf | 10 | 15.7 (9.9) | 14.5 (9.4) |
-| SimpleUI | 9 | 15.9 (7.4) | 12.8 (10.4) |
+| SimpleUI + Bookshelf (not active) | 9 | 15.6 (8.4) | 13.4 (11.2) |
+| Bookshelf (not active) | 10 | 15.7 (9.9) | 14.5 (9.4) |
 | LeanUI (local rebuild) | 14 | 16.0 (12.7) | 16.1 (15.6) |
-| SimpleUI + Bookshelf | 9 | 16.1 (7.5) | 13.1 (11.0) |
-| SimpleUI + VOS + Bookshelf | 9 | 16.1 (7.3) | 14.3 (9.1) |
-| ZenOS | 5 | 16.1 (5.5) | 16.1 (6.6) |
-| ZenOS + Bookshelf | 5 | 16.1 (6.4) | 16.1 (6.5) |
-| SimpleUI + VOS | 9 | 16.1 (7.3) | 14.7 (9.8) |
-| VOS + Bookshelf | 10 | 16.1 (13.3) | 15.1 (8.8) |
+| SimpleUI + VOS + Bookshelf (not active) | 9 | 16.1 (6.3) | 12.6 (9.9) |
+| ZenOS | 5 | 16.1 (5.6) | 16.1 (6.6) |
+| ZenOS + Bookshelf (not active) | 5 | 16.1 (6.7) | 16.0 (7.5) |
+| SimpleUI + VOS | 9 | 16.1 (8.3) | 12.8 (9.7) |
+| VOS + Bookshelf (not active) | 10 | 16.1 (13.3) | 15.1 (8.8) |
 | CyberUI | 8 | 16.1 (10.7) | 16.1 (9.2) |
+| Stock | 10 | 16.6 (9.8) | 16.8 (9.1) |
 | m1n1mal + pagecount | 10 | 17.4 (13.6) | 15.7 (10.6) |
-| Stock | 10 | 17.5 (12.6) | 15.7 (9.5) |
 
 The separate `2026-09-03-flash100` sensitivity study added approximately
 97–106 ms to the median library transition. It is an injected SDL delay, not a
@@ -212,7 +221,7 @@ physical Kindle model.
 
 ### CyberUI
 
-CyberUI v1.0.0 (latest stable; v1.0.5 is a pre-release) was added at a contributor's request (campaign `2026-10-28-cyberui-b`, 0 FAILED). It is a full-screen home plus its own library that sits above the stock browser, so the harness drives its screens directly; it has no quick-settings panel, so those two scenarios are UNSUPPORTED. Its library actions finish in one frame: action CPU 1.5-2.1 ms versus 20-44 ms for Stock's render, sort and folder enter. The wall times are therefore pinned at the harness's 16 ms frame floor (16.1 ms), so differences below one frame are not measurable here; close book (32 ms) and restart (279 ms) are close to Stock. Its sort scenario uses the two of its four sort orders that show different books on page one for the corpus.
+CyberUI v1.0.0 (latest stable; v1.0.5 is a pre-release) was added at a contributor's request (campaign `2026-10-28-cyberui-b`, 0 FAILED). It is a full-screen home plus its own library that sits above the stock browser, so the harness drives its screens directly; it has no quick-settings panel, so those two scenarios are UNSUPPORTED. Its library actions finish in one frame: action CPU 1.5-2.1 ms versus 20-44 ms for Stock's render, sort and folder enter. The wall times are therefore pinned at the harness's 16 ms frame floor (16.1 ms), so differences below one frame are not measurable here; close book (32 ms) and restart + navigation (279 ms) are close to Stock. Its sort scenario uses the two of its four sort orders that show different books on page one for the corpus.
 
 ### Bookends control
 
@@ -275,7 +284,8 @@ Phase 2 with 0 FAILED; their UNSUPPORTED rows (156 + 20 and 8 + 2) are the same
 kind of stack-specific gaps. `2026-10-27-vos-141` adds 498 + 196 PASS (Phase 1 and
 2, 0 FAILED), and `2026-10-27-bookends` 38 PASS. The `2026-10-27-m1n1mal-v3`
 Project:Title and VOS rows are superseded by `2026-10-27-pt-covers` and
-`2026-10-27-vos-141`.
+`2026-10-27-vos-141`. `2026-11-05-issue2` reports 738 PASS in Phase 1 and 279 PASS in Phase 2 with
+0 FAILED (70 and 1 UNSUPPORTED), and `2026-11-06-simpleui` 424 and 162 PASS with 0 FAILED (40 and 0 UNSUPPORTED).
 
 `UNSUPPORTED` entries describe actions that do not exist for the relevant stack or corpus shape, such as next-page navigation in a single-page library. They are reported explicitly rather than treated as success or as `0 ms`.
 

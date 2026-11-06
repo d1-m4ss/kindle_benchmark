@@ -62,6 +62,24 @@ class MeasurementContract(unittest.TestCase):
             (b / 'main.lua').write_text('return 2')
             self.assertNotEqual(manifest(a), manifest(b))
 
+    def test_zenos_adapter_builds_the_library_only_when_needed(self):
+        source = (Path(runner.ROOT) / "plugins_source/benchmark/adapters.lua").read_text()
+        ensure = source.split("function ZenOSAdapter:ensure_filemanager()")[1].split("\nend\n")[0]
+        self.assertLess(ensure.index("return FM"), ensure.index('open_tab("books")'),
+                        "ensure_filemanager must return before reopening the Books tab when already on the library")
+        home_to_library = source.split("function ZenOSAdapter:home_to_library()")[1].split("self:deferred")[0]
+        self.assertIn("realpath(opened_chooser.path) == self.library_dir", home_to_library)
+        self.assertNotIn("if instance then instance:reinit", home_to_library)
+
+    def test_simpleui_adapter_does_not_navigate_when_already_on_library(self):
+        source = (Path(runner.ROOT) / "plugins_source/benchmark/adapters.lua").read_text()
+        ensure = source.split("function SimpleUIAdapter:ensure_filemanager()")[1].split("\nend\n")[0]
+        self.assertLess(ensure.index("return FM"), ensure.index("simpleui_go_library"))
+
+    def test_first_screen_check_has_no_per_stack_settle(self):
+        source = (Path(runner.ROOT) / "plugins_source/benchmark/main.lua").read_text()
+        self.assertNotIn("startup_settle", source)
+
 
 if __name__ == '__main__':
     unittest.main()
