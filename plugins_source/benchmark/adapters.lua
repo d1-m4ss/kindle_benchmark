@@ -1196,6 +1196,8 @@ end
 -- library, sorting and folders) that sits above KOReader's file browser, so the
 -- library scenarios drive its screens, not the FileChooser underneath.
 local CyberUIAdapter = setmetatable({}, { __index = StockAdapter })
+-- Its library is its own window: moving the hidden FileChooser is nothing a reader does.
+CyberUIAdapter.library_hides_file_chooser = true
 CyberUIAdapter.__index = CyberUIAdapter
 
 local cyber_last_grid

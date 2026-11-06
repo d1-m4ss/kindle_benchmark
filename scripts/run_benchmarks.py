@@ -94,8 +94,22 @@ PINNED_TAGS = {
 }
 
 
-def verify_pinned_revisions() -> None:
+def unpinned_plugin_state(name: str) -> dict:
+    """What actually ran for a plugin measured off its pin; uncommitted edits included."""
+    repo_path = ROOT / PINNED_REVISIONS[name][0]
+    git = lambda *args: subprocess.check_output(["git", *args], cwd=str(repo_path), text=True).strip()
+    return {"plugin": name, "pinned": PINNED_REVISIONS[name][1], "head": git("rev-parse", "HEAD"),
+            "uncommitted_entries": len(git("status", "--porcelain").splitlines())}
+
+
+def verify_pinned_revisions(allow_unpinned: Iterable[str] = ()) -> None:
+    allowed = set(allow_unpinned)
+    unknown = allowed - set(PINNED_REVISIONS)
+    if unknown:
+        raise RuntimeError(f"HARD FAIL: --allow-unpinned names unknown plugins: {sorted(unknown)}")
     for name, (rel_path, expected_sha) in PINNED_REVISIONS.items():
+        if name in allowed:
+            continue
         repo_path = ROOT / rel_path
         if not repo_path.exists():
             raise RuntimeError(f"HARD FAIL: Repo path not found for {name}: {repo_path}")
@@ -199,6 +213,14 @@ class Job:
     leanui_source: str | None = None
     library_mode: str = "compact_list"
     measurement_contract: bool = False
+    energy_idle_s: int = 30
+    energy_tail_s: int = 5
+    energy_pace_s: float = 0.25
+    energy_turns: int = 30
+    energy_cycles: int = 5
+    energy_nav_cycles: int = 5
+    energy_reader_short_turns: int = 10
+    energy_reader_long_turns: int = 100
 
 
 def make_layout(campaign: str, phase: str) -> RunLayout:
@@ -619,6 +641,8 @@ def tree_disk_usage(path: Path) -> dict[str, int]:
 
 
 def expected_scenarios(job: Job) -> set[str]:
+    if job.profile == "energy":
+        return set()
     if job.profile == "startup":
         return {"home_to_library", "library_first_render"}
     if job.profile == "paging":
@@ -692,6 +716,94 @@ def paging_root_errors(job: Job, data: dict) -> list[str]:
     return errors
 
 
+ENERGY_IDLE_WINDOWS = ("library_startup_tail", "library_idle", "reader_open_tail",
+                       "reader_idle", "reader_after_turns_tail", "library_after_close_tail")
+ENERGY_ACTION_WINDOWS = ("library_paging", "book_cycles", "library_navigation",
+                         "reader_turns_short", "reader_turns_long")
+ENERGY_COUNTERS = ("cpu_total_ms", "voluntary_switches", "wakeups", "tasks_fired",
+                   "set_dirty_calls", "refreshes", "refresh_pixels")
+
+
+def energy_errors(job: Job, data: dict) -> list[str]:
+    """An energy artifact counts only if every window ran for its full real time."""
+    errors: list[str] = []
+    windows = (data.get("energy") or {}).get("windows")
+    if not isinstance(windows, dict):
+        return ["energy windows missing"]
+    expected = {
+        "library_startup_tail": job.energy_tail_s, "library_idle": job.energy_idle_s,
+        "reader_open_tail": job.energy_tail_s, "reader_idle": job.energy_idle_s,
+        "reader_after_turns_tail": job.energy_tail_s, "library_after_close_tail": job.energy_tail_s,
+    }
+    actions = {"library_paging": job.energy_turns, "book_cycles": job.energy_cycles,
+               "library_navigation": job.energy_nav_cycles,
+               "reader_turns_short": job.energy_reader_short_turns,
+               "reader_turns_long": job.energy_reader_long_turns}
+    for name in ENERGY_IDLE_WINDOWS + ENERGY_ACTION_WINDOWS:
+        window = windows.get(name)
+        if not isinstance(window, dict):
+            errors.append(f"energy window missing: {name}")
+            continue
+        if window.get("status") != "PASS":
+            errors.append(f"energy window {name} failed: {window.get('reason')}")
+        for key in ENERGY_COUNTERS:
+            value = window.get(key)
+            if not isinstance(value, (int, float)) or not math.isfinite(value) or value < 0:
+                errors.append(f"energy counter {name}.{key} invalid: {value}")
+        wall = window.get("wall_s")
+        if not isinstance(wall, (int, float)):
+            errors.append(f"energy window {name} has no wall time")
+        elif name in expected and not expected[name] <= wall <= expected[name] + max(1.0, 0.1 * expected[name]):
+            # A blocked main loop wakes on time; a stall or a short sleep is not idle.
+            errors.append(f"energy window {name} ran {wall}s, expected {expected[name]}s")
+        if name in actions and window.get("actions") != actions[name]:
+            errors.append(f"energy window {name} ran {window.get('actions')} actions, expected {actions[name]}")
+        # An action that paints nothing would report the stack as cheaper.
+        if name in actions and isinstance(window.get("refreshes"), (int, float)) \
+                and window["refreshes"] < actions[name]:
+            errors.append(f"energy window {name} made {window['refreshes']} refreshes for {actions[name]} actions")
+    if not (data.get("reader_book") or {}).get("path"):
+        errors.append("energy reader book missing")
+    if data.get("source_verified") is not True:
+        errors.append("energy plugin tree changed during the run")
+    return errors
+
+
+def energy_environment(job: Job) -> dict[str, str]:
+    return {
+        "BENCHMARK_ENERGY_IDLE_S": str(job.energy_idle_s),
+        "BENCHMARK_ENERGY_TAIL_S": str(job.energy_tail_s),
+        "BENCHMARK_ENERGY_PACE_S": str(job.energy_pace_s),
+        "BENCHMARK_ENERGY_TURNS": str(job.energy_turns),
+        "BENCHMARK_ENERGY_CYCLES": str(job.energy_cycles),
+        "BENCHMARK_ENERGY_NAV_CYCLES": str(job.energy_nav_cycles),
+        "BENCHMARK_ENERGY_READER_SHORT_TURNS": str(job.energy_reader_short_turns),
+        "BENCHMARK_ENERGY_READER_LONG_TURNS": str(job.energy_reader_long_turns),
+    }
+
+
+def energy_keeps_targets(job: Job, targets_file: Path) -> bool:
+    return job.profile == "energy" and not job.fresh_home and targets_file.exists()
+
+
+def removes_corpus_after_block(block_ok: bool, energy: bool) -> bool:
+    return block_ok or not energy
+
+
+def energy_round_errors(job: Job, layout: RunLayout, data: dict) -> list[str]:
+    """Every round of a stack must have measured the same code as its first."""
+    first = layout.raw / f"energy_{job.config}_r00.json"
+    if job.fresh_home or not first.exists():
+        return [] if job.fresh_home else [f"energy first round missing: {first.name}"]
+    try:
+        expected = json.loads(first.read_text()).get("plugin_files_sha256")
+    except (OSError, json.JSONDecodeError) as exc:
+        return [f"energy first round unreadable: {exc}"]
+    if not expected or data.get("plugin_files_sha256") != expected:
+        return [f"energy plugin code differs from {first.name}"]
+    return []
+
+
 def validate_result_artifact(job: Job, layout: RunLayout, *, require_success: bool) -> tuple[bool, list[str]]:
     raw_path = layout.raw / f"{job.run_id}.json"
     log_path = layout.logs / f"{job.run_id}.log"
@@ -745,6 +857,9 @@ def validate_result_artifact(job: Job, layout: RunLayout, *, require_success: bo
         # when the library root paginates on its own. Neither a silent narrowing
         # nor a silently ignored narrowing may pass.
         errors.extend(paging_root_errors(job, data))
+    if job.profile == "energy":
+        errors.extend(energy_errors(job, data))
+        errors.extend(energy_round_errors(job, layout, data))
     if job.measurement_contract:
         errors.extend(measurement_errors(data, job.library_mode if 'leanui' in job.plugins else None))
 
@@ -1031,7 +1146,10 @@ def run_job(job: Job, layout: RunLayout, environment: dict, *, resume: bool = Tr
     if job.mode == "real_first_run":
         sanitize_working_corpus(Path(job.library_dir))
     targets_file = home / "benchmark_targets.json"
-    write_deterministic_targets(Path(job.library_dir), targets_file)
+    # Book sidecars from the first round would pass as folders in later ones, so
+    # energy rounds of a stack keep the targets chosen from its clean corpus.
+    if not energy_keeps_targets(job, targets_file):
+        write_deterministic_targets(Path(job.library_dir), targets_file)
     is_darwin = sys.platform == "darwin"
     headless = os.environ.get("SDL_VIDEODRIVER") == "dummy"
     # Cocoa gets a 2x Retina render target from a half-size window. The SDL
@@ -1067,6 +1185,9 @@ def run_job(job: Job, layout: RunLayout, environment: dict, *, resume: bool = Tr
         "BENCHMARK_TARGETS_FILE": str(targets_file),
         "BENCHMARK_SCREENSHOT_DIR": str(screenshot_dir),
     })
+
+    if job.profile == "energy":
+        env.update(energy_environment(job))
 
     cmd = ["./luajit", "reader.lua", job.library_dir]
     started_ns = time.monotonic_ns()
@@ -1513,6 +1634,40 @@ def paging_phase2_blocks(campaign: str, process_runs: int = 3) -> OrderedDict[st
     return blocks
 
 
+ENERGY_CONFIGS = ("R0_stock", "R13_m1n1mal", "R14_cyberui")
+
+
+def energy_blocks(campaign: str, process_runs: int = 1, idle_s: int = 30, tail_s: int = 5,
+                  configs: Iterable[str] = ENERGY_CONFIGS) -> OrderedDict[str, list[Job]]:
+    """One block, interleaved: drift of the host falls on every stack alike.
+
+    r00 is each stack's first process on a fresh home, so its windows hold first-run
+    indexing and are reported apart. The order rotates every round.
+    """
+    books = corpus_files(ROOT / "real_books")
+    if len(books) != 2692:
+        raise RuntimeError(f"HARD FAIL: real_books/ must contain exactly 2692 EPUB files, found {len(books)}")
+    names = list(configs)
+    jobs: list[Job] = []
+    for round_index in range(process_runs + 1):
+        shift = round_index % len(names)
+        for config in names[shift:] + names[:shift]:
+            jobs.append(Job(
+                f"energy_{config}_r{round_index:02d}", "energy", "energy", config,
+                tuple(PHASE2_CONFIGS[config]), str(WORK_REAL / campaign / config / "corpus"),
+                str(ENV_BASE / campaign / "energy" / config), "warm", "energy", "real_2692",
+                len(books), 0, 1, round_index == 0, timeout_s=3600,
+                energy_idle_s=idle_s, energy_tail_s=tail_s,
+            ))
+    return OrderedDict({"energy": jobs})
+
+
+def energy_corpora_to_reset(jobs: Iterable[Job], layout: RunLayout, *, resume: bool) -> list[Path]:
+    """A stack's first round needs a corpus free of sidecars; later rounds need theirs kept."""
+    return sorted({Path(job.library_dir) for job in jobs if job.fresh_home
+                   and not (resume and valid_completed_result(job, layout))}, key=str)
+
+
 def bookends_blocks(campaign: str) -> OrderedDict[str, list[Job]]:
     master = ROOT / "real_books"
     books = corpus_files(master)
@@ -1789,6 +1944,8 @@ def main() -> int:
     group.add_argument("--paging-phase2", action="store_true",
                        help="paging-only real phase: real_books/2692, three process runs")
     group.add_argument("--bookends-control", action="store_true")
+    group.add_argument("--energy", action="store_true",
+                       help="energy proxies on real_books/2692: stock, m1n1mal, CyberUI")
     parser.add_argument("--campaign", default=date.today().isoformat(),
                         help="campaign folder name; reuse the same value tomorrow")
     parser.add_argument("--batch", choices=("1", "2", "3", "all"), default="all")
@@ -1803,6 +1960,13 @@ def main() -> int:
                         help="independent process runs per paging cell (default: 3)")
     parser.add_argument("--emulate-reader-flash-ms", type=int,
                         help="explicit SDL flash delay in milliseconds; omit for baseline")
+    parser.add_argument("--energy-runs", type=int, default=1,
+                        help="steady process runs per stack, after each stack's first run (0: first run only)")
+    parser.add_argument("--allow-unpinned", default="",
+                        help="energy only: comma-separated plugins measured as checked out; "
+                             "recorded in every artifact, for local runs that are not published")
+    parser.add_argument("--energy-idle-s", type=int, default=30)
+    parser.add_argument("--energy-tail-s", type=int, default=5)
     parser.add_argument("--configs",
                         help="comma-separated config names to run (e.g. M_leanui,A_stock)")
     args = parser.parse_args()
@@ -1820,18 +1984,35 @@ def main() -> int:
     if not args.validate and not args.prepare_only and args.lanes != 1:
         parser.error("final Phase 1/2 and Bookends measurements must use --lanes 1")
 
-    phase_name = "phase1" if args.validate or args.phase1 or args.paging_phase1 else "phase2"
+    if args.energy_runs < 0 or args.energy_idle_s < 1 or args.energy_tail_s < 1:
+        parser.error("--energy-runs must be >= 0; --energy-idle-s and --energy-tail-s must be >= 1")
+    phase_name = "energy" if args.energy else \
+        "phase1" if args.validate or args.phase1 or args.paging_phase1 else "phase2"
     layout = make_layout(args.campaign, phase_name)
     environment: dict = {}
     resume = not args.no_resume
 
-    verify_pinned_revisions()
+    allow_unpinned = [name.strip() for name in args.allow_unpinned.split(",") if name.strip()]
+    if allow_unpinned and not args.energy:
+        parser.error("--allow-unpinned is only for --energy")
+    verify_pinned_revisions(allow_unpinned)
 
     if args.validate:
         if args.batch != "all":
             parser.error("validation uses one smoke_gate block; --batch must be all")
         jobs = validation_jobs(args.campaign)
         blocks = OrderedDict({"smoke_gate": jobs})
+    elif args.energy:
+        if args.batch != "all":
+            parser.error("--energy uses one interleaved block; --batch must be all")
+        if os.environ.get("SDL_VIDEODRIVER") != "dummy":
+            parser.error("--energy needs SDL_VIDEODRIVER=dummy: the emulator's idle floor depends on the driver")
+        requested = {name.strip() for name in args.configs.split(",")} if args.configs else set(ENERGY_CONFIGS)
+        if not requested or requested - set(ENERGY_CONFIGS):
+            parser.error(f"--energy configs must be among {ENERGY_CONFIGS}")
+        selected = [c for c in ENERGY_CONFIGS if c in requested]
+        blocks = energy_blocks(args.campaign, args.energy_runs, args.energy_idle_s,
+                               args.energy_tail_s, selected)
     elif args.paging_phase1:
         blocks = select_blocks(
             paging_phase1_blocks(args.campaign, args.paging_runs),
@@ -1902,9 +2083,11 @@ def main() -> int:
         return 0
 
     environment = ensure_layout(layout, args.emulate_reader_flash_ms)
+    if allow_unpinned:
+        environment = {**environment, "unpinned_plugins": [unpinned_plugin_state(n) for n in allow_unpinned]}
     all_jobs = [job for jobs in blocks.values() for job in jobs]
     if args.prepare_only:
-        if args.phase2 or args.paging_phase2 or args.bookends_control:
+        if args.phase2 or args.paging_phase2 or args.bookends_control or args.energy:
             configs = sorted({job.config if job.block != "bookends_control" else f"bookends_{job.config}" for job in all_jobs})
             prepare_real_corpora(args.campaign, configs, args.lanes)
             write_corpus_manifest(ROOT / "real_books", layout.root / "real_corpus_manifest.json")
@@ -1912,7 +2095,7 @@ def main() -> int:
         print(f"Preparation complete; no KOReader measurement process started. Output: {layout.root}")
         return 0
 
-    if args.phase2 or args.paging_phase2 or args.bookends_control:
+    if args.phase2 or args.paging_phase2 or args.bookends_control or args.energy:
         write_corpus_manifest(ROOT / "real_books", layout.root / "real_corpus_manifest.json")
 
     success = True
@@ -1921,17 +2104,29 @@ def main() -> int:
     else:
         for block, jobs in blocks.items():
             real_corpora = real_corpora_for_jobs(jobs) \
-                if (args.phase2 or args.paging_phase2 or args.bookends_control) else []
+                if (args.phase2 or args.paging_phase2 or args.bookends_control or args.energy) else []
+            if args.energy and not (resume and block_checkpoint_valid(layout, block, jobs)):
+                for corpus in energy_corpora_to_reset(jobs, layout, resume=resume):
+                    _safe_remove(corpus)
             if real_corpora and not (resume and block_checkpoint_valid(layout, block, jobs)):
                 real_corpora = prepare_real_corpora_for_jobs(args.campaign, jobs, lanes=1)
+            block_ok = False
             try:
-                if not run_block(block, jobs, layout, environment, resume=resume):
+                block_ok = run_block(block, jobs, layout, environment, resume=resume)
+                if not block_ok:
                     success = False
                     break
             finally:
                 # The copies are disposable and must not accumulate across blocks.
-                for corpus in real_corpora:
-                    _safe_remove(corpus)
+                # A failed energy block keeps them: a resume needs its sidecars.
+                if removes_corpus_after_block(block_ok, args.energy):
+                    for corpus in real_corpora:
+                        _safe_remove(corpus)
+
+    if args.energy:
+        if success and not args.no_analyze:
+            subprocess.run([sys.executable, str(ROOT / "scripts" / "analyze_energy.py"), str(layout.root)], check=True)
+        return 0 if success else 1
 
     if success and not args.no_analyze:
         scope = "validation" if args.validate else "phase1" if args.phase1 or args.paging_phase1 else \

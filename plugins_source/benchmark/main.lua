@@ -12,6 +12,7 @@ local logger = require("logger")
 local Geometry = require("geometry")
 local Adapters = require("adapters")
 local PaintObserver = require("paint_observer")
+local Energy = require("energy")
 
 ffi.cdef[[
     struct rusage {
@@ -84,19 +85,26 @@ end
 function Benchmark:_scheduleRunner()
     local function step()
         local ok, err = coroutine.resume(self._runner)
+        local sleep_s = ok and type(err) == "table" and err.sleep_s
         if not ok then
             logger.err("Benchmark coroutine failed:", err)
             emit_marker("BENCHMARK_FAILED")
             UIManager:quit(1)
             return
         end
-        if coroutine.status(self._runner) ~= "dead" then UIManager:nextTick(step) end
+        if coroutine.status(self._runner) == "dead" then return end
+        if sleep_s then UIManager:scheduleIn(sleep_s, step) else UIManager:nextTick(step) end
     end
     UIManager:nextTick(step)
 end
 
 function Benchmark:_settleNaturally(ticks)
     for _ = 1, ticks or 2 do coroutine.yield() end
+end
+
+-- Real idle: the main loop blocks until the wake-up instead of ticking.
+function Benchmark:_sleep(seconds)
+    coroutine.yield({ sleep_s = seconds })
 end
 
 function Benchmark:init()
@@ -1118,6 +1126,33 @@ function Benchmark:runHarness()
             else
                 results.run_status = "PASS"
             end
+        elseif profile == "energy" then
+            local function env_number(name, default) return tonumber(os.getenv(name)) or default end
+            local meter = Energy.install({ UIManager = UIManager, Screen = Screen, input = Device.input })
+            local windows, failure = Energy.run({
+                adapter = adapter, meter = meter,
+                sleep = function(seconds) self:_sleep(seconds) end,
+                settle = function(ticks) self:_settleNaturally(ticks) end,
+                settle_ticks = settle_ticks,
+                emit_ready = function() emit_marker("BENCHMARK_LIBRARY_READY") end,
+                select_next_book = select_next_book,
+                select_next_folder = select_next_folder,
+                select_reader_book = select_reader_book,
+                idle_s = env_number("BENCHMARK_ENERGY_IDLE_S", 30),
+                tail_s = env_number("BENCHMARK_ENERGY_TAIL_S", 5),
+                pace_s = env_number("BENCHMARK_ENERGY_PACE_S", 0.25),
+                turns = env_number("BENCHMARK_ENERGY_TURNS", 30),
+                cycles = env_number("BENCHMARK_ENERGY_CYCLES", 5),
+                nav_cycles = env_number("BENCHMARK_ENERGY_NAV_CYCLES", 5),
+                reader_short_turns = env_number("BENCHMARK_ENERGY_READER_SHORT_TURNS", 10),
+                reader_long_turns = env_number("BENCHMARK_ENERGY_READER_LONG_TURNS", 100),
+            })
+            meter.restore()
+            results.energy = { windows = windows }
+            results.reader_book = { path = target_reader_book or target_books[1], bytes = target_reader_book_bytes }
+            results.memory_checkpoints.energy_end = memory_snapshot(false)
+            results.run_status = failure and "FAILED" or "PASS"
+            results.failure_reason = failure
         elseif profile == "startup" then
             execute("home_to_library", function() return adapter:home_to_library() end,
                 function() return adapter:start_to_home() end)
