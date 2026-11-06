@@ -7,7 +7,6 @@ charts are written to docs/charts/*.svg as plain, self-contained SVG.
 from __future__ import annotations
 
 import csv
-import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -24,14 +23,17 @@ SOURCES = {"R14_cyberui": CY, "R4_project_title": PT,
            **{k: ISSUE2 for k in ("R0_stock", "R3_zenos", "R7_zenos_bookshelf")},
            **{k: SIMPLEUI for k in ("R2_simpleui", "R6_simpleui_bookshelf", "R9_simpleui_vos", "R10_simpleui_vos_bookshelf")}}
 NAMES = {
-    # Bookshelf is loaded in these rows but not active, except in the post-stress heap: the stress
-    # sequence opens its shelf, so the heap chart drops the label.
-    "R0_stock": "Stock", "R1_bookshelf": "Bookshelf (not active)", "R2_simpleui": "SimpleUI", "R3_zenos": "ZenOS",
-    "R4_project_title": "Project:Title", "R5_vos": "VOS", "R6_simpleui_bookshelf": "SimpleUI + Bookshelf (not active)",
-    "R7_zenos_bookshelf": "ZenOS + Bookshelf (not active)", "R8_vos_bookshelf": "VOS + Bookshelf (not active)",
-    "R9_simpleui_vos": "SimpleUI + VOS", "R10_simpleui_vos_bookshelf": "SimpleUI + VOS + Bookshelf (not active)",
+    "R0_stock": "Stock", "R1_bookshelf": "Bookshelf", "R2_simpleui": "SimpleUI", "R3_zenos": "ZenOS",
+    "R4_project_title": "Project:Title", "R5_vos": "VOS", "R6_simpleui_bookshelf": "SimpleUI + Bookshelf",
+    "R7_zenos_bookshelf": "ZenOS + Bookshelf", "R8_vos_bookshelf": "VOS + Bookshelf",
+    "R9_simpleui_vos": "SimpleUI + VOS", "R10_simpleui_vos_bookshelf": "SimpleUI + VOS + Bookshelf",
     "R11_project_title_vos": "Project:Title + VOS", "R13_m1n1mal": "m1n1mal + pagecount", "R14_cyberui": "CyberUI",
 }
+# Bookshelf is loaded in these stacks but is not the library, so their restart and close
+# figures measure the browser without it. Only the post-stress heap counts: that sequence
+# opens the shelf.
+BOOKSHELF_NOT_USED = {"R1_bookshelf", "R6_simpleui_bookshelf", "R7_zenos_bookshelf",
+                      "R8_vos_bookshelf", "R10_simpleui_vos_bookshelf"}
 _cache: dict[str, list[dict]] = {}
 
 
@@ -65,47 +67,17 @@ def bars(title: str, unit: str, values: list[tuple[str, float]], path: Path, dec
     path.write_text("\n".join(out) + "\n")
 
 
-def bookends_control(path: Path) -> None:
-    """Stock vs Stock + Bookends: three metrics, each pair drawn on its own scale."""
-    base = RUNS / "2026-10-27-bookends" / "phase2"
-    rows = list(csv.DictReader(open(base / "BOOKENDS_RESULTS.csv")))
-    pick = lambda stack, scenario: float(next(r["wall_time_ms_median"] for r in rows
-                                              if r["Stack"] == stack and r["Scenario"] == scenario and r["wall_time_ms_median"]))
-    heap = {m.group(1): float(m.group(2)) for m in re.finditer(
-        r"^\| (A_stock|K_stock_bookends) \| \d+ \| \d+ \| ([\d.]+) \|", (base / "BOOKENDS_REPORT.md").read_text(), re.M)}
-    groups = [("Reader page turn", "ms", pick("A_stock", "reader_page_turn"), pick("K_stock_bookends", "reader_page_turn"), 1),
-              ("Closing a book", "ms", pick("A_stock", "close_book"), pick("K_stock_bookends", "close_book"), 1),
-              ("Live Lua heap", "MiB", heap["A_stock"], heap["K_stock_bookends"], 1)]
-    width, left, row_h = 760, 170, 22
-    height = 44 + len(groups) * (2 * row_h + 14) + 8
-    out = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}" font-family="Helvetica, Arial, sans-serif" font-size="13">',
-           f'<rect width="{width}" height="{height}" fill="#ffffff"/>',
-           '<text x="12" y="26" font-size="15" font-weight="bold" fill="#1f2328">Bookends v5.31.0 control (real library), lower is better</text>']
-    y = 44
-    for label, unit, stock, bk, dec in groups:
-        scale = (width - left - 110) / max(stock, bk)
-        out.append(f'<text x="{left - 8}" y="{y + 30}" text-anchor="end" font-weight="bold" fill="#1f2328">{label}</text>')
-        for i, (name, value, color) in enumerate((("Stock", stock, "#0969da"), ("+ Bookends", bk, "#bf8700"))):
-            yy = y + i * row_h
-            out.append(f'<rect x="{left}" y="{yy + 3}" width="{value * scale:.1f}" height="16" rx="2" fill="{color}"/>')
-            out.append(f'<text x="{left + value * scale + 6:.1f}" y="{yy + 15}" fill="#57606a">{name}: {value:.{dec}f} {unit}</text>')
-        y += 2 * row_h + 14
-    out.append("</svg>")
-    path.write_text("\n".join(out) + "\n")
-
-
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
-    restart = [(n, metric(k, "process:spawn_to_library_ready_ms", "real_steady_cold")) for k, n in NAMES.items()]
+    latency = {k: n for k, n in NAMES.items() if k not in BOOKSHELF_NOT_USED}
+    restart = [(n, metric(k, "process:spawn_to_library_ready_ms", "real_steady_cold")) for k, n in latency.items()]
     heap = [(n, metric(k, "memory:post_stress_idle", "warm", "forced_gc_live_heap_kb_median") / 1024) for k, n in NAMES.items()]
-    heap = [(n.replace(" (not active)", ""), v) for n, v in heap]
-    close = [(n, metric(k, "close_book", "warm")) for k, n in NAMES.items()]
-    boot = [(n, metric(k, "process:spawn_to_ui_ready_ms", "real_steady_cold")) for k, n in NAMES.items()]
+    close = [(n, metric(k, "close_book", "warm")) for k, n in latency.items()]
+    boot = [(n, metric(k, "process:spawn_to_ui_ready_ms", "real_steady_cold")) for k, n in latency.items()]
     bars("Real library (2,692 EPUBs): restart to first screen (Home or library), lower is better", "ms", boot, OUT / "real_boot.svg")
     bars("Real library (2,692 EPUBs): restart + scripted navigation to library, lower is better", "ms", restart, OUT / "real_restart.svg")
     bars("Live Lua heap after stress (forced GC), lower is better", "MiB", heap, OUT / "real_heap.svg", 1)
     bars("Closing a book, lower is better (rows from different harness versions)", "ms", close, OUT / "real_close_book.svg")
-    bookends_control(OUT / "bookends_control.svg")
 
 
 if __name__ == "__main__":
