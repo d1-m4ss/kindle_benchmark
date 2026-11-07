@@ -620,7 +620,11 @@ function BaseAdapter:goto_bookshelf_page(target_page)
     return true
 end
 
+local function bookshelf_defaults() return os.getenv("BENCHMARK_BOOKSHELF_DEFAULTS") == "1" end
+
 function BaseAdapter:set_bookshelf_animation(mode)
+    -- At the plugin's defaults, "on" is the plugin's own default animation, not a value the harness picks.
+    if bookshelf_defaults() and (mode == nil or mode == "medium") then mode = "fast" end
     local ok, BookshelfSettings = pcall(require, "lib/bookshelf_settings_store")
     if ok and BookshelfSettings and BookshelfSettings.save then
         BookshelfSettings.save("shelf_page_animation", mode or "medium")
@@ -629,6 +633,22 @@ function BaseAdapter:set_bookshelf_animation(mode)
         return readback == (mode or "medium")
     end
     return false
+end
+
+-- What the shelf actually runs with, read back from the plugin.
+function BaseAdapter:bookshelf_effective()
+    local out = { defaults = bookshelf_defaults() }
+    local ok_s, Store = pcall(require, "lib/bookshelf_settings_store")
+    if ok_s and Store and Store.read then
+        out.shelf_page_animation = Store.read("shelf_page_animation")
+    end
+    local ok_t, TabModel = pcall(require, "lib/bookshelf_tab_model")
+    if ok_t and TabModel.load then
+        for _, tab in ipairs(TabModel.load()) do
+            if tab.id == "all" then out.all_tab_view_mode = tab.view_mode break end
+        end
+    end
+    return out
 end
 
 function BaseAdapter:open_bookshelf()
@@ -655,7 +675,7 @@ function BaseAdapter:open_bookshelf()
         -- unsupported. Pin only this benchmark profile to covers, preserving
         -- every other user/default tab setting.
         local ok_tabs, TabModel = pcall(require, "lib/bookshelf_tab_model")
-        if ok_tabs and TabModel.load and TabModel.save then
+        if ok_tabs and TabModel.load and TabModel.save and not bookshelf_defaults() then
             local tabs, changed = TabModel.load(), false
             for _, tab in ipairs(tabs) do
                 if tab.id == "all" and tab.view_mode ~= "covers" then

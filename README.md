@@ -12,11 +12,11 @@ ZenOS's author [reported harness problems](https://github.com/d1-m4ss/kindle_ben
 
 - **ZenOS was built more often than Stock.** The adapter opened the Books tab and then forced a reinit in `home_to_library`, and did the same again in `library_first_render`. Fixed. Between campaigns, restart + navigation dropped from 461 to 403 ms, and library render from 33 to 17 ms (close to the harness's 16 ms frame floor; its page holds 5 entries). The navigation steps the fix touched account for about 16–31 ms of the drop across ZenOS and ZenOS + Bookshelf (about 23 ms by step medians); the rest is before the first screen, which the fix cannot affect, so it is not credited to the fix. Stock, re-measured as a control, moved from 269 to 271 ms.
 - **"Restart" included scripted navigation to the library.** It is now two numbers: restart to the first screen, and restart plus navigation. The first screen is Home on ZenOS, SimpleUI and CyberUI and the library on Stock, and the check confirms the widget is on the stack, not that it has painted, so neither number is a like-for-like comparison of the same screen.
-- **Bookshelf's library rows measured the stock browser with Bookshelf idle.** They were first labelled *not active*; as pointed out in the same issue, that was still misleading, so they are removed from the tables and charts. Bookshelf as the start page (`start_with = "bookshelf"`) has not been measured. Its shelf has its own scenarios. Heap after stress stays, because the stress sequence opens the shelf, so that figure includes real use (before stress Bookshelf adds about 0.5 MiB, after it 6–8 MiB). The per-campaign reports linked above keep every raw row.
-- **The same check on every other stack found more of this.** Nothing below was re-measured; the wording is corrected to what was actually exercised:
-  - **Bookends ran disabled.** It defaults to off and the harness never enabled it, so it drew nothing. The result is withdrawn until it is measured enabled.
+- **Bookshelf's library rows measured the stock browser with Bookshelf idle.** They were first labelled *not active*; as pointed out in the same issue, that was still misleading, so they are removed from the tables and charts. Its shelf has its own scenarios, and on 2026-11-07 it was measured at its own defaults and as the start page (see *Bookshelf at its own defaults*). Heap after stress stays, because the stress sequence opens the shelf, so that figure includes real use (before stress Bookshelf adds about 0.5 MiB, after it 6–8 MiB). The per-campaign reports linked above keep every raw row.
+- **The same check on every other stack found more of this.** Unless an item says it was re-measured on 2026-11-07, nothing below was; the wording is corrected to what was actually exercised:
+  - **Bookends ran disabled.** It defaults to off and the harness never enabled it, so it drew nothing. The first result was withdrawn; on 2026-11-07 it was re-measured enabled (see *Bookends control*).
   - **m1n1mal + pagecount (mine) ran mostly idle.** No page was counted, reader corner lines were never timed, and library paging frames are identical to Stock's. "As light as Stock" is not a result about the plugin's main jobs.
-  - **Bookshelf's shelf ran with settings the harness chose:** `medium` animation (plugin default `fast`) and the `covers` view (default `spines`). Earlier text called it the default animation.
+  - **Bookshelf's shelf ran with settings the harness chose:** `medium` animation (plugin default `fast`) and the `covers` view (default `spines`). Earlier text called it the default animation. Re-measured at the plugin's defaults on 2026-11-07, see below.
   - **VOS rows don't exercise its cover-grid code,** because the library is in list mode. Only its navbar and other non-grid changes are active.
   - **Close book compares different screens:** it returns to Home on SimpleUI, ZenOS and CyberUI and to the library on Stock.
 - **The round-over-round comparison is withdrawn.** The earlier chart and per-plugin changes compared a windowed run with a headless one, where Stock itself restarted about twice as fast, so its ratios could move with no change in the plugin. The framebuffer was 1236×1648 in both rounds, so resolution was not the cause. The window versus headless setup is the likely one, though the harness also changed and no controlled run isolates it. Old plugin versions were not re-measured, so this README no longer claims how any plugin changed between rounds.
@@ -25,11 +25,12 @@ ZenOS's author [reported harness problems](https://github.com/d1-m4ss/kindle_ben
 
 ## Quick links
 
-- Campaigns of 2026-10-27 (reports with all scenarios): [all stacks, Phase 1](results/runs/2026-10-27-m1n1mal-v3/phase1/REPORT.md) and [Phase 2](results/runs/2026-10-27-m1n1mal-v3/phase2/REPORT.md); [Project:Title with covers](results/runs/2026-10-27-pt-covers/phase2/REPORT.md); [VOS v1.4.1 stacks](results/runs/2026-10-27-vos-141/phase2/REPORT.md); [Bookends control](results/runs/2026-10-27-bookends/phase2/BOOKENDS_REPORT.md). Each row in the tables below comes from the newest campaign that measured it.
+- Campaigns of 2026-11-07 (Bookends enabled, Bookshelf at its defaults): [Phase 2](results/runs/2026-11-07-defaults-2/phase2/REPORT.md), [Bookends control](results/runs/2026-11-07-defaults-2/phase2/BOOKENDS_REPORT.md), repeats [1](results/runs/2026-11-07-rep1/phase2/BOOKENDS_REPORT.md), [2](results/runs/2026-11-07-rep2/phase2/BOOKENDS_REPORT.md), [3](results/runs/2026-11-07-rep3/phase2/BOOKENDS_REPORT.md)
+- Campaigns of 2026-10-27 (reports with all scenarios): [all stacks, Phase 1](results/runs/2026-10-27-m1n1mal-v3/phase1/REPORT.md) and [Phase 2](results/runs/2026-10-27-m1n1mal-v3/phase2/REPORT.md); [Project:Title with covers](results/runs/2026-10-27-pt-covers/phase2/REPORT.md); [VOS v1.4.1 stacks](results/runs/2026-10-27-vos-141/phase2/REPORT.md); [Bookends control, withdrawn: ran disabled](results/runs/2026-10-27-bookends/phase2/BOOKENDS_REPORT.md). Each row in the tables below comes from the newest campaign that measured it.
 - Earlier (older pins): [2026-09-03 Phase 1](results/runs/2026-09-03-full/phase1/REPORT.md), [Phase 2](results/runs/2026-09-03-full/phase2/REPORT.md), [100 ms flash-delay study](results/runs/2026-09-03-flash100/phase1/REPORT.md)
 - [Campaign runbook](RUNBOOK.md) · [Scenario definitions](SCENARIOS.md) · [Plan: benchmark on a real Kindle](docs/DEVICE_BENCHMARK_PLAN.md)
 
-## Results at a glance (2026-10-27 to 2026-11-06)
+## Results at a glance (2026-10-27 to 2026-11-07)
 
 Real library of 2,692 EPUBs, KOReader v2026.07.2 in the SDL emulator, each plugin at the pinned version listed below (some have newer releases since).
 
@@ -38,8 +39,9 @@ Real library of 2,692 EPUBs, KOReader v2026.07.2 in the SDL emulator, each plugi
 | **Close to Stock** | Project:Title (cover list on), VOS (list mode, so its cover-grid code is not exercised) and my own m1n1mal + pagecount (mostly idle: no pages counted, corner lines not timed): restart + navigation 271–291 ms including Stock, 14–16 MiB live Lua heap. |
 | **Heaviest** | SimpleUI: restart to Home 332–340 ms, with navigation 409–413 ms, 66–78 MiB heap, 219–249 ms to close a book (Stock: 34 ms, but SimpleUI returns to its Home and Stock to the library). Home as the start page is set by the harness; SimpleUI's default is the file manager. |
 | **In between** | ZenOS: restart to Home 307 ms, with navigation 403 ms, 22 MiB. |
-| **Bookends** | Withdrawn: it ran disabled, so there is no result for it. |
-| **Bookshelf's own shelf** | In the `covers` view (harness choice, default `spines`): page turn 133 ms with `medium` animation (harness choice, default `fast`), 38 ms (fastest 22 ms) with it off. Stock's list, a different screen, takes 16.6 ms. Live Lua heap after the stress sequence, which uses the shelf: 20.3 MiB (Stock 14.0), and 6–8 MiB more on top of VOS, ZenOS or SimpleUI. Bookshelf as the start page has not been measured. |
+| **Bookends** | Enabled, four separate processes against Stock: slower in book page turns in all four, median 11.7–12.7 ms against 4.1–5.5, but the size and cause are not isolated (some turns are as fast as Stock's, others one 16 ms frame slower). Minimal open book +5 to +9 ms. +8 MiB live heap after stress (14.5–15.9 → 22.6–24.2 MiB). Closing a book is not claimed (frames match Stock's in 8–9 of 10). |
+| **Bookshelf's own shelf** | In the `covers` view (harness choice, default `spines`): page turn 133 ms with `medium` animation (harness choice, default `fast`), 38 ms (fastest 22 ms) with it off. Stock's list, a different screen, takes 16.6 ms. Live Lua heap after the stress sequence, which uses the shelf: 20.3 MiB (Stock 14.0), and 6–8 MiB more on top of VOS, ZenOS or SimpleUI. |
+| **Bookshelf at its own defaults** | `fast` animation, `spines` view, one process; restart three times. Shelf opens in 28 ms; moving between its first two pages takes 101 ms (38 ms with animation off). Live heap after stress 24.6 MiB (Stock 14.1). As the start page, restart to the first screen is 376 ms versus 193 ms for Stock's library, which is a different screen. Sequential paging through the shelf is not checked in this view (see below). |
 | **CyberUI** | Restart + navigation 279 ms, 13.3 MiB heap, close book 32 ms: close to Stock. Its own library actions finish within one frame (action CPU 1.5–2.1 ms vs 20–44 ms for Stock's render/sort, the call only, not the paint that follows), so their wall times sit at the harness's 16 ms frame floor. |
 | **Correction** | Project:Title's lead in the earlier report came from running without its cover list. With covers it is about as light as Stock, not clearly faster. |
 | **Library paging** | 14.8–17.4 ms per page for every stack, distributions overlap: no ranking. |
@@ -58,10 +60,10 @@ Emulator on Apple Silicon, not a Kindle: read the numbers as relative. Tables fo
 
 ## Details: campaigns, tables and notes
 
-**Test dates: 2026-10-27 to 2026-11-06** (all campaigns below, same host and pinned KOReader).
-The current numbers come from seven campaigns, each measuring only the configs
+**Test dates: 2026-10-27 to 2026-11-07** (all campaigns below, same host and pinned KOReader).
+The current numbers come from eleven campaigns, each measuring only the configs
 it names. The 2026-10 campaigns share harness behaviour for the scenarios they have in common;
-the two 2026-11 campaigns differ from them (see below):
+the 2026-11 campaigns differ from them (see below):
 
 - `2026-10-27-m1n1mal-v3`: all 14 stacks at the pins listed under *Pinned
   software* (VOS at v1.4). Its Project:Title and VOS rows are superseded.
@@ -69,6 +71,9 @@ the two 2026-11 campaigns differ from them (see below):
   (It also contains a Project:Title + VOS run on VOS v1.4, superseded below.)
 - `2026-10-27-vos-141`: every VOS-containing stack on VOS v1.4.1.
 - `2026-10-27-bookends`: Stock versus Stock + Bookends, withdrawn because Bookends ran disabled.
+- `2026-11-07-defaults-2`: Bookends enabled against Stock (one of four processes), and Bookshelf at its own
+  defaults, with and without `start_with = "bookshelf"`, against Stock. `2026-11-07-rep1` to `rep3` repeat the Bookends
+  control. Their harness hash covers the working tree at the time, including changes not committed with this update (see below), so it cannot be reproduced from the committed harness alone.
 - `2026-10-28-cyberui-b`: CyberUI alone.
 - `2026-11-05-issue2`: Stock and every ZenOS stack again after the harness fixes
   above. It supersedes their earlier rows. Its harness also has other
@@ -102,7 +107,7 @@ section.
   to close a book (Stock: 34 ms; SimpleUI returns to its Home, Stock to the library).
 - **ZenOS** restarts to Home in 307 ms, 403 ms with navigation, and renders the library
   in 17 ms; its page holds 5 entries, so paging comparisons are UX-level.
-- **Bookshelf** is measured in its dedicated shelf, not as the library. There,
+- **Bookshelf** is measured in its dedicated shelf, not as the library (at its own defaults it is in *Bookshelf at its own defaults*). There,
   the `medium` animation the harness sets (plugin default `fast`) dominates page-turn latency, in the `covers` view it also sets (default `spines`); animation-off isolates a
   much smaller renderer cost.
 - **VOS v1.4.1** is close to v1.4 on the real library (restart + navigation 291 ms, open book
@@ -214,9 +219,37 @@ physical Kindle model.
 
 CyberUI v1.0.0 (latest stable when measured) was added at a contributor's request (campaign `2026-10-28-cyberui-b`, 0 FAILED). It is a full-screen home plus its own library that sits above the stock browser, so the harness sets it as the start page and drives its screens directly; it has no quick-settings panel, so those two scenarios are UNSUPPORTED. Its library actions finish in one frame: action CPU 1.5-2.1 ms versus 20-44 ms for Stock's render, sort and folder enter. The wall times are therefore pinned at the harness's 16 ms frame floor (16.1 ms), so differences below one frame are not measurable here; close book (32 ms) and restart + navigation (279 ms) are close to Stock. Its sort scenario uses the two of its four sort orders that show different books on page one for the corpus.
 
-### Bookends control (withdrawn)
+### Bookends control
 
-The `2026-10-27-bookends` campaign compared Stock with Stock + Bookends, but Bookends defaults to off and the harness never enabled it: no top-level `enabled` in its settings, and frames identical to Stock's for reader page turn, open book and close book. Opening a book did make 2 more screen refreshes than Stock, consistent with the overlay widget `Bookends:init()` shows whether enabled or not. The earlier numbers and the "not negligible" verdict are withdrawn: they describe the plugin switched off, and the timing differences are not explained. Bookends has no result here until it is measured enabled.
+The `2026-10-27-bookends` campaign compared Stock with Stock + Bookends, but Bookends defaults to off and the harness never enabled it: no top-level `enabled` in its settings, and frames identical to Stock's for reader page turn, open book and close book. Opening a book did make 2 more screen refreshes than Stock, consistent with the overlay widget `Bookends:init()` shows whether enabled or not. Its numbers (page turn 4.7 → 16.7 ms and the verdict built on them) are withdrawn: they describe the plugin switched off.
+
+On 2026-11-07 the harness turned it on (`enabled = true`, everything else at the plugin's defaults, so its default preset applies) and measured Stock against Stock + Bookends in four separate processes (`2026-11-07-defaults-2`, `rep1` to `rep3`; one process per variant each, 10 samples per scenario). The frames now differ from Stock's. Median of the 10 samples in each process, in ms:
+
+| Scenario | Stock | + Bookends | Difference per process |
+|---|---|---|---|
+| Reader page turn | 5.5, 4.1, 4.1, 4.1 | 12.7, 12.6, 11.7, 12.1 | +7.2, +8.5, +7.6, +8.0 |
+| Open book (minimal) | 95.7, 97.8, 95.7, 100.5 | 101.1, 103.4, 104.3, 107.7 | +5.4, +5.7, +8.6, +7.2 |
+| Close book | 27.5, 28.1, 27.7, 21.8 | 33.3, 29.7, 34.1, 23.5 | +5.8, +1.6, +6.4, +1.7 |
+| Open book (with instrumentation) | 42.5, 52.6, 51.6, 63.2 | 69.8, 69.0, 64.5, 61.0 | +27.3, +16.4, +12.9, −2.2 |
+| Live Lua heap after stress, MiB | 15.2, 14.6, 14.5, 15.9 | 23.0, 23.5, 22.6, 24.2 | about +8 (stress checkpoint; the generated Bookends reports show reader-cycle heap, +2.4 to +4.3 MiB, a different measure) |
+
+Page turns, minimal open book and heap are higher with Bookends in all four processes; the size of the page-turn difference is not isolated. Per process, 0 to 2 of Stock's 10 turns take 10 ms or more, against 5 to 8 of Bookends' 10 (in `rep3` its first five are under 10 ms, then the last five are 14.9–16.3 ms), so the median mixes "same as Stock" with "one 16 ms frame later", and CPU time in the action is about the same. Stock always ran about 12 s before Bookends (no alternating order), and the withdrawn run showed +12 ms for the disabled plugin with identical frames, so loading the plugin cannot be separated from drawing with it. Close book, where frames match Stock's in 8–9 of 10, and the instrumented open book vary too much to claim a size. These are emulator timings, one process per variant in each campaign, with Bookends at its default preset only.
+
+### Bookshelf at its own defaults
+
+Earlier shelf numbers ran with harness-chosen settings. On 2026-11-07 Bookshelf was measured with its animation (`fast`) and Home view (`spines`) left at the plugin's defaults, on the real library, once as an added plugin and once as the start page (`start_with = "bookshelf"`), against Stock in the same campaign (`2026-11-07-defaults-2`). One warm process each; restart is three processes.
+
+| | Stock | Bookshelf at defaults |
+|---|---:|---:|
+| Library paging, sequential (stock browser) | 15.3 ms | 15.2 ms |
+| Open book (minimal) / close book | 92.3 / 27.8 ms | 101.0 / 31.9 ms |
+| Restart to first screen / with navigation | 193 / 249 ms | 198 / 255 ms |
+| Live Lua heap after stress | 14.1 MiB | 24.6 MiB |
+| Open shelf / first render / close shelf | | 28.0 / 20.6 / 6.8 ms |
+| Shelf, page 1↔2 turn (animation `fast`) / animation off | | 100.9 / 38.0 ms |
+| As start page: restart to first screen / with navigation | 193 / 249 ms | 376 / 432 ms |
+
+Compare within this campaign only: its Stock differs from the Stock row in the real-library table above, because that comes from another campaign. The start-page row compares different screens: Bookshelf's shelf against Stock's library, and the first-screen check only confirms the widget is on the stack, not that it has painted. Opening a book (minimal) is 8.7 ms slower with Bookshelf loaded; the instrumented open book differs more (49.8 versus 77.5 ms) and the cause was not investigated. Sequential paging through the shelf is not checked in this view: in the first attempt a next-page turn from page 3 stayed on page 3 (each page showed 84 books, 33 pages), so the strict one-page-forward check failed once. Pages in this view hold a variable number of books, which may be the cause, but a Bookshelf bug or harness timing is not excluded and was not investigated. The scenario is recorded as unsupported with that reason in the raw result (not published; the generated report shows "—"). The shelf's cached paging only alternates pages 1 and 2, so this view is not exercised beyond page 2. The harness writes no animation setting at the start (the plugin's own `fast` applies), but it saves `fast` explicitly just before the animation-on measurement; the value read before that is not in the raw results.
 
 ## What was tested
 
@@ -258,6 +291,7 @@ kind of stack-specific gaps. `2026-10-27-vos-141` adds 498 + 196 PASS (Phase 1 a
 Project:Title and VOS rows are superseded by `2026-10-27-pt-covers` and
 `2026-10-27-vos-141`. `2026-11-05-issue2` reports 738 PASS in Phase 1 and 279 PASS in Phase 2 with
 0 FAILED (70 and 1 UNSUPPORTED), and `2026-11-06-simpleui` 424 and 162 PASS with 0 FAILED (40 and 0 UNSUPPORTED).
+`2026-11-07-defaults-2` ran 16 jobs with 0 FAILED; one earlier attempt (`2026-11-07-defaults`) failed on Bookshelf sequential paging in its default view and is not used.
 
 `UNSUPPORTED` entries describe actions that do not exist for the relevant stack or corpus shape, such as next-page navigation in a single-page library. They are reported explicitly rather than treated as success or as `0 ms`.
 
@@ -585,7 +619,7 @@ Bookshelf is a separate widget, not a replacement for KOReader's file browser. T
 measure the stock browser with Bookshelf loaded and idle; the screens for `A_stock` and
 `B_bookshelf` are identical. Those rows stay in the raw results but are left out of the tables
 and charts, since they say nothing about using the plugin. Only the
-`bookshelf_*` scenarios exercise the shelf itself, and `start_with = "bookshelf"` has not been measured. Stacks that do replace the browser
+`bookshelf_*` scenarios exercise the shelf itself, and `start_with = "bookshelf"` was measured on 2026-11-07 (see *Bookshelf at its own defaults*). Stacks that do replace the browser
 (SimpleUI, ZenOS, Project:Title) are measured on their own library views. The Bookshelf
 shelf scenarios walk explicit page transitions and fail on a no-op turn, an empty shelf or
 an unchanged visible signature (the `noops` / `empty_shelves` audit counters).

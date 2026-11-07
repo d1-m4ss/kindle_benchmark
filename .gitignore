@@ -40,6 +40,10 @@ results/runs/*
 !results/runs/2026-10-28-cyberui-b/
 !results/runs/2026-11-05-issue2/
 !results/runs/2026-11-06-simpleui/
+!results/runs/2026-11-07-defaults-2/
+!results/runs/2026-11-07-rep1/
+!results/runs/2026-11-07-rep2/
+!results/runs/2026-11-07-rep3/
 results/runs/**/raw/
 results/runs/**/logs/
 results/runs/**/checkpoints/

@@ -221,6 +221,8 @@ class Job:
     energy_nav_cycles: int = 5
     energy_reader_short_turns: int = 10
     energy_reader_long_turns: int = 100
+    bookshelf_defaults: bool = False
+    start_with: str | None = None
 
 
 def make_layout(campaign: str, phase: str) -> RunLayout:
@@ -436,6 +438,8 @@ def setup_isolated_home(job: Job) -> Path:
         start_with_str = '    ["start_with"] = "homescreen_simpleui",\n' if "simpleui" in job.plugins else ''
         if "cyberui" in job.plugins:
             start_with_str = '    ["start_with"] = "cyberui",\n'
+        if job.start_with:
+            start_with_str = f'    ["start_with"] = "{job.start_with}",\n'
         leanui_settings_str = (
             '    ["leanui_settings"] = {\n'
             '        ["enabled"] = true,\n'
@@ -535,14 +539,23 @@ def setup_isolated_home(job: Job) -> Path:
         settings_dir.mkdir(parents=True, exist_ok=True)
         bs_settings = settings_dir / "bookshelf.lua"
         if not bs_settings.exists():
+            # With bookshelf_defaults the animation and the Home view stay at the plugin's own defaults.
+            animation_str = '' if job.bookshelf_defaults else '    ["shelf_page_animation"] = "medium",\n'
             bs_settings.write_text(
                 'return {\n'
                 '    ["active_chip"] = "all",\n'
                 '    ["active_page"] = 1,\n'
                 '    ["active_cursor"] = 1,\n'
-                '    ["shelf_page_animation"] = "medium",\n'
+                f'{animation_str}'
                 '}\n'
             )
+    if "bookends" in job.plugins:
+        # Bookends defaults to off; a user turns it on from its menu. Everything else stays at its defaults.
+        settings_dir = home / "settings"
+        settings_dir.mkdir(parents=True, exist_ok=True)
+        be_settings = settings_dir / "bookends.lua"
+        if not be_settings.exists():
+            be_settings.write_text('return {\n    ["enabled"] = true,\n}\n')
     if "simpleui" in job.plugins or "simpleui" in job.config.lower():
         sui_dir = home / "settings" / "simpleui"
         sui_dir.mkdir(parents=True, exist_ok=True)
@@ -1188,6 +1201,9 @@ def run_job(job: Job, layout: RunLayout, environment: dict, *, resume: bool = Tr
 
     if job.profile == "energy":
         env.update(energy_environment(job))
+    env.pop("BENCHMARK_BOOKSHELF_DEFAULTS", None)
+    if job.bookshelf_defaults:
+        env["BENCHMARK_BOOKSHELF_DEFAULTS"] = "1"
 
     cmd = ["./luajit", "reader.lua", job.library_dir]
     started_ns = time.monotonic_ns()
@@ -1668,6 +1684,40 @@ def energy_corpora_to_reset(jobs: Iterable[Job], layout: RunLayout, *, resume: b
                    and not (resume and valid_completed_result(job, layout))}, key=str)
 
 
+BOOKSHELF_CHECK = OrderedDict({
+    "R0_stock": ([], None, False),
+    "R1_bookshelf": (["bookshelf"], None, True),
+    "R1_bookshelf_start": (["bookshelf"], "bookshelf", True),
+})
+
+
+def bookshelf_defaults_blocks(campaign: str, steady_runs: int = 3) -> OrderedDict[str, list[Job]]:
+    """Bookshelf at its own defaults (animation, Home view), also as the start page, against Stock."""
+    books = corpus_files(ROOT / "real_books")
+    if len(books) != 2692:
+        raise RuntimeError(f"HARD FAIL: real_books/ must contain exactly 2692 EPUB files, found {len(books)}")
+    blocks: OrderedDict[str, list[Job]] = OrderedDict()
+    for config, (plugins, start_with, defaults) in BOOKSHELF_CHECK.items():
+        library = WORK_REAL / campaign / config / "corpus"
+        home = ENV_BASE / campaign / "bookshelf_check" / config
+        common = dict(plugins=tuple(plugins), library_dir=str(library), ko_home=str(home),
+                      dataset_mode="real_2692", book_count=len(books),
+                      bookshelf_defaults=defaults, start_with=start_with)
+        jobs = [Job(run_id=f"check_first_{config}", block=config, phase="phase2", config=config,
+                    mode="real_first_run", profile="startup", warmup=0, measure=1, fresh_home=True,
+                    timeout_s=3600, **common)]
+        for index in range(1, steady_runs + 1):
+            jobs.append(Job(run_id=f"check_steady_{config}_r{index:02d}", block=config, phase="phase2",
+                            config=config, mode="real_steady_cold", profile="startup", warmup=0, measure=1,
+                            fresh_home=False, timeout_s=1800, **common))
+        if start_with is None:
+            jobs.append(Job(run_id=f"check_warm_{config}", block=config, phase="phase2", config=config,
+                            mode="warm", profile="real", warmup=2, measure=10, fresh_home=False,
+                            timeout_s=3600, **common))
+        blocks[config] = jobs
+    return blocks
+
+
 def bookends_blocks(campaign: str) -> OrderedDict[str, list[Job]]:
     master = ROOT / "real_books"
     books = corpus_files(master)
@@ -1944,6 +1994,8 @@ def main() -> int:
     group.add_argument("--paging-phase2", action="store_true",
                        help="paging-only real phase: real_books/2692, three process runs")
     group.add_argument("--bookends-control", action="store_true")
+    group.add_argument("--bookshelf-check", action="store_true",
+                       help="Bookshelf at plugin defaults, and as the start page, against Stock (real library)")
     group.add_argument("--energy", action="store_true",
                        help="energy proxies on real_books/2692: stock, m1n1mal, CyberUI")
     parser.add_argument("--campaign", default=date.today().isoformat(),
@@ -1963,7 +2015,7 @@ def main() -> int:
     parser.add_argument("--energy-runs", type=int, default=1,
                         help="steady process runs per stack, after each stack's first run (0: first run only)")
     parser.add_argument("--allow-unpinned", default="",
-                        help="energy only: comma-separated plugins measured as checked out; "
+                        help="local runs only (--energy, --bookshelf-check, --bookends-control): comma-separated plugins measured as checked out; "
                              "recorded in every artifact, for local runs that are not published")
     parser.add_argument("--energy-idle-s", type=int, default=30)
     parser.add_argument("--energy-tail-s", type=int, default=5)
@@ -1993,8 +2045,8 @@ def main() -> int:
     resume = not args.no_resume
 
     allow_unpinned = [name.strip() for name in args.allow_unpinned.split(",") if name.strip()]
-    if allow_unpinned and not args.energy:
-        parser.error("--allow-unpinned is only for --energy")
+    if allow_unpinned and not (args.energy or args.bookshelf_check or args.bookends_control):
+        parser.error("--allow-unpinned is only for --energy, --bookshelf-check and --bookends-control")
     verify_pinned_revisions(allow_unpinned)
 
     if args.validate:
@@ -2002,6 +2054,8 @@ def main() -> int:
             parser.error("validation uses one smoke_gate block; --batch must be all")
         jobs = validation_jobs(args.campaign)
         blocks = OrderedDict({"smoke_gate": jobs})
+    elif args.bookshelf_check:
+        blocks = bookshelf_defaults_blocks(args.campaign, args.steady_runs)
     elif args.energy:
         if args.batch != "all":
             parser.error("--energy uses one interleaved block; --batch must be all")
@@ -2087,7 +2141,7 @@ def main() -> int:
         environment = {**environment, "unpinned_plugins": [unpinned_plugin_state(n) for n in allow_unpinned]}
     all_jobs = [job for jobs in blocks.values() for job in jobs]
     if args.prepare_only:
-        if args.phase2 or args.paging_phase2 or args.bookends_control or args.energy:
+        if args.phase2 or args.paging_phase2 or args.bookends_control or args.energy or args.bookshelf_check:
             configs = sorted({job.config if job.block != "bookends_control" else f"bookends_{job.config}" for job in all_jobs})
             prepare_real_corpora(args.campaign, configs, args.lanes)
             write_corpus_manifest(ROOT / "real_books", layout.root / "real_corpus_manifest.json")
@@ -2095,7 +2149,7 @@ def main() -> int:
         print(f"Preparation complete; no KOReader measurement process started. Output: {layout.root}")
         return 0
 
-    if args.phase2 or args.paging_phase2 or args.bookends_control or args.energy:
+    if args.phase2 or args.paging_phase2 or args.bookends_control or args.energy or args.bookshelf_check:
         write_corpus_manifest(ROOT / "real_books", layout.root / "real_corpus_manifest.json")
 
     success = True
@@ -2104,7 +2158,8 @@ def main() -> int:
     else:
         for block, jobs in blocks.items():
             real_corpora = real_corpora_for_jobs(jobs) \
-                if (args.phase2 or args.paging_phase2 or args.bookends_control or args.energy) else []
+                if (args.phase2 or args.paging_phase2 or args.bookends_control or args.energy
+                                         or args.bookshelf_check) else []
             if args.energy and not (resume and block_checkpoint_valid(layout, block, jobs)):
                 for corpus in energy_corpora_to_reset(jobs, layout, resume=resume):
                     _safe_remove(corpus)

@@ -1,0 +1,9 @@
+{
+  "benchmark_harness_sha256": "93cd08edc22b5cfd0a0880b123bf295729ab18d1e8a4d96e883103add2ef75c0",
+  "campaign": "2026-11-07-rep3",
+  "created_utc": "2026-11-07T10:10:51.673598+00:00",
+  "emulate_reader_flash_ms": null,
+  "runner_sha256": "2979666815896d6a1eb0c895155abeebb6564d1312504cd2f2b489b34e158c2e",
+  "sdl_video_driver": "dummy",
+  "versions_lock_sha256": "2cdf45f8dfbb2504fce73c7a91c76384954a65bb1d59fdbc0884740b8ccd46fe"
+}

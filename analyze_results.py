@@ -568,7 +568,7 @@ def data_report(rows: list[dict[str, Any]], scope: str, records: list[dict[str, 
                 seq_n = seq_def.get("PassSamples", 0) if seq_def else 0
                 cac_n = cac_def.get("PassSamples", 0) if cac_def else 0
                 lines.append(
-                    f"| {stack} | {mode} | {dataset} | {books} | default (medium) | {bpp_def} | {fmt(total_p_def)} | {seq_runs}/{cac_runs} | {seq_n}/{cac_n} | "
+                    f"| {stack} | {mode} | {dataset} | {books} | on | {bpp_def} | {fmt(total_p_def)} | {seq_runs}/{cac_runs} | {seq_n}/{cac_n} | "
                     f"{fmt(seq_def.get('wall_time_ms_median') if seq_def else None)} | {fmt(seq_def.get('wall_time_ms_p90') if seq_def else None)} | "
                     f"{fmt(seq_def.get('wall_time_ms_min') if seq_def else None)} | {fmt(seq_def.get('wall_time_ms_max') if seq_def else None)} | "
                     f"{fmt(cac_def.get('wall_time_ms_median') if cac_def else None)} | {fmt(cac_def.get('wall_time_ms_p90') if cac_def else None)} | "
